@@ -1,5 +1,5 @@
 import { rpc } from './page-bridge';
-import { detectPageMode } from './activation';
+import { detectPageMode, detectInBundleBvc } from './activation';
 
 const FLAG = '__bvcExtensionMounted';
 declare global {
@@ -14,6 +14,14 @@ async function main(): Promise<void> {
     return;
   }
   window[FLAG] = true;
+
+  // Coexistence guard (§9): if the in-bundle BVC is already on the page, stand
+  // down rather than mount a second panel that collides on shadow-host id and
+  // pick-mode events. (A storage-backed opt-out is a P2 refinement.)
+  if (detectInBundleBvc()) {
+    console.log('[bvc] in-bundle BVC detected — extension standing down (coexistence guard)');
+    return;
+  }
 
   const mode = await detectPageMode({
     probeNg: async () => {
