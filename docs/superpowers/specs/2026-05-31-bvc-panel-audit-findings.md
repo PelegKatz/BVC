@@ -49,6 +49,14 @@ each element — which is the data that confirms/extends the fix.
   entries (30 entries; "Form Field", "Avatar", etc. all normalize-match).
 - **F3** is pre-existing and out of scope for the classification fix (the signal
   RPC path is the Storybook-only secondary path). Logged for the record.
+- **F5 (P0) fix approach** (decided): in `cxui-variant.ts`, stop early-returning
+  on a null instance. Render select axes that have a `classMap` as chips driven
+  by the existing class-swap path (`applyVariantChange`), with the initial
+  selected value inferred from the element's current classes. Axes that need
+  signal read/write (no classMap: e.g. `color`, `loading`, free-text) render
+  **disabled with a small "needs Angular dev build" hint** (user decision —
+  honest over hidden, matching the readonly-banner philosophy). To be fixed in
+  the post-sweep batch.
 
 ## Outstanding (needs user's Chrome)
 
