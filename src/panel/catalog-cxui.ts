@@ -9,9 +9,11 @@ import { detectComponentName } from './detect-map';
  *
  * Detection order:
  *   1. Tag name starts with "cxui-" (element selector components).
- *   2. window.ng.getComponent(el) returns a Cxui* class (component with
- *      attribute selector, e.g. `button[cxuiButton]`).
- *   3. window.ng.getDirectives(el) contains a Cxui* instance (directive).
+ *   2. getCxuiInstance(el) is non-null — a Cxui* component (attribute or
+ *      element selector) or directive instance, via window.ng dev tools.
+ *   3. detectComponentName(el) (detect-map.ts) — synchronous fallback when
+ *      window.ng is absent (isolated content-script world), e.g.
+ *      button[cxuiButton].
  */
 export function isCxuiComponent(el: Element): boolean {
   if (el.tagName.toLowerCase().startsWith('cxui-')) return true;
