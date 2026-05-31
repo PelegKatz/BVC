@@ -2,6 +2,7 @@
 
 import type { CatalogEntry } from './catalog-loader';
 import { getCxuiInstance } from './signal-writer';
+import { detectComponentName } from './detect-map';
 
 /**
  * Returns true when the element is (or hosts) a cxui component or directive.
@@ -14,7 +15,11 @@ import { getCxuiInstance } from './signal-writer';
  */
 export function isCxuiComponent(el: Element): boolean {
   if (el.tagName.toLowerCase().startsWith('cxui-')) return true;
-  return getCxuiInstance(el) !== null;
+  if (getCxuiInstance(el) !== null) return true;
+  // Isolated content-script world: window.ng is absent, so getCxuiInstance is
+  // always null. Fall back to the synchronous attribute detector so directive
+  // components (e.g. button[cxuiButton]) are still classified as cxui.
+  return detectComponentName(el) !== null;
 }
 
 /**
@@ -29,11 +34,17 @@ export function isCxuiComponent(el: Element): boolean {
  */
 export function findCxuiEntry(el: Element, catalog: CatalogEntry[]): CatalogEntry | null {
   const instance = getCxuiInstance(el);
-  if (!instance) return null;
 
-  const ctorName = instance.constructor.name;
-  if (!ctorName.startsWith('Cxui')) return null;
-  const target = normalizeName(ctorName.slice(4));
+  let target: string | null = null;
+  if (instance) {
+    const ctorName = instance.constructor.name;
+    if (ctorName.startsWith('Cxui')) target = normalizeName(ctorName.slice(4));
+  }
+  // No live instance (isolated world): derive the name from the attribute map.
+  if (!target) {
+    const detected = detectComponentName(el);
+    if (detected) target = normalizeName(detected);
+  }
   if (!target) return null;
 
   return (
@@ -53,7 +64,11 @@ function normalizeName(s: string): string {
 /** Human-readable component name for the panel header. */
 export function describeCxuiComponent(el: Element): string {
   const instance = getCxuiInstance(el);
-  if (!instance) return el.tagName.toLowerCase();
-  const name = instance.constructor.name;
-  return name.startsWith('Cxui') ? name.slice(4) : name;
+  if (instance) {
+    const name = instance.constructor.name;
+    return name.startsWith('Cxui') ? name.slice(4) : name;
+  }
+  const detected = detectComponentName(el);
+  if (detected) return detected;
+  return el.tagName.toLowerCase();
 }
