@@ -47,6 +47,12 @@ export function findCxuiEntry(el: Element, catalog: CatalogEntry[]): CatalogEntr
     const detected = detectComponentName(el);
     if (detected) target = normalizeName(detected);
   }
+  // Tag-based cxui components beyond DETECT_MAP (e.g. cxui-form-field): derive
+  // the lookup name from the element-selector tag when window.ng is absent.
+  if (!target) {
+    const tag = el.tagName.toLowerCase();
+    if (tag.startsWith('cxui-')) target = normalizeName(tag.slice('cxui-'.length));
+  }
   if (!target) return null;
 
   return (
