@@ -34,3 +34,20 @@ describe('catalog-cxui — directive components without window.ng', () => {
     expect(describeCxuiComponent(cxuiButton())).toBe('Button');
   });
 });
+
+describe('catalog-cxui — tag-based cxui components beyond DETECT_MAP', () => {
+  const CATALOG_WITH_FORM_FIELD: CatalogEntry[] = [
+    { name: 'Form Field', storyTitle: 'Components/Form Field', axes: [], bvc: { content: 'text-label' } },
+  ];
+
+  it(`GIVEN a <cxui-form-field> not in DETECT_MAP and no window.ng
+      THEN findCxuiEntry resolves it to the "Form Field" catalog entry by tag name`, () => {
+    const el = document.createElement('cxui-form-field');
+    expect(findCxuiEntry(el, CATALOG_WITH_FORM_FIELD)?.name).toBe('Form Field');
+  });
+
+  it(`GIVEN a <cxui-form-field>
+      THEN isCxuiComponent is true (tag-based fast path)`, () => {
+    expect(isCxuiComponent(document.createElement('cxui-form-field'))).toBe(true);
+  });
+});
