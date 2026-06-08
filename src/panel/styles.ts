@@ -210,8 +210,7 @@ export const panelCss = /* css */ `
   }
 
   /* Floating toggle button — always visible, top-right of viewport. The
-     glyph is a custom SVG (panel-with-sliders monogram) coloured in the
-     Brainy interactive green so the brand is unmistakable. */
+     glyph is the 🎨 palette emoji, centred in the round button. */
   .toggle-btn {
     position: fixed;
     top: 12px;
@@ -301,6 +300,11 @@ export const panelCss = /* css */ `
     height: 6px;
     border-radius: 50%;
     background: var(--bvc-accent);
+  }
+  /* Brand glyph in the header title — the 🎨 mark next to "Repaint". */
+  .title-emoji {
+    font-size: 13px;
+    line-height: 1;
   }
 
   /* Pick toggle — ghost when off, outlined-interactive when on (Brainy

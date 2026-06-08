@@ -66,15 +66,8 @@ export class Panel {
     this.toggleBtn = document.createElement('button');
     this.toggleBtn.className = 'toggle-btn';
     this.toggleBtn.title = 'Open / close BVC (⌘. or ⌘\\)';
-    this.toggleBtn.innerHTML =
-      '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" ' +
-      'stroke="currentColor" stroke-width="1" ' +
-      'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-      '<rect x="3" y="4" width="18" height="16" rx="3"/>' +
-      '<line x1="7" y1="9" x2="17" y2="9"/>' +
-      '<line x1="7" y1="14" x2="13" y2="14"/>' +
-      '<circle cx="15" cy="14" r="1.5" fill="currentColor"/>' +
-      '</svg>';
+    this.toggleBtn.textContent = '🎨';
+    this.toggleBtn.style.fontSize = '18px';
     this.toggleBtn.addEventListener('click', () => this.setOpen(!this.open));
     this.shadow.appendChild(this.toggleBtn);
 
@@ -98,9 +91,10 @@ export class Panel {
     title.className = 'title';
     const titleMain = document.createElement('div');
     titleMain.className = 'title-main';
-    const dot = document.createElement('span');
-    dot.className = 'dot';
-    titleMain.append(dot, document.createTextNode('BVC'));
+    const brandIcon = document.createElement('span');
+    brandIcon.className = 'title-emoji';
+    brandIcon.textContent = '🎨';
+    titleMain.append(brandIcon, document.createTextNode('Repaint'));
     title.appendChild(titleMain);
 
     this.sentLabel = document.createElement('div');
