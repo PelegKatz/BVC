@@ -1,4 +1,5 @@
 import { typographyTokenGroups, type TypographyToken, getAppliedToken, tokenClassName } from '../typography-tokens';
+import { positionPopover } from '../popover-utils';
 
 /** Strip all tw-font-* classes from the element. */
 function clearTokenClasses(el: Element): void {
@@ -77,7 +78,8 @@ export function createTypographyTokenRow(el: Element, onChange: () => void): HTM
 
     const content = document.createElement('div');
     content.className = 'popover';
-    content.style.cssText = `top:${rect.bottom + 4}px;left:${rect.left}px;width:${w}px;padding:4px;max-height:60vh;overflow:auto;`;
+    // Position (top/left/maxHeight) is set by positionPopover after mount.
+    content.style.cssText = `width:${w}px;padding:4px;overflow:auto;`;
     content.addEventListener('click', e => e.stopPropagation());
 
     const current = getAppliedToken(el);
@@ -118,6 +120,11 @@ export function createTypographyTokenRow(el: Element, onChange: () => void): HTM
 
     overlay.appendChild(content);
     shadowRoot.appendChild(overlay);
+    // Position after mount so the helper can flip above/below and clamp the
+    // height to the viewport — otherwise a long token list opened near the
+    // panel bottom (e.g. the Typography section) overflows offscreen and the
+    // lower options become unreachable.
+    positionPopover(content, trigger, w);
   };
 
   trigger.addEventListener('click', () => (isOpen ? close() : open()));

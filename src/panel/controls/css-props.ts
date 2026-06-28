@@ -1,8 +1,10 @@
 import { SHADOW_PRESETS, SPACING_SCALE, RADIUS_SCALE, findStop, matchShadow, type ShadowPreset, type SpacingStop } from '../design-tokens';
 
+import { positionPopover } from '../popover-utils';
+import { attachTooltip } from '../tooltip';
 import { createColorChip } from './color-picker';
 import { createSection } from './section';
-import { highlightSpacing, clearSpacingHighlight, type SpacingKind, type SpacingSide } from './spacing-hover';
+import { highlightSpacing, highlightGap, clearSpacingHighlight, type SpacingKind, type SpacingSide } from './spacing-hover';
 
 const ICON_FLEX_ROW =
   '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="4" width="3" height="6" rx="0.5"/><rect x="6" y="4" width="3" height="6" rx="0.5"/><rect x="10" y="4" width="2" height="6" rx="0.5" opacity="0.5"/></svg>';
@@ -155,10 +157,16 @@ function buildAutoLayoutSection(el: Element, onChange: () => void): HTMLDivEleme
 
   const gap = parseFloat(cs(el).gap) || 0;
   wrap.appendChild(
-    makeTokenAwarePxInput('Gap', gap, SPACING_SCALE, val => {
-      html.style.gap = val === null ? '' : `${val}px`;
-      onChange();
-    }),
+    makeTokenAwarePxInput(
+      'Gap',
+      gap,
+      SPACING_SCALE,
+      val => {
+        html.style.gap = val === null ? '' : `${val}px`;
+        onChange();
+      },
+      { onEnter: () => highlightGap(el), onLeave: () => clearSpacingHighlight() },
+    ),
   );
 
   const overflow = cs(el).overflow || 'visible';
@@ -300,7 +308,7 @@ function buildFigmaPad(el: Element, kind: SpacingKind, props: [string, string, s
   modeBtn.type = 'button';
   modeBtn.className = 'figma-pad-mode';
   modeBtn.innerHTML = ICON_PAD_MODE;
-  modeBtn.title = 'Toggle individual / combined padding';
+  attachTooltip(modeBtn, 'Toggle individual / combined padding');
   modeBtn.dataset.on = String(mode === 'individual');
   modeBtn.addEventListener('click', () => {
     mode = mode === 'combined' ? 'individual' : 'combined';
@@ -415,7 +423,7 @@ function makePadCell(props: PadCellProps): HTMLButtonElement {
   const cell = document.createElement('button');
   cell.type = 'button';
   cell.className = 'figma-pad-cell';
-  cell.title = props.title;
+  attachTooltip(cell, props.title);
 
   const icon = document.createElement('span');
   icon.className = 'figma-pad-icon';
@@ -584,7 +592,7 @@ function makeUnitInput(
   num.disabled = initial.unit === 'auto';
 
   const sel = document.createElement('select');
-  sel.className = 'text-input';
+  sel.className = 'text-input unit-select';
   sel.style.cssText = 'width:54px;';
   for (const u of units) {
     const o = document.createElement('option');
@@ -635,7 +643,7 @@ function makeIconRow(label: string, options: IconRowOption[], current: string, o
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'segmented-btn segmented-btn-icon';
-    btn.title = opt.label;
+    attachTooltip(btn, opt.label);
     btn.dataset.value = opt.value;
     btn.innerHTML = opt.icon;
     btn.addEventListener('click', () => {
@@ -660,7 +668,13 @@ function makeIconRow(label: string, options: IconRowOption[], current: string, o
   return row;
 }
 
-function makeTokenAwarePxInput(label: string, current: number, scale: SpacingStop[], onSet: (val: number | null) => void): HTMLDivElement {
+function makeTokenAwarePxInput(
+  label: string,
+  current: number,
+  scale: SpacingStop[],
+  onSet: (val: number | null) => void,
+  hover?: { onEnter: () => void; onLeave: () => void },
+): HTMLDivElement {
   const row = document.createElement('div');
   row.className = 'two-col';
 
@@ -695,13 +709,21 @@ function makeTokenAwarePxInput(label: string, current: number, scale: SpacingSto
     });
   });
 
+  // Optional on-page highlight while the cell is hovered/focused (used by Gap
+  // to light up the flex/grid gaps, mirroring the Padding / Margin cells).
+  if (hover) {
+    cell.addEventListener('mouseenter', hover.onEnter);
+    cell.addEventListener('mouseleave', hover.onLeave);
+    cell.addEventListener('focus', hover.onEnter);
+    cell.addEventListener('blur', hover.onLeave);
+  }
+
   row.append(lbl, cell);
   return row;
 }
 
 function openTokenPicker(anchor: HTMLElement, scale: SpacingStop[], onPick: (stop: SpacingStop) => void): void {
   const shadowRoot = anchor.getRootNode() as ShadowRoot;
-  const rect = anchor.getBoundingClientRect();
 
   const overlay = document.createElement('div');
   overlay.style.cssText = 'position:fixed;inset:0;z-index:2147483646;';
@@ -709,7 +731,7 @@ function openTokenPicker(anchor: HTMLElement, scale: SpacingStop[], onPick: (sto
 
   const menu = document.createElement('div');
   menu.className = 'popover';
-  menu.style.cssText = `top:${rect.bottom + 4}px;left:${rect.left}px;padding:4px;min-width:140px;`;
+  menu.style.cssText = 'padding:4px;min-width:140px;';
   menu.addEventListener('click', e => e.stopPropagation());
 
   for (const stop of scale) {
@@ -732,6 +754,7 @@ function openTokenPicker(anchor: HTMLElement, scale: SpacingStop[], onPick: (sto
 
   overlay.appendChild(menu);
   shadowRoot.appendChild(overlay);
+  positionPopover(menu, anchor, 140);
 }
 
 function makePxInput(label: string, current: number, onSet: (val: number | null) => void): HTMLDivElement {
@@ -776,7 +799,7 @@ function buildScrubInput(opts: {
   const handle = document.createElement('span');
   handle.className = 'scrub-handle';
   handle.textContent = opts.unit;
-  handle.title = 'Drag horizontally to scrub. Shift = ×10, Alt = ÷10.';
+  attachTooltip(handle, 'Drag horizontally to scrub. Shift = ×10, Alt = ÷10.');
 
   const input = document.createElement('input');
   input.type = 'number';
@@ -896,6 +919,7 @@ function makeRangeInput(
 
   const range = document.createElement('input');
   range.type = 'range';
+  range.className = 'opacity-slider'; // carries accent-color: var(--bvc-accent) so the slider is green, not browser-blue
   range.min = String(min);
   range.max = String(max);
   range.value = String(current);

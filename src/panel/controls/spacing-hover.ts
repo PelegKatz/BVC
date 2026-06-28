@@ -13,6 +13,9 @@ export type SpacingSide = 'top' | 'right' | 'bottom' | 'left';
 
 let overlay: HTMLDivElement | null = null;
 let bands: Record<SpacingSide, HTMLDivElement> | null = null;
+// A flex/grid container can have many gaps (N-1 for N children), unlike
+// padding/margin which are always four sides, so gap bands are a growable pool.
+let gapBands: HTMLDivElement[] = [];
 let activeEl: Element | null = null;
 let frameHandle: number | null = null;
 
@@ -120,14 +123,80 @@ export function highlightSpacing(el: Element, kind: SpacingKind, sides: SpacingS
   update();
 }
 
+/** Grow/reuse the gap-band pool, returning the i-th band. */
+function gapBand(i: number): HTMLDivElement {
+  while (gapBands.length <= i) {
+    const b = document.createElement('div');
+    b.className = 'bvc-spacing-band';
+    b.dataset.side = 'gap';
+    overlay!.appendChild(b);
+    gapBands.push(b);
+  }
+  return gapBands[i];
+}
+
+/**
+ * Light up the flex/grid gap(s) of `el`, mirroring how highlightSpacing lights
+ * up padding — a band fills the empty space between each pair of adjacent
+ * children, sized to their shared extent. The actual child geometry is read
+ * (not the CSS gap value) so row, column, and grid layouts all work, and
+ * stays in sync via rAF until clearSpacingHighlight fires.
+ */
+export function highlightGap(el: Element): void {
+  ensureOverlay();
+  activeEl = el;
+
+  const update = () => {
+    if (!activeEl) return;
+    const kids = Array.from((activeEl as HTMLElement).children).filter(c => {
+      const ccs = window.getComputedStyle(c);
+      return ccs.display !== 'none' && ccs.position !== 'absolute' && ccs.position !== 'fixed';
+    });
+
+    let n = 0;
+    for (let i = 0; i < kids.length - 1; i++) {
+      const a = kids[i].getBoundingClientRect();
+      const b = kids[i + 1].getBoundingClientRect();
+      const vOverlap = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
+      const hOverlap = Math.min(a.right, b.right) - Math.max(a.left, b.left);
+      const hGap = b.left - a.right; // horizontal space → row layout
+      const vGap = b.top - a.bottom; // vertical space → column layout
+
+      let rect: { left: number; top: number; width: number; height: number } | null = null;
+      if (hGap > 0.5 && vOverlap > 0) {
+        rect = { left: a.right, top: Math.max(a.top, b.top), width: hGap, height: vOverlap };
+      } else if (vGap > 0.5 && hOverlap > 0) {
+        rect = { left: Math.max(a.left, b.left), top: a.bottom, width: hOverlap, height: vGap };
+      }
+      if (!rect) continue;
+
+      const band = gapBand(n++);
+      band.dataset.on = 'true';
+      band.style.left = `${rect.left}px`;
+      band.style.top = `${rect.top}px`;
+      band.style.width = `${rect.width}px`;
+      band.style.height = `${rect.height}px`;
+    }
+    // Hide any bands left over from a previous, larger layout.
+    for (let j = n; j < gapBands.length; j++) gapBands[j].dataset.on = 'false';
+
+    if (activeEl) frameHandle = requestAnimationFrame(update);
+  };
+
+  if (frameHandle != null) cancelAnimationFrame(frameHandle);
+  update();
+}
+
 export function clearSpacingHighlight(): void {
   activeEl = null;
   if (frameHandle != null) {
     cancelAnimationFrame(frameHandle);
     frameHandle = null;
   }
-  if (!bands) return;
-  for (const side of ['top', 'right', 'bottom', 'left'] as const) {
-    bands[side].dataset.on = 'false';
+  if (bands) {
+    for (const side of ['top', 'right', 'bottom', 'left'] as const) {
+      bands[side].dataset.on = 'false';
+    }
   }
+  for (const b of gapBands) b.dataset.on = 'false';
 }

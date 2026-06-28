@@ -1,4 +1,6 @@
 export const PANEL_WIDTH = 320;
+export const PANEL_MIN_WIDTH = 240;
+export const PANEL_MAX_WIDTH = 560;
 
 export const panelCss = /* css */ `
   :host {
@@ -10,6 +12,10 @@ export const panelCss = /* css */ `
     --bvc-fg: var(--c-text-primary, #09090b);
     --bvc-fg-2: var(--c-text-secondary, #68686d);
     --bvc-fg-muted: var(--c-text-disabled, #ababb1);
+    /* Canonical dropdown chevron (matches the inline SVG in color-picker /
+       icon-picker / section headers) as a data-URI so native <select>s can
+       render it via background-image. Colour is baked in per theme. */
+    --bvc-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M2.5 3.5 L5 6 L7.5 3.5' stroke='%23ababb1' stroke-width='1' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     --bvc-bg: var(--c-background-surface-secondary, #ffffff);
     --bvc-bg-2: var(--c-background-surface-primary, #f8fafc);
     /* Dedicated input fill. Light mode reuses bg-2; dark mode bumps it
@@ -105,6 +111,7 @@ export const panelCss = /* css */ `
       --bvc-fg: var(--c-text-primary, #e6e6e9);
       --bvc-fg-2: var(--c-text-secondary, #a1a1a6);
       --bvc-fg-muted: var(--c-text-disabled, #6e6e72);
+      --bvc-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M2.5 3.5 L5 6 L7.5 3.5' stroke='%236e6e72' stroke-width='1' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
       /* Tiered elevation: bg = panel surround (deepest), bg-2 = inset
          controls (clearly lifted), bg-hover = transient highlight.
          Dark-mode panels use direct hex (no var()) instead of inheriting
@@ -140,6 +147,7 @@ export const panelCss = /* css */ `
     --bvc-fg: var(--c-text-primary, #e6e6e9);
     --bvc-fg-2: var(--c-text-secondary, #a1a1a6);
     --bvc-fg-muted: var(--c-text-disabled, #6e6e72);
+    --bvc-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M2.5 3.5 L5 6 L7.5 3.5' stroke='%236e6e72' stroke-width='1' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     /* Surface + border tokens use direct hex in dark mode (see comment
        in the @media block above for the rationale). */
     --bvc-bg: #1c1c22;
@@ -197,7 +205,7 @@ export const panelCss = /* css */ `
     position: fixed;
     top: 0;
     right: 0;
-    width: ${PANEL_WIDTH}px;
+    width: var(--panel-w, ${PANEL_WIDTH}px);
     height: 100vh;
     background: var(--bvc-bg);
     border-left: 1px solid var(--bvc-border);
@@ -207,6 +215,24 @@ export const panelCss = /* css */ `
     color: var(--bvc-fg);
     font-size: 12px;
     line-height: 1.4;
+  }
+
+  /* Drag handle on the panel's left edge — resize the panel horizontally.
+     Highlights with the accent (green) on hover / during drag. */
+  .resize-handle {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    cursor: col-resize;
+    z-index: 10;
+    transition: background 120ms;
+  }
+  .resize-handle:hover,
+  .resize-handle[data-dragging] {
+    background: var(--bvc-accent);
+    opacity: 0.25;
   }
 
   /* Floating toggle button — always visible, top-right of viewport. The
@@ -238,7 +264,7 @@ export const panelCss = /* css */ `
     border-color: var(--bvc-border-strong);
   }
   .toggle-btn[data-open="true"] {
-    right: ${PANEL_WIDTH + 12}px;
+    right: calc(var(--panel-w, ${PANEL_WIDTH}px) + 12px);
     box-shadow: var(--bvc-shadow-sm);
   }
   .toggle-btn svg {
@@ -335,7 +361,6 @@ export const panelCss = /* css */ `
     background: var(--bvc-bg-focus);
     border-color: var(--bvc-accent);
     color: var(--bvc-accent);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--bvc-accent) 12%, transparent);
   }
 
   .header-actions {
@@ -812,7 +837,7 @@ export const panelCss = /* css */ `
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 14px 16px 10px;
+    padding: 8px 12px 6px;
     cursor: pointer;
     user-select: none;
     transition: background-color var(--bvc-motion-fast);
@@ -839,15 +864,15 @@ export const panelCss = /* css */ `
   }
   .fsection-title {
     font-weight: 600;
-    font-size: 13px;
-    letter-spacing: -0.01em;
+    font-size: 11px;
+    letter-spacing: 0;
     color: var(--bvc-fg);
   }
   .fsection-body {
-    padding: 0 16px 16px;
+    padding: 0 12px 12px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
   }
 
   /* Value chip (Figma-style row) */
@@ -898,14 +923,14 @@ export const panelCss = /* css */ `
     width: 100%;
     height: 28px;
     padding: 0 8px;
-    border: 1px solid transparent;
+    border: 1px solid var(--bvc-border);
     border-radius: var(--bvc-radius);
     background: var(--bvc-input-bg);
     font-size: 12px;
     font-family: inherit;
     color: var(--bvc-fg);
   }
-  .mini-input:hover { background: var(--bvc-bg-hover); }
+  .mini-input:hover { border-color: var(--bvc-border-strong); background: var(--bvc-bg-hover); }
   .mini-input:focus {
     outline: none;
     border-color: var(--bvc-accent);
@@ -916,6 +941,41 @@ export const panelCss = /* css */ `
   select.mini-input {
     padding: 0 6px;
     line-height: 26px;
+  }
+  /* Replace the browser's native dropdown chevron with the panel's canonical
+     thin chevron (same SVG as color-picker / icon-picker triggers) so every
+     dropdown in the panel reads identically. Native <select> ignores ::after,
+     so the chevron is painted as a background-image. background-image is a
+     longhand, so it survives the hover/focus background: shorthand on the
+     base .text-input / .mini-input rules without being reset.
+     select.text-input (0,1,1) outspecifies the base .text-input (0,1,0). */
+  select.text-input,
+  select.mini-input {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 22px;
+    background-image: var(--bvc-chevron);
+    background-repeat: no-repeat;
+    background-position: right 7px center;
+  }
+  select.text-input:hover,
+  select.text-input:focus,
+  select.mini-input:hover,
+  select.mini-input:focus {
+    background-image: var(--bvc-chevron);
+    background-repeat: no-repeat;
+    background-position: right 7px center;
+  }
+  /* Firefox: hide the dotted focus ring on the option text. */
+  select.text-input:-moz-focusring,
+  select.mini-input:-moz-focusring { color: transparent; text-shadow: 0 0 0 var(--bvc-fg); }
+  /* Narrow unit selects (W/H → px/%/auto, ~54px) need a tighter chevron inset
+     so "auto" doesn't clip. Keeps the wider dropdowns at the comfortable 22px. */
+  select.unit-select {
+    padding-left: 6px;
+    padding-right: 15px;
+    background-position: right 4px center;
   }
 
   /* Control row (label + control) */
@@ -934,7 +994,7 @@ export const panelCss = /* css */ `
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: 1fr;
-    border: 1px solid transparent;
+    border: 1px solid var(--bvc-border);
     border-radius: var(--bvc-radius);
     overflow: hidden;
     background: var(--bvc-bg-2);
@@ -942,11 +1002,12 @@ export const panelCss = /* css */ `
     gap: 2px;
     height: 28px;
   }
+  .segmented:hover { border-color: var(--bvc-border-strong); }
   .segmented-btn {
     border: none;
     background: transparent;
-    padding: 0 8px;
-    font-size: 12px;
+    padding: 0 6px;
+    font-size: 11px;
     color: var(--bvc-fg-2);
     cursor: pointer;
     font-family: inherit;
@@ -955,6 +1016,9 @@ export const panelCss = /* css */ `
     overflow: hidden;
     text-overflow: ellipsis;
     border-radius: var(--bvc-radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .segmented-btn:hover { background: var(--bvc-bg); color: var(--bvc-fg); }
   .segmented-btn[data-active="true"] {
@@ -964,15 +1028,15 @@ export const panelCss = /* css */ `
     box-shadow: var(--bvc-shadow-sm);
   }
   .segmented-btn-icon {
-    padding: 4px 0;
-    height: 26px;
+    padding: 0;
+    height: 24px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
   }
   .segmented-btn-icon svg {
-    width: 14px;
-    height: 14px;
+    width: 13px;
+    height: 13px;
     display: block;
   }
 
@@ -988,13 +1052,13 @@ export const panelCss = /* css */ `
     display: inline-flex;
     align-items: stretch;
     height: 28px;
-    border: 1px solid transparent;
+    border: 1px solid var(--bvc-border);
     border-radius: var(--bvc-radius);
     background: var(--bvc-input-bg);
     overflow: hidden;
     min-width: 0;
   }
-  .scrub:hover { background: var(--bvc-bg-hover); }
+  .scrub:hover { border-color: var(--bvc-border-strong); background: var(--bvc-bg-hover); }
   .scrub:focus-within {
     border-color: var(--bvc-accent);
     background: var(--bvc-bg);
@@ -1059,7 +1123,7 @@ export const panelCss = /* css */ `
     width: 100%;
     height: 28px;
     padding: 0 8px;
-    border: 1px solid transparent;
+    border: 1px solid var(--bvc-border);
     border-radius: var(--bvc-radius);
     background: var(--bvc-input-bg);
     color: var(--bvc-fg);
@@ -1070,7 +1134,12 @@ export const panelCss = /* css */ `
     min-width: 0;
   }
   .color-chip:hover {
+    border-color: var(--bvc-border-strong);
     background: var(--bvc-bg-hover);
+  }
+  /* Active state while its popover is open — accent border echoes focus. */
+  .color-chip[data-open="true"] {
+    border-color: var(--bvc-accent);
   }
   .color-chip-swatch {
     width: 16px;
@@ -1817,7 +1886,7 @@ export const panelCss = /* css */ `
     gap: 8px;
     height: 28px;
     padding: 0 8px;
-    border: 1px solid transparent;
+    border: 1px solid var(--bvc-border);
     border-radius: var(--bvc-radius);
     background: var(--bvc-figma-pad-bg);
     color: var(--bvc-fg);
@@ -1835,6 +1904,7 @@ export const panelCss = /* css */ `
     width: 100%;
   }
   .figma-pad-cell:hover {
+    border-color: var(--bvc-border-strong);
     background: var(--bvc-bg-hover);
   }
   .figma-pad-cell[data-scale="off"] { color: var(--bvc-warn-text); }
@@ -1860,7 +1930,7 @@ export const panelCss = /* css */ `
   .figma-pad-mode {
     width: 28px;
     height: 28px;
-    border: 1px solid transparent;
+    border: 1px solid var(--bvc-border);
     border-radius: var(--bvc-radius);
     background: transparent;
     color: var(--bvc-fg-muted);
@@ -1872,6 +1942,7 @@ export const panelCss = /* css */ `
     flex-shrink: 0;
   }
   .figma-pad-mode:hover {
+    border-color: var(--bvc-border-strong);
     background: var(--bvc-bg-hover);
     color: var(--bvc-fg);
   }
@@ -2149,13 +2220,14 @@ export const panelCss = /* css */ `
   /* Two-col control row → label left, control right (Figma pattern) */
   .fsection-body .two-col {
     display: grid;
-    grid-template-columns: 70px 1fr;
-    gap: 8px;
+    grid-template-columns: 64px 1fr;
+    gap: 6px;
     align-items: center;
   }
   .fsection-body .two-col .control-label {
     margin-bottom: 0;
     color: var(--bvc-fg-2);
+    font-size: 11px;
   }
 
   /* Properties' axis rows wrap in .variant-rows. Without explicit gap they
@@ -2181,7 +2253,6 @@ export const panelCss = /* css */ `
     text-transform: none;
     letter-spacing: 0;
     margin-bottom: 6px;
-    font-weight: 500;
   }
   .variant-chips {
     display: flex;
@@ -2281,7 +2352,7 @@ export const panelCss = /* css */ `
     height: 28px;
     padding: 0 8px;
     background: var(--bvc-input-bg);
-    border: 1px solid transparent;
+    border: 1px solid var(--bvc-border);
     border-radius: var(--bvc-radius);
     color: var(--bvc-fg);
     font-size: 12px;
@@ -2289,12 +2360,16 @@ export const panelCss = /* css */ `
     outline: none;
     box-sizing: border-box;
   }
-  .text-input:hover { background: var(--bvc-bg-hover); }
+  .text-input:hover { border-color: var(--bvc-border-strong); background: var(--bvc-bg-hover); }
   .text-input:focus {
     border-color: var(--bvc-accent);
     background: var(--bvc-bg);
   }
   .text-input::placeholder { color: var(--bvc-fg-muted); }
+  /* Suppress native number spinners — the scrub handle is the numeric affordance. */
+  .text-input::-webkit-outer-spin-button,
+  .text-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .text-input[type="number"] { appearance: textfield; -moz-appearance: textfield; }
 
   /* Icon trigger — looks like a select but opens a popover. Visually identical
      to .mini-input dimensions. */
@@ -2305,7 +2380,7 @@ export const panelCss = /* css */ `
     width: 100%;
     height: 28px;
     background: var(--bvc-input-bg);
-    border: 1px solid transparent;
+    border: 1px solid var(--bvc-border);
     border-radius: var(--bvc-radius);
     padding: 0 8px;
     cursor: pointer;
@@ -2314,7 +2389,7 @@ export const panelCss = /* css */ `
     color: var(--bvc-fg);
     text-align: left;
   }
-  .icon-trigger:hover { background: var(--bvc-bg-hover); }
+  .icon-trigger:hover { border-color: var(--bvc-border-strong); background: var(--bvc-bg-hover); }
   .icon-trigger-preview {
     display: inline-flex;
     align-items: center;
@@ -2526,13 +2601,14 @@ export const panelCss = /* css */ `
   }
   .swatch:focus { outline: none; }
   .swatch:hover {
-    border-color: var(--bvc-accent);
+    /* Subtle darken on hover so it stays distinct from the green selected
+       state without competing with it. */
+    border-color: var(--bvc-border-strong);
   }
   .swatch[data-active="true"] {
+    /* Single accent border marks the selected swatch — no inner ring (that
+       read as a double border). Geometry is unchanged (same 2px width). */
     border-color: var(--bvc-accent);
-    /* Inner ring marks the active swatch without changing geometry —
-       paints over the swatch fill, so the bounding box is unchanged. */
-    box-shadow: inset 0 0 0 2px white, inset 0 0 0 3px var(--bvc-accent);
   }
   /* Off-scale marker: the current token is outside the role-narrowed set
      (e.g., a surface-* token applied as text colour). We keep showing it
@@ -2694,27 +2770,44 @@ export const panelCss = /* css */ `
     border: 4px solid transparent;
     border-top-color: #1d1d1f;
   }
-
-  /* Read-only mode (extension D5) — no Angular dev tools on this build. */
-  .bvc-readonly-banner {
-    margin: 8px 12px;
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-size: 11px;
-    line-height: 1.4;
-    background: var(--c-status-warning-soft, #fef3c7);
-    color: var(--c-status-warning-strong, #92400e);
+  /* Below-placement variant — sits under the anchor with the arrow on top. */
+  .swatch-tooltip.tip-below {
+    transform: translate(-50%, 8px);
   }
-  .bvc-readonly .apply-btn,
-  .bvc-readonly .pick-btn,
-  .bvc-readonly .reset-btn,
-  .bvc-readonly .swatch,
-  .bvc-readonly input,
-  .bvc-readonly .chip,
-  .bvc-readonly .segmented-btn,
-  .bvc-readonly .icon-trigger {
-    pointer-events: none;
-    opacity: 0.5;
+  .swatch-tooltip.tip-below::after {
+    bottom: auto;
+    top: -4px;
+    border-top-color: transparent;
+    border-bottom-color: #1d1d1f;
+  }
+
+  /* Quiet, non-alarming note (e.g. cxui layout is design-system-owned). Muted
+     text + a thin top separator — deliberately NOT a warning box, so it doesn't
+     read as another error among the notices. */
+  .ds-locked-note {
+    margin: 0 12px;
+    padding: 10px 0 2px;
+    font-size: 11px;
+    line-height: 1.45;
+    color: var(--bvc-fg-muted);
+  }
+  /* Read-only mode (no window.ng) does NOT disable any control here: layout,
+     color, content/icon, typography, sizing and spacing all edit the DOM
+     directly and work without Angular dev tools — and Copy-prompt + Pick must
+     stay live. The only Angular-bound editor is the cxui variant section, and
+     it self-disables with its own "Angular component not found" notice. The
+     .bvc-readonly class is kept solely to scope the informational banner. */
+
+  /* Respect the OS "reduce motion" setting: drop the tooltip fade, the resize
+     handle highlight, and neutralise the panel's transitions/animations. */
+  @media (prefers-reduced-motion: reduce) {
+    .swatch-tooltip { animation: none; }
+    .root *,
+    .toggle-btn,
+    .resize-handle {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
   }
 `;
 
@@ -2750,6 +2843,9 @@ export const outlineCss = /* css */ `
     border-radius: 3px;
     z-index: 2147483646;
     white-space: nowrap;
+    max-width: 320px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   /* Spacing-hover overlay — magenta diagonal-stripe bands shown over the
      picked element while the user hovers a padding / margin input in the
