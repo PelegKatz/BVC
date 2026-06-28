@@ -1,3 +1,5 @@
+import { attachTooltip } from '../tooltip';
+
 export interface SectionProps {
   title: string;
   defaultOpen?: boolean;
@@ -15,7 +17,7 @@ export function createSection(props: SectionProps): {
 
   const header = document.createElement('div');
   header.className = 'fsection-head';
-  header.title = `Click to collapse / expand the ${props.title} section`;
+  attachTooltip(header, `Click to collapse / expand the ${props.title} section`);
 
   const chevron = document.createElement('span');
   chevron.className = 'fsection-chevron';

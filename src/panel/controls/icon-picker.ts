@@ -1,5 +1,6 @@
 import { iconNames, fetchIconSvg, iconLabel } from '../icons';
 
+import { attachTooltip } from '../tooltip';
 import { createSection } from './section';
 
 interface NgDevTools {
@@ -314,7 +315,7 @@ export function createIconSection(el: Element, onChange: () => void): HTMLDivEle
       btn.type = 'button';
       btn.className = 'segmented-btn';
       btn.textContent = TYPE_LABELS[type];
-      btn.title = TYPE_LABELS[type];
+      attachTooltip(btn, TYPE_LABELS[type]);
       if (type === current) btn.dataset.active = 'true';
       btn.addEventListener('click', () => setType(type));
       seg.appendChild(btn);
@@ -337,7 +338,7 @@ export function createIconSection(el: Element, onChange: () => void): HTMLDivEle
       btn.type = 'button';
       btn.className = 'segmented-btn';
       btn.textContent = side === 'left' ? '← Left' : 'Right →';
-      btn.title = side === 'left' ? 'Icon on left' : 'Icon on right';
+      attachTooltip(btn, side === 'left' ? 'Icon on left' : 'Icon on right');
       if (side === current) btn.dataset.active = 'true';
       btn.addEventListener('click', () => setSide(side));
       sideSeg.appendChild(btn);
@@ -415,7 +416,7 @@ function renderIconPicker(el: Element, container: HTMLElement, onChange: () => v
     if (iconEl) {
       const iconPath = iconEl.getAttribute('icon') ?? '';
       nameSpan.textContent = iconLabel(iconPath);
-      nameSpan.title = iconPath;
+      attachTooltip(nameSpan, iconPath);
       fetchIconSvg(iconPath)
         .then(svg => {
           preview.innerHTML = svg;
@@ -499,7 +500,7 @@ function renderIconPicker(el: Element, container: HTMLElement, onChange: () => v
         const cellLabel = document.createElement('span');
         cellLabel.className = 'icon-cell-label';
         cellLabel.textContent = iconLabel(name);
-        cellLabel.title = name;
+        attachTooltip(cellLabel, name);
 
         cell.append(svgWrap, cellLabel);
         cell.addEventListener('click', () => {

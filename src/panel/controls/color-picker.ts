@@ -16,6 +16,7 @@ import {
   recordRecentToken,
   type Token,
 } from '../tokens';
+import { positionPopover } from '../popover-utils';
 
 type ColorRole = 'background' | 'text' | 'border' | 'icon';
 
@@ -193,7 +194,6 @@ interface OpenPopoverProps {
 
 function openColorPopover(opts: OpenPopoverProps): void {
   const shadowRoot = opts.anchor.getRootNode() as ShadowRoot;
-  const rect = opts.anchor.getBoundingClientRect();
 
   const overlay = document.createElement('div');
   overlay.className = 'popover-overlay';
@@ -201,7 +201,7 @@ function openColorPopover(opts: OpenPopoverProps): void {
 
   const popover = document.createElement('div');
   popover.className = 'popover color-popover';
-  popover.style.cssText = `top:${rect.bottom + 6}px;left:${Math.max(8, rect.left)}px;width:300px;max-height:70vh;`;
+  popover.style.width = '300px';
   popover.addEventListener('click', e => e.stopPropagation());
 
   const head = document.createElement('div');
@@ -220,6 +220,20 @@ function openColorPopover(opts: OpenPopoverProps): void {
   popover.append(head, search, body);
   overlay.appendChild(popover);
   shadowRoot.appendChild(overlay);
+  positionPopover(popover, opts.anchor, 300);
+
+  // Highlight the chip while its popover is open. The overlay is removed by
+  // several paths (outside-click, pick, custom-apply); a one-shot observer
+  // clears the state whenever the overlay leaves the DOM, without threading a
+  // close callback through every render helper.
+  opts.anchor.setAttribute('data-open', 'true');
+  const openObserver = new MutationObserver(() => {
+    if (!overlay.isConnected) {
+      opts.anchor.removeAttribute('data-open');
+      openObserver.disconnect();
+    }
+  });
+  openObserver.observe(shadowRoot, { childList: true });
 
   // The picker narrows to tokens for the role plus accent tokens (status,
   // brand, etc.) since those bleed across all roles in practice. If the

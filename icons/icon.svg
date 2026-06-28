@@ -1,0 +1,13 @@
+<svg width="1024" height="1024" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <!-- Repaint toolbar icon: artist palette on the cxui brand green. -->
+  <rect width="128" height="128" rx="28" fill="#029449"/>
+  <!-- Palette body -->
+  <path d="M64 28C90 28 103 45 103 64c0 14-12 19-21 20-7 1-10 5-10 11 0 6-5 9-12 9C34 104 24 85 24 64 24 44 38 28 64 28Z" fill="#ffffff"/>
+  <!-- Thumb hole -->
+  <ellipse cx="58" cy="92" rx="7" ry="6" fill="#029449"/>
+  <!-- Paint wells -->
+  <circle cx="50" cy="52" r="6.5" fill="#029449"/>
+  <circle cx="71" cy="47" r="6.5" fill="#E8A33D"/>
+  <circle cx="87" cy="61" r="6.5" fill="#D9534F"/>
+  <circle cx="46" cy="71" r="6.5" fill="#4A90D9"/>
+</svg>

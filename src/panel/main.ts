@@ -37,10 +37,12 @@ export async function boot(mode: PageMode): Promise<void> {
     {
       onHover: () => {},
       onSelect: el => {
-        panel.setPicking(false);
+        // Stay in pick mode after a selection (see Selector.onClick) so the
+        // designer can keep picking; the panel still populates with the pick.
         if (el) panel.renderSelected(el);
         else panel.renderEmpty();
       },
+      onPickCancelled: () => panel.setPicking(false),
     },
     el => panel.isInPanel(el),
   );

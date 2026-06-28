@@ -1,8 +1,10 @@
+import { describeShort } from './element-label';
 import { outlineCss } from './styles';
 
 export interface SelectorEvents {
   onHover: (el: Element | null) => void;
   onSelect: (el: Element | null) => void;
+  onPickCancelled?: () => void;
 }
 
 const OUTLINE_LAYER_ID = 'bvc-outline-layer';
@@ -155,8 +157,12 @@ export class Selector {
       e.stopPropagation();
       this.selected = target;
       this.drawAt(this.selectOutline, this.selectLabel, target);
+      // Stay in pick mode after selecting so designers can rapidly re-pick a
+      // different element. Esc (or the Pick button) exits. Clear the hover
+      // preview so only the selection outline remains.
+      this.hideHover();
+      this.hovered = null;
       this.events.onSelect(target);
-      this.setPicking(false);
       return;
     }
 
@@ -169,6 +175,7 @@ export class Selector {
   private onKeyDown = (e: KeyboardEvent) => {
     if (e.key === 'Escape' && this.picking) {
       this.setPicking(false);
+      this.events.onPickCancelled?.();
     }
   };
 
@@ -203,17 +210,4 @@ export class Selector {
     this.selectOutline.style.display = 'none';
     this.selectLabel.style.display = 'none';
   }
-}
-
-function describeShort(el: Element): string {
-  const tag = el.tagName.toLowerCase();
-  const id = el.id ? `#${el.id}` : '';
-  const cls = (el.getAttribute('class') || '')
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map(c => `.${c}`)
-    .join('');
-  return `${tag}${id}${cls}`;
 }

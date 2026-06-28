@@ -1,4 +1,4 @@
-import { panelCss, PANEL_WIDTH } from './styles';
+import { panelCss, PANEL_WIDTH, PANEL_MIN_WIDTH, PANEL_MAX_WIDTH } from './styles';
 import { isCxuiComponent, findCxuiEntry, describeCxuiComponent } from './catalog-cxui';
 import { createCxuiVariantSection } from './controls/cxui-variant';
 import { applyIconToElement, injectIconIntoElement, removeIconFromElement } from './controls/icon-picker';
@@ -10,6 +10,8 @@ import { createWarningBanner, isDismissed } from './banner';
 import { findBlockingAncestor } from './blocklist';
 import { createBlockedEmptyState } from './blocked-empty-state';
 import { createUncatalogedCxuiState } from './uncataloged-cxui-state';
+import { describeShort as describeShortLabel } from './element-label';
+import { attachTooltip } from './tooltip';
 import { buildSessionPrompt, copyToClipboard, postApply } from './apply';
 import { computeChanges, restoreSnapshot, takeSnapshot, type Change, type Snapshot } from './diff';
 import type { BvcContentKind, CatalogEntry } from './catalog-loader';
@@ -44,6 +46,8 @@ export class Panel {
   private lastSentAt: number | null = null;
   private sentLabel!: HTMLDivElement;
   private sentLabelTimer: number | null = null;
+  private panelWidth = readPersistedWidth();
+  private readOnly = false;
 
   constructor(private handlers: PanelHandlers) {
     this.host = document.createElement('div');
@@ -65,7 +69,10 @@ export class Panel {
 
     this.toggleBtn = document.createElement('button');
     this.toggleBtn.className = 'toggle-btn';
-    this.toggleBtn.title = 'Open / close BVC (⌘. or ⌘\\)';
+    attachTooltip(this.toggleBtn, 'Open / close Repaint (⌘. or ⌘\\)');
+    // Emoji glyph isn't a meaningful accessible name, so label it explicitly
+    // (attachTooltip only auto-labels elements with no text content).
+    this.toggleBtn.setAttribute('aria-label', 'Open / close Repaint');
     this.toggleBtn.textContent = '🎨';
     this.toggleBtn.style.fontSize = '18px';
     this.toggleBtn.addEventListener('click', () => this.setOpen(!this.open));
@@ -105,7 +112,7 @@ export class Panel {
     this.pickBtn = document.createElement('button');
     this.pickBtn.className = 'pick-btn';
     this.pickBtn.textContent = 'Pick';
-    this.pickBtn.title = 'Enter pick mode, then click any element';
+    attachTooltip(this.pickBtn, 'Enter pick mode, then click any element');
     this.pickBtn.addEventListener('click', () => {
       this.setPicking(!this.picking);
       this.handlers.onTogglePick(this.picking);
@@ -113,7 +120,7 @@ export class Panel {
 
     this.closeBtn = document.createElement('button');
     this.closeBtn.className = 'close-btn';
-    this.closeBtn.title = 'Close panel';
+    attachTooltip(this.closeBtn, 'Close panel');
     this.closeBtn.setAttribute('aria-label', 'Close panel');
     this.closeBtn.textContent = '✕';
     this.closeBtn.addEventListener('click', () => this.setOpen(false));
@@ -127,7 +134,11 @@ export class Panel {
     this.applyBtn.className = 'apply-btn';
     this.applyBtn.textContent = 'Copy prompt';
     this.applyBtn.disabled = true;
-    this.applyBtn.title = 'Copy a Claude Code prompt to clipboard and write .bvc/last-edit.md';
+    attachTooltip(
+      this.applyBtn,
+      () => (this.applyBtn.disabled ? 'No changes yet — edit something first' : 'Copy a Claude Code prompt to clipboard'),
+      'below',
+    );
     this.applyBtn.addEventListener('click', () => this.onApply());
 
     const headerActions = document.createElement('div');
@@ -176,7 +187,7 @@ export class Panel {
     this.resetBtn.className = 'reset-btn';
     this.resetBtn.type = 'button';
     this.resetBtn.textContent = 'Reset';
-    this.resetBtn.title = 'Restore all edited elements to their original state';
+    attachTooltip(this.resetBtn, 'Restore all edited elements to their original state');
     this.resetBtn.addEventListener('click', () => this.onReset());
 
     // Copy-prompt CTA was promoted to the header (always-visible), so the
@@ -204,24 +215,25 @@ export class Panel {
   }
 
   /**
-   * Read-only mode (extension D5): on a build with no Angular dev tools, live
-   * editing can't apply, so the panel disables its controls and shows a banner.
-   * Selection + Copy-prompt still work (pure DOM). Toggles the `bvc-readonly`
-   * class; styling lives in styles.ts.
+   * Read-only mode (extension D5): on a build with no Angular dev tools, only
+   * the cxui *variant* editor is unavailable (it needs window.ng). Everything
+   * else — layout, color, content/icon, typography, sizing, spacing, selection
+   * and Copy-prompt — edits the DOM directly and still works. We no longer show
+   * a global banner for it (irrelevant for primitives, not actionable on prod);
+   * the only effect is that cxui Properties is hidden in this mode (see
+   * renderSelected). The `bvc-readonly` class is kept as semantic root state.
    */
   setReadOnly(readOnly: boolean): void {
+    this.readOnly = readOnly;
     this.root.classList.toggle('bvc-readonly', readOnly);
-    if (readOnly && !this.root.querySelector('.bvc-readonly-banner')) {
-      const banner = document.createElement('div');
-      banner.className = 'bvc-readonly-banner';
-      banner.textContent = '⚠ Live editing unavailable on this build (no Angular dev tools). Selection + Copy-prompt still work.';
-      this.root.insertBefore(banner, this.root.firstChild);
-    }
   }
 
   mount(parent: ParentNode) {
     parent.appendChild(this.host);
-    document.body.style.transition = 'margin-right 120ms ease-out';
+    this.applyWidth(this.panelWidth);
+    this.attachResizeHandle();
+    const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    document.body.style.transition = reduceMotion ? '' : 'margin-right 120ms ease-out';
     this.setOpen(readPersistedOpen());
 
     window.addEventListener('beforeunload', e => {
@@ -254,7 +266,7 @@ export class Panel {
     this.open = open;
     this.toggleBtn.dataset.open = String(open);
     this.root.style.display = open ? 'flex' : 'none';
-    document.body.style.marginRight = open ? PANEL_WIDTH + 'px' : '';
+    document.body.style.marginRight = open ? this.panelWidth + 'px' : '';
     persistOpen(open);
     if (!open) {
       if (this.picking) {
@@ -270,6 +282,46 @@ export class Panel {
 
   isOpen() {
     return this.open;
+  }
+
+  /** Apply a panel width: drives the `--panel-w` CSS var and the page margin. */
+  private applyWidth(w: number) {
+    this.panelWidth = w;
+    (this.shadow.host as HTMLElement).style.setProperty('--panel-w', w + 'px');
+    if (this.open) document.body.style.marginRight = w + 'px';
+  }
+
+  /** Left-edge drag handle to resize the panel horizontally (clamped + persisted). */
+  private attachResizeHandle() {
+    const handle = document.createElement('div');
+    handle.className = 'resize-handle';
+
+    handle.addEventListener('mousedown', (e: MouseEvent) => {
+      e.preventDefault();
+      const startX = e.clientX;
+      const startW = this.panelWidth;
+      handle.dataset.dragging = 'true';
+      document.body.style.userSelect = 'none';
+
+      const onMove = (ev: MouseEvent) => {
+        const delta = startX - ev.clientX; // dragging left widens the panel
+        const clamped = Math.min(PANEL_MAX_WIDTH, Math.max(PANEL_MIN_WIDTH, startW + delta));
+        this.applyWidth(clamped);
+      };
+
+      const onUp = () => {
+        delete handle.dataset.dragging;
+        document.body.style.userSelect = '';
+        persistWidth(this.panelWidth);
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+      };
+
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    });
+
+    this.root.appendChild(handle);
   }
 
   setPicking(on: boolean) {
@@ -431,9 +483,14 @@ export class Panel {
         return;
       }
 
-      // Properties — auto-generated chips from argTypes.
-      const variant = createCxuiVariantSection({ el, entry, onChange });
-      if (variant) this.body.appendChild(variant);
+      // Properties — auto-generated chips from argTypes. In read-only mode
+      // (no window.ng) the section can only ever show "Angular component not
+      // found", which isn't actionable on a prod build — so skip it entirely
+      // to keep the cxui view clean. Variants remain editable on dev builds.
+      if (!this.readOnly) {
+        const variant = createCxuiVariantSection({ el, entry, onChange });
+        if (variant) this.body.appendChild(variant);
+      }
 
       // Content — declared via bvc.content in the story, with a legacy fallback
       // for the seven components whose mapping hasn't been migrated yet.
@@ -443,8 +500,16 @@ export class Panel {
         if (section) this.body.appendChild(section);
       }
 
-      // Layout sections — Auto layout, Sizing, Spacing. No visuals, no typography.
-      for (const s of createLayoutSections(el, onChange)) this.body.appendChild(s);
+      // Layout, sizing & spacing are owned by the cxui design system for a
+      // recognized component — hand-editing gap/padding/margin/size here would
+      // fight the component's own styling. We surface a note instead of the
+      // Auto layout / Sizing / Spacing controls. Customise via Properties
+      // (variants) or Content; structural spacing belongs in code.
+      const dsNote = document.createElement('div');
+      dsNote.className = 'ds-locked-note';
+      dsNote.textContent =
+        'Layout, sizing & spacing are owned by the cxui design system here. Edit via Content, or change the component in code.';
+      this.body.appendChild(dsNote);
     } else {
       // Primitive — Layout + Visual + (new) Typography token picker.
       for (const s of createLayoutSections(el, onChange)) this.body.appendChild(s);
@@ -650,7 +715,7 @@ function renderChange(ch: Change, onRevert: () => void): HTMLLIElement {
     const revert = document.createElement('button');
     revert.type = 'button';
     revert.className = 'change-revert';
-    revert.title = 'Revert this change';
+    attachTooltip(revert, 'Revert this change');
     revert.setAttribute('aria-label', 'Revert this change');
     revert.textContent = '✕';
     revert.addEventListener('click', e => {
@@ -736,7 +801,7 @@ function ancestorBreadcrumb(el: Element, onSelect: (el: Element) => void, onPrev
     const seg = document.createElement('button');
     seg.type = 'button';
     seg.className = 'breadcrumb-seg';
-    seg.title = `Select ${describeShort(a)}`;
+    attachTooltip(seg, `Select ${describeShort(a)}`);
     seg.textContent = describeShort(a);
     seg.addEventListener('click', e => {
       e.stopPropagation();
@@ -846,14 +911,14 @@ function descendantList(el: Element, onSelect: (el: Element) => void, onPreview?
   const arrow = document.createElement('span');
   arrow.className = 'breadcrumb-sep';
   arrow.textContent = '↳';
-  arrow.title = 'Dive into a child';
+  attachTooltip(arrow, 'Dive into a child');
   wrap.appendChild(arrow);
 
   const makeSeg = (c: Element): HTMLButtonElement => {
     const seg = document.createElement('button');
     seg.type = 'button';
     seg.className = 'breadcrumb-seg';
-    seg.title = `Select ${describeShort(c)}`;
+    attachTooltip(seg, `Select ${describeShort(c)}`);
     seg.textContent = describeShort(c);
     seg.addEventListener('click', e => {
       e.stopPropagation();
@@ -908,15 +973,13 @@ function descendantList(el: Element, onSelect: (el: Element) => void, onPreview?
 }
 
 function describeShort(el: Element): string {
-  const tag = el.tagName.toLowerCase();
-  if (el.id) return `${tag}#${el.id}`;
-  const cls = (el.getAttribute('class') || '').trim().split(/\s+/).filter(Boolean)[0];
-  return cls ? `${tag}.${cls}` : tag;
+  return describeShortLabel(el, 1);
 }
 
 // ─── Persistence helpers ──────────────────────────────────────────────────────
 
 const STORAGE_KEY_OPEN = 'bvc-panel-open';
+const STORAGE_KEY_WIDTH = 'bvc-panel-width';
 
 function readPersistedOpen(): boolean {
   try {
@@ -929,6 +992,27 @@ function readPersistedOpen(): boolean {
 function persistOpen(open: boolean): void {
   try {
     localStorage.setItem(STORAGE_KEY_OPEN, String(open));
+  } catch {
+    /* private mode */
+  }
+}
+
+function readPersistedWidth(): number {
+  try {
+    const v = localStorage.getItem(STORAGE_KEY_WIDTH);
+    if (v) {
+      const n = parseInt(v, 10);
+      if (n >= PANEL_MIN_WIDTH && n <= PANEL_MAX_WIDTH) return n;
+    }
+  } catch {
+    /* ignore */
+  }
+  return PANEL_WIDTH;
+}
+
+function persistWidth(w: number): void {
+  try {
+    localStorage.setItem(STORAGE_KEY_WIDTH, String(w));
   } catch {
     /* private mode */
   }

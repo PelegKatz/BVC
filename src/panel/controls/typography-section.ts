@@ -4,6 +4,7 @@
 // primitives are token-only.
 
 import { createColorChip } from './color-picker';
+import { attachTooltip } from '../tooltip';
 import { createSection } from './section';
 import { createTypographyTokenRow } from './token-typography-picker';
 
@@ -78,7 +79,7 @@ function makeAlignRow(el: Element, onChange: () => void): HTMLDivElement {
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'segmented-btn segmented-btn-icon';
-    btn.title = opt.label;
+    attachTooltip(btn, opt.label);
     btn.dataset.value = opt.value;
     btn.innerHTML = opt.icon;
     if (align === opt.value) btn.dataset.active = 'true';

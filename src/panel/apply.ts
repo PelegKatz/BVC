@@ -1,4 +1,5 @@
 import { computeChanges, type Change, type Snapshot } from './diff';
+import { readableClasses } from './element-label';
 
 export interface EditedElement {
   el: Element;
@@ -258,7 +259,7 @@ If the user says yes, invoke the \`/cx-pr-create\` skill to handle the rest end-
 function describeSelector(el: Element): string {
   const tag = el.tagName.toLowerCase();
   if (el.id) return `${tag}#${el.id}`;
-  const classes = (el.getAttribute('class') || '').trim().split(/\s+/).filter(Boolean);
+  const classes = readableClasses(el);
   if (classes.length === 0) return tag;
   const useful = classes
     .filter(c => !c.startsWith('tw-flex') && !c.startsWith('tw-items') && !c.startsWith('tw-justify') && !c.startsWith('tw-inline'))
