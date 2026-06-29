@@ -69,10 +69,10 @@ export class Panel {
 
     this.toggleBtn = document.createElement('button');
     this.toggleBtn.className = 'toggle-btn';
-    attachTooltip(this.toggleBtn, 'Open / close Repaint (⌘. or ⌘\\)');
+    attachTooltip(this.toggleBtn, 'Open / close CX-Visual (⌘. or ⌘\\)');
     // Emoji glyph isn't a meaningful accessible name, so label it explicitly
     // (attachTooltip only auto-labels elements with no text content).
-    this.toggleBtn.setAttribute('aria-label', 'Open / close Repaint');
+    this.toggleBtn.setAttribute('aria-label', 'Open / close CX-Visual');
     this.toggleBtn.textContent = '🎨';
     this.toggleBtn.style.fontSize = '18px';
     this.toggleBtn.addEventListener('click', () => this.setOpen(!this.open));
@@ -101,7 +101,7 @@ export class Panel {
     const brandIcon = document.createElement('span');
     brandIcon.className = 'title-emoji';
     brandIcon.textContent = '🎨';
-    titleMain.append(brandIcon, document.createTextNode('Repaint'));
+    titleMain.append(brandIcon, document.createTextNode('CX-Visual'));
     title.appendChild(titleMain);
 
     this.sentLabel = document.createElement('div');

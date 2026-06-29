@@ -327,7 +327,7 @@ export const panelCss = /* css */ `
     border-radius: 50%;
     background: var(--bvc-accent);
   }
-  /* Brand glyph in the header title — the 🎨 mark next to "Repaint". */
+  /* Brand glyph in the header title — the 🎨 mark next to "CX-Visual". */
   .title-emoji {
     font-size: 13px;
     line-height: 1;
