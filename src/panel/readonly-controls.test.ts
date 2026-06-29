@@ -11,7 +11,7 @@ import { panelCss } from './styles';
  * (`.pick-btn`) and Copy-prompt (`.apply-btn`) must stay live too.
  */
 function readonlyDisabledSelectors(): string[] {
-  const match = panelCss.match(/((?:\s*\.bvc-readonly[^,{]+,?)+)\{\s*pointer-events:\s*none/);
+  const match = panelCss.match(/((?:\s*\.cx-visual-readonly[^,{]+,?)+)\{\s*pointer-events:\s*none/);
   if (!match) return [];
   return match[1]
     .split(',')
@@ -21,13 +21,13 @@ function readonlyDisabledSelectors(): string[] {
 
 describe('read-only mode disabled controls', () => {
   const mustStayUsable = [
-    '.bvc-readonly .apply-btn', // Copy prompt
-    '.bvc-readonly .pick-btn', // Pick / selection
-    '.bvc-readonly .reset-btn', // Reset (restores snapshots, pure DOM)
-    '.bvc-readonly .swatch', // color picker
-    '.bvc-readonly input', // sizing / spacing fields
-    '.bvc-readonly .segmented-btn', // auto-layout toggles
-    '.bvc-readonly .icon-trigger', // icon picker
+    '.cx-visual-readonly .apply-btn', // Copy prompt
+    '.cx-visual-readonly .pick-btn', // Pick / selection
+    '.cx-visual-readonly .reset-btn', // Reset (restores snapshots, pure DOM)
+    '.cx-visual-readonly .swatch', // color picker
+    '.cx-visual-readonly input', // sizing / spacing fields
+    '.cx-visual-readonly .segmented-btn', // auto-layout toggles
+    '.cx-visual-readonly .icon-trigger', // icon picker
   ];
 
   for (const selector of mustStayUsable) {
@@ -39,6 +39,6 @@ describe('read-only mode disabled controls', () => {
 
   it(`GIVEN read-only mode
       THEN there is no global read-only banner (removed as non-actionable noise)`, () => {
-    expect(panelCss).not.toContain('.bvc-readonly-banner');
+    expect(panelCss).not.toContain('.cx-visual-readonly-banner');
   });
 });

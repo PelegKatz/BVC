@@ -5,14 +5,14 @@ import { copyFileSync, existsSync, mkdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 export function resolveWorkspaceRoot(env: Record<string, string | undefined>): string {
-  if (env.BVC_WORKSPACE_ROOT) return env.BVC_WORKSPACE_ROOT;
+  if (env.CX_VISUAL_WORKSPACE_ROOT) return env.CX_VISUAL_WORKSPACE_ROOT;
   if (env.HOME) return resolve(env.HOME, 'Desktop', 'cx-web-workspace');
-  throw new Error('cannot resolve workspace root: set BVC_WORKSPACE_ROOT or $HOME');
+  throw new Error('cannot resolve workspace root: set CX_VISUAL_WORKSPACE_ROOT or $HOME');
 }
 
 if (process.argv[1]?.endsWith('fetch-catalog.ts')) {
   const root = resolveWorkspaceRoot(process.env);
-  const srcDir = resolve(root, '.bvc-exports');
+  const srcDir = resolve(root, '.cx-visual-exports');
   const dstDir = resolve(import.meta.dirname, '..', 'data');
 
   if (!existsSync(srcDir)) {

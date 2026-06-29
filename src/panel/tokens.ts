@@ -8,7 +8,7 @@ export interface Token {
 
 import { loadRuntimeData } from './runtime-data';
 
-// Populated at boot from the bundled data/tokens.json (was the __BVC_TOKENS__
+// Populated at boot from the bundled data/tokens.json (was the __CX_VISUAL_TOKENS__
 // build-injected global in the in-bundle client). `tokens` is a live ESM
 // binding — consumers import it and see the seeded array after initTokens().
 export let tokens: Token[] = [];
@@ -107,7 +107,7 @@ function capitalize(s: string): string {
   return s.length === 0 ? s : s[0].toUpperCase() + s.slice(1);
 }
 
-const RECENT_STORAGE_KEY = 'bvc-recent-tokens';
+const RECENT_STORAGE_KEY = 'cx-visual-recent-tokens';
 const MAX_RECENT = 8;
 
 export function loadRecentTokens(): Token[] {

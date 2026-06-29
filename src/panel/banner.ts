@@ -12,14 +12,14 @@ export function isDismissed(el: Element): boolean {
 
 export function createWarningBanner(forEl: Element, message: string): HTMLDivElement {
   const banner = document.createElement('div');
-  banner.className = 'bvc-banner bvc-banner-warning';
+  banner.className = 'cx-visual-banner cx-visual-banner-warning';
 
   const text = document.createElement('span');
   text.textContent = message;
 
   const close = document.createElement('button');
   close.type = 'button';
-  close.className = 'bvc-banner-close';
+  close.className = 'cx-visual-banner-close';
   close.setAttribute('aria-label', 'Dismiss warning');
   close.innerHTML = '×';
   close.addEventListener('click', () => {

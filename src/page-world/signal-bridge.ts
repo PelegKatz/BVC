@@ -95,4 +95,4 @@ export function installBridge(onMessage?: (req: RpcRequest) => void): void {
 }
 
 installBridge();
-console.log('[bvc] page-world bridge installed');
+console.log('[cx-visual] page-world bridge installed');

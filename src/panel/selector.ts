@@ -7,7 +7,7 @@ export interface SelectorEvents {
   onPickCancelled?: () => void;
 }
 
-const OUTLINE_LAYER_ID = 'bvc-outline-layer';
+const OUTLINE_LAYER_ID = 'cx-visual-outline-layer';
 
 export class Selector {
   private layer: HTMLDivElement;
@@ -94,7 +94,7 @@ export class Selector {
   private buildLayer(): HTMLDivElement {
     const layer = document.createElement('div');
     layer.id = OUTLINE_LAYER_ID;
-    layer.setAttribute('data-bvc', 'true');
+    layer.setAttribute('data-cx-visual', 'true');
     Object.assign(layer.style, {
       position: 'fixed',
       top: '0',
@@ -112,20 +112,20 @@ export class Selector {
 
   private buildOutline(mode: 'hover' | 'select'): HTMLDivElement {
     const div = document.createElement('div');
-    div.className = 'bvc-outline';
+    div.className = 'cx-visual-outline';
     div.dataset.mode = mode;
     return div;
   }
 
   private buildLabel(): HTMLDivElement {
     const div = document.createElement('div');
-    div.className = 'bvc-label';
+    div.className = 'cx-visual-label';
     return div;
   }
 
   private buildCursorBadge(): HTMLDivElement {
     const div = document.createElement('div');
-    div.className = 'bvc-cursor-badge';
+    div.className = 'cx-visual-cursor-badge';
     div.textContent = 'Esc to cancel';
     return div;
   }

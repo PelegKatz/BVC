@@ -1,5 +1,5 @@
 // Element-to-component detection predicates for common cxui components.
-// This is a hand-maintained supplement to the catalog — it lets BVC recognise
+// This is a hand-maintained supplement to the catalog — it lets CX-Visual recognise
 // native elements that host cxui directives even before the full catalog is
 // loaded (e.g. for tooltip hints on hover).
 

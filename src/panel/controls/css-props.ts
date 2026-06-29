@@ -919,7 +919,7 @@ function makeRangeInput(
 
   const range = document.createElement('input');
   range.type = 'range';
-  range.className = 'opacity-slider'; // carries accent-color: var(--bvc-accent) so the slider is green, not browser-blue
+  range.className = 'opacity-slider'; // carries accent-color: var(--cx-visual-accent) so the slider is green, not browser-blue
   range.min = String(min);
   range.max = String(max);
   range.value = String(current);

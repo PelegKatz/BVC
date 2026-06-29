@@ -71,7 +71,7 @@ function detectButtonType(el: Element): ButtonContentType {
   const isIconOnly =
     typeof iconOnlySig === 'function'
       ? !!(iconOnlySig as () => unknown)()
-      : el.hasAttribute('cxuiIconButton') || !!el.querySelector('[data-bvc-text-hidden]');
+      : el.hasAttribute('cxuiIconButton') || !!el.querySelector('[data-cx-visual-text-hidden]');
   if (isIconOnly && hasIcon) return 'icon';
   if (hasIcon) return 'text+icon';
   return 'text';
@@ -84,7 +84,7 @@ function detectIconSide(el: Element): IconSide {
   for (const child of Array.from(el.childNodes)) {
     if (child === iconEl) return 'left';
     // Skip hidden-text spans and empty text nodes; a visible text node means icon comes after
-    if (child.nodeType === Node.ELEMENT_NODE && (child as Element).hasAttribute('data-bvc-text-hidden')) continue;
+    if (child.nodeType === Node.ELEMENT_NODE && (child as Element).hasAttribute('data-cx-visual-text-hidden')) continue;
     if (child.nodeType === Node.TEXT_NODE && !(child.textContent ?? '').trim()) continue;
     return 'right';
   }
@@ -107,7 +107,7 @@ function hideButtonText(el: Element): void {
   }
   for (const tn of textNodes) {
     const span = document.createElement('span');
-    span.setAttribute('data-bvc-text-hidden', 'true');
+    span.setAttribute('data-cx-visual-text-hidden', 'true');
     span.style.cssText = 'position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;';
     tn.parentNode?.insertBefore(span, tn);
     span.appendChild(tn);
@@ -116,7 +116,7 @@ function hideButtonText(el: Element): void {
 
 /** Restores text hidden by hideButtonText. */
 function showButtonText(el: Element): void {
-  for (const span of Array.from(el.querySelectorAll('[data-bvc-text-hidden]'))) {
+  for (const span of Array.from(el.querySelectorAll('[data-cx-visual-text-hidden]'))) {
     span.replaceWith(...Array.from(span.childNodes));
   }
 }
@@ -162,7 +162,7 @@ export function applyIconToElement(targetEl: Element, iconPath: string): void {
 export function injectIconIntoElement(el: Element, iconPath: string, side: IconSide = 'left'): void {
   const iconEl = document.createElement('cxui-icon');
   iconEl.setAttribute('icon', iconPath);
-  iconEl.setAttribute('data-bvc-injected', 'true');
+  iconEl.setAttribute('data-cx-visual-injected', 'true');
   (iconEl as HTMLElement).style.cssText =
     'display:inline-flex;align-items:center;justify-content:center;width:1em;height:1em;flex-shrink:0;';
   fetchIconSvg(iconPath)
@@ -188,8 +188,8 @@ const DEFAULT_ICON = 'actions/add-circle.svg';
 
 /** Finds the primary text node in a button — inside a hidden span (icon-only) or a visible text node. */
 function findButtonTextNode(el: Element): Text | null {
-  // When icon-only, text is wrapped in a [data-bvc-text-hidden] span
-  const hiddenSpan = el.querySelector('[data-bvc-text-hidden]');
+  // When icon-only, text is wrapped in a [data-cx-visual-text-hidden] span
+  const hiddenSpan = el.querySelector('[data-cx-visual-text-hidden]');
   if (hiddenSpan) {
     const walker = document.createTreeWalker(hiddenSpan, NodeFilter.SHOW_TEXT);
     const n = walker.nextNode();
@@ -200,7 +200,7 @@ function findButtonTextNode(el: Element): Text | null {
     acceptNode(node) {
       let p = node.parentElement;
       while (p && p !== el) {
-        if (p.hasAttribute('data-bvc-text-hidden')) return NodeFilter.FILTER_REJECT;
+        if (p.hasAttribute('data-cx-visual-text-hidden')) return NodeFilter.FILTER_REJECT;
         p = p.parentElement;
       }
       return (node.textContent ?? '').trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
@@ -425,7 +425,7 @@ function renderIconPicker(el: Element, container: HTMLElement, onChange: () => v
         .catch(() => {});
     } else {
       nameSpan.textContent = 'Pick icon…';
-      nameSpan.style.color = 'var(--bvc-fg-muted)';
+      nameSpan.style.color = 'var(--cx-visual-fg-muted)';
     }
 
     const chev = document.createElement('span');

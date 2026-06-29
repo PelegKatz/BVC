@@ -1,4 +1,4 @@
-// Hardcoded design-token scales for BVC controls.
+// Hardcoded design-token scales for CX-Visual controls.
 // cx-ui generated-tokens.scss currently only contains color tokens (--c-*).
 // When spacing/radius/shadow tokens land there, replace these with parsed data.
 

@@ -1,20 +1,20 @@
 /**
- * Tag prefixes that block BVC entirely. Visualization components have their
- * own design conventions that don't map to BVC's section model; the panel
+ * Tag prefixes that block CX-Visual entirely. Visualization components have their
+ * own design conventions that don't map to CX-Visual's section model; the panel
  * stays closed for any element under one of these prefixes.
  */
-export const BVC_BLOCKED_PREFIXES = ['cxui-chart-', 'cxui-graph'];
+export const CX_VISUAL_BLOCKED_PREFIXES = ['cxui-chart-', 'cxui-graph'];
 
 /**
  * Exact-tag blocklist for internal cxui sub-components — projection slots,
  * structural directives, internal renderers — that have no standalone story
- * and shouldn't surface BVC controls when accidentally picked. Last refreshed
- * from `output/bvc-catalog-audit-2026-05-27.md`.
+ * and shouldn't surface CX-Visual controls when accidentally picked. Last refreshed
+ * from `output/cx-visual-catalog-audit-2026-05-27.md`.
  *
  * Keep this list curated: every entry here is a component the audit found
  * with zero external references AND no story file.
  */
-export const BVC_BLOCKED_TAGS = [
+export const CX_VISUAL_BLOCKED_TAGS = [
   // Announcement
   'cxui-announcement-slot',
   // Badge variants (internal-only)
@@ -102,7 +102,7 @@ export const BVC_BLOCKED_TAGS = [
  * etc.). Separate list because they don't share the `cxui-` lineage so a
  * `cxui-*` prefix wouldn't catch them. Sourced from the 2026-05-27 audit.
  */
-export const BVC_BLOCKED_NON_CXUI_TAGS = [
+export const CX_VISUAL_BLOCKED_NON_CXUI_TAGS = [
   // Grid internals + examples
   'cx-circle-help',
   'cx-grid-expand-collapse-cell-example',
@@ -131,18 +131,18 @@ export const BVC_BLOCKED_NON_CXUI_TAGS = [
 /**
  * Walk up from `el` and return the first ancestor (or `el` itself) that
  * matches a blocklist entry. Returns null when nothing in the chain is
- * blocked. This is the structured form of `isBvcBlocked` — callers that
+ * blocked. This is the structured form of `isCxVisualBlocked` — callers that
  * need to surface "which ancestor blocked this?" (e.g., the empty state's
  * escape-out button) use this; callers that only need a boolean keep
- * using `isBvcBlocked`.
+ * using `isCxVisualBlocked`.
  */
 export function findBlockingAncestor(el: Element): Element | null {
   let cur: Element | null = el;
   while (cur && cur !== document.body) {
     const tag = cur.tagName.toLowerCase();
-    if (BVC_BLOCKED_PREFIXES.some(p => tag.startsWith(p))) return cur;
-    if (BVC_BLOCKED_TAGS.includes(tag)) return cur;
-    if (BVC_BLOCKED_NON_CXUI_TAGS.includes(tag)) return cur;
+    if (CX_VISUAL_BLOCKED_PREFIXES.some(p => tag.startsWith(p))) return cur;
+    if (CX_VISUAL_BLOCKED_TAGS.includes(tag)) return cur;
+    if (CX_VISUAL_BLOCKED_NON_CXUI_TAGS.includes(tag)) return cur;
     cur = cur.parentElement;
   }
   return null;
@@ -150,10 +150,10 @@ export function findBlockingAncestor(el: Element): Element | null {
 
 /**
  * True if the element OR any of its ancestors matches a blocked prefix or
- * an exact blocked tag. Picking anywhere in a blocked subtree shows BVC's
+ * an exact blocked tag. Picking anywhere in a blocked subtree shows CX-Visual's
  * empty state instead of any sections.
  */
-export function isBvcBlocked(el: Element): boolean {
+export function isCxVisualBlocked(el: Element): boolean {
   return findBlockingAncestor(el) !== null;
 }
 
@@ -167,7 +167,7 @@ export function isBvcBlocked(el: Element): boolean {
 export function findEscapeTarget(blockingAncestor: Element): Element | null {
   let cur: Element | null = blockingAncestor.parentElement;
   while (cur && cur !== document.body) {
-    if (!isBvcBlocked(cur)) return cur;
+    if (!isCxVisualBlocked(cur)) return cur;
     cur = cur.parentElement;
   }
   return null;

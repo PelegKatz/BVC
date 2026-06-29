@@ -9,89 +9,89 @@ export const panelCss = /* css */ `
     /* Inherit Coralogix design tokens from the host page (custom props pierce
        the shadow boundary). Hex fallbacks make the panel portable to projects
        that don't load the Brainy token set. */
-    --bvc-fg: var(--c-text-primary, #09090b);
-    --bvc-fg-2: var(--c-text-secondary, #68686d);
-    --bvc-fg-muted: var(--c-text-disabled, #ababb1);
+    --cx-visual-fg: var(--c-text-primary, #09090b);
+    --cx-visual-fg-2: var(--c-text-secondary, #68686d);
+    --cx-visual-fg-muted: var(--c-text-disabled, #ababb1);
     /* Canonical dropdown chevron (matches the inline SVG in color-picker /
        icon-picker / section headers) as a data-URI so native <select>s can
        render it via background-image. Colour is baked in per theme. */
-    --bvc-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M2.5 3.5 L5 6 L7.5 3.5' stroke='%23ababb1' stroke-width='1' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-    --bvc-bg: var(--c-background-surface-secondary, #ffffff);
-    --bvc-bg-2: var(--c-background-surface-primary, #f8fafc);
+    --cx-visual-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M2.5 3.5 L5 6 L7.5 3.5' stroke='%23ababb1' stroke-width='1' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    --cx-visual-bg: var(--c-background-surface-secondary, #ffffff);
+    --cx-visual-bg-2: var(--c-background-surface-primary, #f8fafc);
     /* Dedicated input fill. Light mode reuses bg-2; dark mode bumps it
        above bg-2 because controls otherwise visually merge with the
        section background. */
-    --bvc-input-bg: var(--bvc-bg-2);
-    --bvc-figma-pad-bg: var(--bvc-input-bg);
-    --bvc-bg-hover: var(--c-background-hover, rgba(0, 0, 0, 0.04));
-    --bvc-bg-focus: var(--c-background-focus, #e6fff2);
-    --bvc-border: var(--c-border-subtle, #ececee);
-    --bvc-border-strong: var(--c-border-strong, #dedee0);
-    --bvc-accent: var(--c-text-interactive, #029449);
-    --bvc-success: var(--c-text-success, #3cc67e);
-    --bvc-error: var(--c-text-error, #eb6166);
-    --bvc-warn-bg: var(--c-tag-yellow-bg, #fff8e6);
-    --bvc-warn-text: var(--c-tag-yellow-text, #8e581f);
+    --cx-visual-input-bg: var(--cx-visual-bg-2);
+    --cx-visual-figma-pad-bg: var(--cx-visual-input-bg);
+    --cx-visual-bg-hover: var(--c-background-hover, rgba(0, 0, 0, 0.04));
+    --cx-visual-bg-focus: var(--c-background-focus, #e6fff2);
+    --cx-visual-border: var(--c-border-subtle, #ececee);
+    --cx-visual-border-strong: var(--c-border-strong, #dedee0);
+    --cx-visual-accent: var(--c-text-interactive, #029449);
+    --cx-visual-success: var(--c-text-success, #3cc67e);
+    --cx-visual-error: var(--c-text-error, #eb6166);
+    --cx-visual-warn-bg: var(--c-tag-yellow-bg, #fff8e6);
+    --cx-visual-warn-text: var(--c-tag-yellow-text, #8e581f);
 
     /* Selector-strip syntax-color tints — tag (orange-ish), id (purple),
        and the Tailwind-utility chip badge. Hard hex values in light mode
        so we don't over-couple to cxui tokens; dark mode equivalents land
        in the @media + :host-context blocks below. */
-    --bvc-syntax-tag: #b04500;
-    --bvc-syntax-id: #6941c6;
-    --bvc-syntax-tw: #5925dc;
+    --cx-visual-syntax-tag: #b04500;
+    --cx-visual-syntax-id: #6941c6;
+    --cx-visual-syntax-tw: #5925dc;
 
     /* ── Spacing scale ─────────────────────────────────────────────────────
        Tight, geometric. Most layouts use s2 (6) for tight rows, s3 (8) for
        section bodies, s4 (12) for section padding, s5 (16) for hero gaps. */
-    --bvc-s1: 4px;
-    --bvc-s2: 6px;
-    --bvc-s3: 8px;
-    --bvc-s4: 12px;
-    --bvc-s5: 16px;
+    --cx-visual-s1: 4px;
+    --cx-visual-s2: 6px;
+    --cx-visual-s3: 8px;
+    --cx-visual-s4: 12px;
+    --cx-visual-s5: 16px;
 
     /* ── Control heights ───────────────────────────────────────────────────
        Three rungs only. xs = inline chips inside dense rows (token-chip in
        a spacing cell). sm = primary 26px control rhythm (inputs, chips,
        buttons in section bodies). md = header-level actions / preset rows. */
-    --bvc-h-xs: 22px;
-    --bvc-h-sm: 26px;
-    --bvc-h-md: 28px;
+    --cx-visual-h-xs: 22px;
+    --cx-visual-h-sm: 26px;
+    --cx-visual-h-md: 28px;
 
     /* ── Type scale ────────────────────────────────────────────────────────
        Four rungs. xs = meta (sent ago, axis micro-labels). sm = body / chip
        value default. md = section headings. lg = component name in header. */
-    --bvc-t-xs: 10px;
-    --bvc-t-sm: 11px;
-    --bvc-t-md: 12px;
-    --bvc-t-lg: 13px;
+    --cx-visual-t-xs: 10px;
+    --cx-visual-t-sm: 11px;
+    --cx-visual-t-md: 12px;
+    --cx-visual-t-lg: 13px;
 
     /* ── Radius ────────────────────────────────────────────────────────────
-       sm = chips and tight rows. Default (--bvc-radius) for most controls.
+       sm = chips and tight rows. Default (--cx-visual-radius) for most controls.
        lg = popovers, the panel's "soft" surfaces. */
-    --bvc-radius-sm: 4px;
-    --bvc-radius: 6px;
-    --bvc-radius-lg: 8px;
+    --cx-visual-radius-sm: 4px;
+    --cx-visual-radius: 6px;
+    --cx-visual-radius-lg: 8px;
 
     /* ── Motion ────────────────────────────────────────────────────────────
        fast = state transitions (hover, focus, active). med = larger layout
        shifts (toggle slide, accordion open). One curve only — Apple-style
        ease-out — so the panel feels coherent in motion. */
-    --bvc-motion-fast: 120ms cubic-bezier(0.2, 0.7, 0.2, 1);
-    --bvc-motion-med: 200ms cubic-bezier(0.2, 0.7, 0.2, 1);
+    --cx-visual-motion-fast: 120ms cubic-bezier(0.2, 0.7, 0.2, 1);
+    --cx-visual-motion-med: 200ms cubic-bezier(0.2, 0.7, 0.2, 1);
 
     /* ── Shadows ───────────────────────────────────────────────────────────
        sm = small surface lift (chips on hover). md = popover. lg = panel
        drop edge when scrolling. */
-    --bvc-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
-    --bvc-shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.04);
-    --bvc-shadow-lg: 0 10px 30px rgba(15, 23, 42, 0.10), 0 4px 12px rgba(15, 23, 42, 0.06);
+    --cx-visual-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+    --cx-visual-shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.04);
+    --cx-visual-shadow-lg: 0 10px 30px rgba(15, 23, 42, 0.10), 0 4px 12px rgba(15, 23, 42, 0.06);
 
     /* ── Focus ring ────────────────────────────────────────────────────────
        Always 2px solid accent, 1px offset. Set on :focus-visible only so
        mouse clicks don't trigger keyboard-focus rings. */
-    --bvc-focus-ring: 2px solid var(--bvc-accent);
-    --bvc-focus-offset: 1px;
+    --cx-visual-focus-ring: 2px solid var(--cx-visual-accent);
+    --cx-visual-focus-offset: 1px;
   }
 
   /* ── Dark mode ─────────────────────────────────────────────────────────
@@ -108,10 +108,10 @@ export const panelCss = /* css */ `
      in when cxui isn't loaded. */
   @media (prefers-color-scheme: dark) {
     :host {
-      --bvc-fg: var(--c-text-primary, #e6e6e9);
-      --bvc-fg-2: var(--c-text-secondary, #a1a1a6);
-      --bvc-fg-muted: var(--c-text-disabled, #6e6e72);
-      --bvc-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M2.5 3.5 L5 6 L7.5 3.5' stroke='%236e6e72' stroke-width='1' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      --cx-visual-fg: var(--c-text-primary, #e6e6e9);
+      --cx-visual-fg-2: var(--c-text-secondary, #a1a1a6);
+      --cx-visual-fg-muted: var(--c-text-disabled, #6e6e72);
+      --cx-visual-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M2.5 3.5 L5 6 L7.5 3.5' stroke='%236e6e72' stroke-width='1' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
       /* Tiered elevation: bg = panel surround (deepest), bg-2 = inset
          controls (clearly lifted), bg-hover = transient highlight.
          Dark-mode panels use direct hex (no var()) instead of inheriting
@@ -122,50 +122,50 @@ export const panelCss = /* css */ `
          readable, not color-matched. Borders also use hex for the same
          reason — subtle Coralogix border tokens disappear against
          near-black backgrounds. */
-      --bvc-bg: #1c1c22;
-      --bvc-bg-2: #2e2e38;
+      --cx-visual-bg: #1c1c22;
+      --cx-visual-bg-2: #2e2e38;
       /* Inputs sit ~10 L above bg-2 so the editable surface is visibly
          distinct from section backgrounds and segmented controls. */
-      --bvc-input-bg: #3d3d4a;
-      --bvc-figma-pad-bg: #222222;
-      --bvc-bg-hover: rgba(255, 255, 255, 0.08);
-      --bvc-bg-focus: var(--c-background-focus, rgba(2, 148, 73, 0.22));
-      --bvc-border: #44444f;
-      --bvc-border-strong: #5e5e6c;
-      --bvc-warn-bg: var(--c-tag-yellow-bg, #3a2a14);
-      --bvc-warn-text: var(--c-tag-yellow-text, #f7c97a);
-      --bvc-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-      --bvc-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
-      --bvc-shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.55), 0 4px 12px rgba(0, 0, 0, 0.35);
-      --bvc-syntax-tag: #ff9966;
-      --bvc-syntax-id: #b294f6;
-      --bvc-syntax-tw: #a89cf6;
+      --cx-visual-input-bg: #3d3d4a;
+      --cx-visual-figma-pad-bg: #222222;
+      --cx-visual-bg-hover: rgba(255, 255, 255, 0.08);
+      --cx-visual-bg-focus: var(--c-background-focus, rgba(2, 148, 73, 0.22));
+      --cx-visual-border: #44444f;
+      --cx-visual-border-strong: #5e5e6c;
+      --cx-visual-warn-bg: var(--c-tag-yellow-bg, #3a2a14);
+      --cx-visual-warn-text: var(--c-tag-yellow-text, #f7c97a);
+      --cx-visual-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+      --cx-visual-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
+      --cx-visual-shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.55), 0 4px 12px rgba(0, 0, 0, 0.35);
+      --cx-visual-syntax-tag: #ff9966;
+      --cx-visual-syntax-id: #b294f6;
+      --cx-visual-syntax-tw: #a89cf6;
     }
   }
   :host-context(html.dark),
   :host-context(.dark) {
-    --bvc-fg: var(--c-text-primary, #e6e6e9);
-    --bvc-fg-2: var(--c-text-secondary, #a1a1a6);
-    --bvc-fg-muted: var(--c-text-disabled, #6e6e72);
-    --bvc-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M2.5 3.5 L5 6 L7.5 3.5' stroke='%236e6e72' stroke-width='1' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    --cx-visual-fg: var(--c-text-primary, #e6e6e9);
+    --cx-visual-fg-2: var(--c-text-secondary, #a1a1a6);
+    --cx-visual-fg-muted: var(--c-text-disabled, #6e6e72);
+    --cx-visual-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M2.5 3.5 L5 6 L7.5 3.5' stroke='%236e6e72' stroke-width='1' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     /* Surface + border tokens use direct hex in dark mode (see comment
        in the @media block above for the rationale). */
-    --bvc-bg: #1c1c22;
-    --bvc-bg-2: #2e2e38;
-    --bvc-input-bg: #3d3d4a;
-    --bvc-figma-pad-bg: #222222;
-    --bvc-bg-hover: rgba(255, 255, 255, 0.08);
-    --bvc-bg-focus: var(--c-background-focus, rgba(2, 148, 73, 0.22));
-    --bvc-border: #44444f;
-    --bvc-border-strong: #5e5e6c;
-    --bvc-warn-bg: var(--c-tag-yellow-bg, #3a2a14);
-    --bvc-warn-text: var(--c-tag-yellow-text, #f7c97a);
-    --bvc-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-    --bvc-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
-    --bvc-shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.55), 0 4px 12px rgba(0, 0, 0, 0.35);
-    --bvc-syntax-tag: #ff9966;
-    --bvc-syntax-id: #b294f6;
-    --bvc-syntax-tw: #a89cf6;
+    --cx-visual-bg: #1c1c22;
+    --cx-visual-bg-2: #2e2e38;
+    --cx-visual-input-bg: #3d3d4a;
+    --cx-visual-figma-pad-bg: #222222;
+    --cx-visual-bg-hover: rgba(255, 255, 255, 0.08);
+    --cx-visual-bg-focus: var(--c-background-focus, rgba(2, 148, 73, 0.22));
+    --cx-visual-border: #44444f;
+    --cx-visual-border-strong: #5e5e6c;
+    --cx-visual-warn-bg: var(--c-tag-yellow-bg, #3a2a14);
+    --cx-visual-warn-text: var(--c-tag-yellow-text, #f7c97a);
+    --cx-visual-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --cx-visual-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
+    --cx-visual-shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.55), 0 4px 12px rgba(0, 0, 0, 0.35);
+    --cx-visual-syntax-tag: #ff9966;
+    --cx-visual-syntax-id: #b294f6;
+    --cx-visual-syntax-tw: #a89cf6;
   }
 
   *, *::before, *::after { box-sizing: border-box; }
@@ -176,11 +176,11 @@ export const panelCss = /* css */ `
      properties so layout doesn't visibly animate. */
   button, input, select, textarea, [role="button"], [tabindex]:not([tabindex="-1"]) {
     transition:
-      background-color var(--bvc-motion-fast),
-      border-color var(--bvc-motion-fast),
-      color var(--bvc-motion-fast),
-      box-shadow var(--bvc-motion-fast),
-      opacity var(--bvc-motion-fast);
+      background-color var(--cx-visual-motion-fast),
+      border-color var(--cx-visual-motion-fast),
+      color var(--cx-visual-motion-fast),
+      box-shadow var(--cx-visual-motion-fast),
+      opacity var(--cx-visual-motion-fast);
   }
 
   /* Universal focus-visible ring — only fires on keyboard focus, never on
@@ -197,8 +197,8 @@ export const panelCss = /* css */ `
   textarea:focus-visible,
   [role="button"]:focus-visible,
   [tabindex]:focus-visible {
-    outline: var(--bvc-focus-ring);
-    outline-offset: var(--bvc-focus-offset);
+    outline: var(--cx-visual-focus-ring);
+    outline-offset: var(--cx-visual-focus-offset);
   }
 
   .root {
@@ -207,12 +207,12 @@ export const panelCss = /* css */ `
     right: 0;
     width: var(--panel-w, ${PANEL_WIDTH}px);
     height: 100vh;
-    background: var(--bvc-bg);
-    border-left: 1px solid var(--bvc-border);
+    background: var(--cx-visual-bg);
+    border-left: 1px solid var(--cx-visual-border);
     z-index: 2147483646;
     display: flex;
     flex-direction: column;
-    color: var(--bvc-fg);
+    color: var(--cx-visual-fg);
     font-size: 12px;
     line-height: 1.4;
   }
@@ -231,7 +231,7 @@ export const panelCss = /* css */ `
   }
   .resize-handle:hover,
   .resize-handle[data-dragging] {
-    background: var(--bvc-accent);
+    background: var(--cx-visual-accent);
     opacity: 0.25;
   }
 
@@ -244,14 +244,14 @@ export const panelCss = /* css */ `
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    border: 1px solid var(--bvc-border);
-    background: var(--bvc-bg);
-    color: var(--bvc-accent);
+    border: 1px solid var(--cx-visual-border);
+    background: var(--cx-visual-bg);
+    color: var(--cx-visual-accent);
     line-height: 1;
     cursor: pointer;
     /* Token-driven shadow scales correctly in dark mode (becomes pure-black,
        stronger) without hand-tuning per theme. */
-    box-shadow: var(--bvc-shadow-md);
+    box-shadow: var(--cx-visual-shadow-md);
     z-index: 2147483647;
     display: flex;
     align-items: center;
@@ -260,12 +260,12 @@ export const panelCss = /* css */ `
     pointer-events: auto;
   }
   .toggle-btn:hover {
-    background: var(--bvc-bg-2);
-    border-color: var(--bvc-border-strong);
+    background: var(--cx-visual-bg-2);
+    border-color: var(--cx-visual-border-strong);
   }
   .toggle-btn[data-open="true"] {
     right: calc(var(--panel-w, ${PANEL_WIDTH}px) + 12px);
-    box-shadow: var(--bvc-shadow-sm);
+    box-shadow: var(--cx-visual-shadow-sm);
   }
   .toggle-btn svg {
     display: block;
@@ -274,7 +274,7 @@ export const panelCss = /* css */ `
   /* ─── Sticky header ────────────────────────────────────────────────────────
      The whole top region (header + changes + target strip) sits above the
      scrolling body via the flex layout. The header itself is the always-on
-     identity row: BVC mark + sent indicator on the left, the primary
+     identity row: CX-Visual mark + sent indicator on the left, the primary
      Copy-prompt CTA + Pick toggle + Close on the right. The CTA stays in
      place regardless of selection, with a disabled state when there are no
      edits — moving it out of the conditional changes section means the
@@ -282,15 +282,15 @@ export const panelCss = /* css */ `
   .header {
     display: flex;
     flex-direction: column;
-    border-bottom: 1px solid var(--bvc-border);
-    background: var(--bvc-bg);
+    border-bottom: 1px solid var(--cx-visual-border);
+    background: var(--cx-visual-bg);
   }
   .header-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--bvc-s3) var(--bvc-s4);
-    gap: var(--bvc-s2);
+    padding: var(--cx-visual-s3) var(--cx-visual-s4);
+    gap: var(--cx-visual-s2);
   }
   .header-row-top {
     /* The top row owns the panel identity + global actions. */
@@ -303,7 +303,7 @@ export const panelCss = /* css */ `
     min-width: 0;
     font-weight: 700;
     font-size: 12px;
-    color: var(--bvc-fg);
+    color: var(--cx-visual-fg);
     letter-spacing: 0;
   }
   .title-main {
@@ -316,7 +316,7 @@ export const panelCss = /* css */ `
   .title-sent {
     font-size: 9.5px;
     font-weight: 500;
-    color: var(--bvc-fg-muted);
+    color: var(--cx-visual-fg-muted);
     margin-left: 12px;
     letter-spacing: 0.05px;
   }
@@ -325,7 +325,7 @@ export const panelCss = /* css */ `
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: var(--bvc-accent);
+    background: var(--cx-visual-accent);
   }
   /* Brand glyph in the header title — the 🎨 mark next to "CX-Visual". */
   .title-emoji {
@@ -337,81 +337,81 @@ export const panelCss = /* css */ `
      ghost-primary / outlined patterns). Visually distinct from Apply, which is
      filled/solid — establishes a clear primary-vs-secondary action hierarchy. */
   .pick-btn {
-    border: 1px solid var(--bvc-border);
-    background: var(--bvc-bg);
-    border-radius: var(--bvc-radius);
-    padding: 0 var(--bvc-s3);
-    height: var(--bvc-h-sm);
-    font-size: var(--bvc-t-sm);
+    border: 1px solid var(--cx-visual-border);
+    background: var(--cx-visual-bg);
+    border-radius: var(--cx-visual-radius);
+    padding: 0 var(--cx-visual-s3);
+    height: var(--cx-visual-h-sm);
+    font-size: var(--cx-visual-t-sm);
     font-weight: 600;
     font-family: inherit;
     cursor: pointer;
-    color: var(--bvc-fg-2);
+    color: var(--cx-visual-fg-2);
     white-space: nowrap;
   }
   .pick-btn:hover {
-    border-color: var(--bvc-border-strong);
-    background: var(--bvc-bg-2);
-    color: var(--bvc-fg);
+    border-color: var(--cx-visual-border-strong);
+    background: var(--cx-visual-bg-2);
+    color: var(--cx-visual-fg);
   }
   .pick-btn:active {
     transform: translateY(0.5px);
   }
   .pick-btn[data-active="true"] {
-    background: var(--bvc-bg-focus);
-    border-color: var(--bvc-accent);
-    color: var(--bvc-accent);
+    background: var(--cx-visual-bg-focus);
+    border-color: var(--cx-visual-accent);
+    color: var(--cx-visual-accent);
   }
 
   .header-actions {
     display: flex;
     align-items: center;
-    gap: var(--bvc-s2);
+    gap: var(--cx-visual-s2);
   }
 
   /* Apply — primary action, solid interactive (Brainy cxl-btn--solid).
      Lives in the always-visible header CTA slot; disabled state telegraphs
      "no edits yet to copy". */
   .apply-btn {
-    border: 1px solid var(--bvc-accent);
-    background: var(--bvc-accent);
+    border: 1px solid var(--cx-visual-accent);
+    background: var(--cx-visual-accent);
     color: white;
-    border-radius: var(--bvc-radius);
-    padding: 0 var(--bvc-s3);
-    height: var(--bvc-h-sm);
-    font-size: var(--bvc-t-sm);
+    border-radius: var(--cx-visual-radius);
+    padding: 0 var(--cx-visual-s3);
+    height: var(--cx-visual-h-sm);
+    font-size: var(--cx-visual-t-sm);
     font-weight: 600;
     font-family: inherit;
     cursor: pointer;
     white-space: nowrap;
     /* Subtle shadow lifts the primary CTA from the header background. */
-    box-shadow: var(--bvc-shadow-sm);
+    box-shadow: var(--cx-visual-shadow-sm);
   }
   .apply-btn:hover:not(:disabled) {
     filter: brightness(0.92);
   }
   .apply-btn:disabled {
-    background: var(--bvc-bg-2);
-    border-color: var(--bvc-border);
-    color: var(--bvc-fg-muted);
+    background: var(--cx-visual-bg-2);
+    border-color: var(--cx-visual-border);
+    color: var(--cx-visual-fg-muted);
     box-shadow: none;
     cursor: not-allowed;
   }
   .apply-btn.apply-btn-ok {
-    background: var(--bvc-success);
-    border-color: var(--bvc-success);
+    background: var(--cx-visual-success);
+    border-color: var(--cx-visual-success);
   }
   .apply-btn.apply-btn-err {
-    background: var(--bvc-error);
-    border-color: var(--bvc-error);
+    background: var(--cx-visual-error);
+    border-color: var(--cx-visual-error);
   }
 
   /* Close — tertiary, ghost icon-only. */
   .close-btn {
     border: none;
     background: transparent;
-    color: var(--bvc-fg-muted);
-    border-radius: var(--bvc-radius);
+    color: var(--cx-visual-fg-muted);
+    border-radius: var(--cx-visual-radius);
     width: 24px;
     height: 24px;
     display: inline-flex;
@@ -424,8 +424,8 @@ export const panelCss = /* css */ `
     padding: 0;
   }
   .close-btn:hover {
-    background: var(--bvc-bg-hover);
-    color: var(--bvc-fg);
+    background: var(--cx-visual-bg-hover);
+    color: var(--cx-visual-fg);
   }
 
   .body {
@@ -436,13 +436,13 @@ export const panelCss = /* css */ `
 
   .empty {
     text-align: center;
-    color: var(--bvc-fg-2);
+    color: var(--cx-visual-fg-2);
     padding: 40px 16px;
     font-size: 11px;
     line-height: 1.5;
   }
   .empty strong {
-    color: var(--bvc-fg);
+    color: var(--cx-visual-fg);
     display: block;
     margin-bottom: 6px;
     font-size: 12px;
@@ -450,20 +450,20 @@ export const panelCss = /* css */ `
   }
   .empty em {
     font-style: normal;
-    background: var(--bvc-bg-2);
-    border: 1px solid var(--bvc-border);
+    background: var(--cx-visual-bg-2);
+    border: 1px solid var(--cx-visual-border);
     border-radius: 3px;
     padding: 1px 5px;
     font-family: 'Inconsolata', ui-monospace, monospace;
     font-size: 10px;
-    color: var(--bvc-fg-2);
+    color: var(--cx-visual-fg-2);
   }
 
   /* Selector strip — appears under header, always shows current target. */
   .target-strip {
     padding: 8px 12px;
-    border-bottom: 1px solid var(--bvc-border);
-    background: var(--bvc-bg-2);
+    border-bottom: 1px solid var(--cx-visual-border);
+    background: var(--cx-visual-bg-2);
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -482,12 +482,12 @@ export const panelCss = /* css */ `
     overflow: hidden;
     font-family: 'Inconsolata', ui-monospace, monospace;
     font-size: 10.5px;
-    color: var(--bvc-fg-muted);
+    color: var(--cx-visual-fg-muted);
   }
   .breadcrumb-seg {
     border: none;
     background: transparent;
-    color: var(--bvc-fg-muted);
+    color: var(--cx-visual-fg-muted);
     font-family: inherit;
     font-size: inherit;
     padding: 1px 4px;
@@ -503,12 +503,12 @@ export const panelCss = /* css */ `
     white-space: nowrap;
   }
   .breadcrumb-seg:hover {
-    background: var(--bvc-bg);
-    color: var(--bvc-accent);
+    background: var(--cx-visual-bg);
+    color: var(--cx-visual-accent);
   }
   .breadcrumb-sep {
     flex-shrink: 0;
-    color: var(--bvc-fg-muted);
+    color: var(--cx-visual-fg-muted);
     user-select: none;
   }
 
@@ -525,7 +525,7 @@ export const panelCss = /* css */ `
   .breadcrumb-more {
     border: none;
     background: transparent;
-    color: var(--bvc-accent);
+    color: var(--cx-visual-accent);
     font-family: inherit;
     font-size: inherit;
     font-weight: 500;
@@ -534,12 +534,12 @@ export const panelCss = /* css */ `
     cursor: pointer;
     flex-shrink: 0;
     text-decoration: underline;
-    text-decoration-color: color-mix(in srgb, var(--bvc-accent) 35%, transparent);
+    text-decoration-color: color-mix(in srgb, var(--cx-visual-accent) 35%, transparent);
     text-underline-offset: 2px;
   }
   .breadcrumb-more:hover {
-    background: var(--bvc-bg-hover);
-    text-decoration-color: var(--bvc-accent);
+    background: var(--cx-visual-bg-hover);
+    text-decoration-color: var(--cx-visual-accent);
   }
 
   /* Changes section — shown only when the selection has been edited. Lists
@@ -551,8 +551,8 @@ export const panelCss = /* css */ `
     flex-direction: column;
     gap: 8px;
     padding: 10px 12px;
-    background: var(--bvc-warn-bg);
-    border-bottom: 1px solid var(--bvc-border);
+    background: var(--cx-visual-warn-bg);
+    border-bottom: 1px solid var(--cx-visual-border);
   }
   .changes-header {
     display: flex;
@@ -574,7 +574,7 @@ export const panelCss = /* css */ `
     font-family: inherit;
     font-size: 11px;
     font-weight: 700;
-    color: var(--bvc-warn-text);
+    color: var(--cx-visual-warn-text);
     letter-spacing: 0.1px;
     flex-shrink: 0;
     cursor: pointer;
@@ -616,8 +616,8 @@ export const panelCss = /* css */ `
   .reset-btn {
     border: 1px solid transparent;
     background: transparent;
-    color: var(--bvc-fg-2);
-    border-radius: var(--bvc-radius);
+    color: var(--cx-visual-fg-2);
+    border-radius: var(--cx-visual-radius);
     padding: 0 8px;
     height: 24px;
     font-size: 11px;
@@ -626,9 +626,9 @@ export const panelCss = /* css */ `
     cursor: pointer;
   }
   .reset-btn:hover {
-    background: var(--bvc-bg);
-    border-color: var(--bvc-border);
-    color: var(--bvc-fg);
+    background: var(--cx-visual-bg);
+    border-color: var(--cx-visual-border);
+    color: var(--cx-visual-fg);
   }
 
   .changes-list {
@@ -652,7 +652,7 @@ export const panelCss = /* css */ `
   }
   .change-group-head .selector-line {
     font-size: 10.5px;
-    color: var(--bvc-fg-2);
+    color: var(--cx-visual-fg-2);
   }
   .change-group-items {
     list-style: none;
@@ -669,7 +669,7 @@ export const panelCss = /* css */ `
     gap: 6px;
     font-size: 11px;
     line-height: 1.45;
-    color: var(--bvc-fg);
+    color: var(--cx-visual-fg);
   }
   .change-icon {
     flex-shrink: 0;
@@ -687,15 +687,15 @@ export const panelCss = /* css */ `
   }
   .change-icon-add {
     background: rgba(2, 148, 73, 0.14);
-    color: var(--bvc-accent);
+    color: var(--cx-visual-accent);
   }
   .change-icon-remove {
     background: rgba(235, 97, 102, 0.16);
-    color: var(--bvc-error);
+    color: var(--cx-visual-error);
   }
   .change-icon-mod {
     background: rgba(228, 184, 60, 0.28);
-    color: var(--bvc-warn-text);
+    color: var(--cx-visual-warn-text);
   }
   .change-text {
     flex: 1;
@@ -705,10 +705,10 @@ export const panelCss = /* css */ `
   .change-text code {
     font-family: 'Inconsolata', ui-monospace, SFMono-Regular, Menlo, monospace;
     font-size: 10.5px;
-    background: var(--bvc-bg-hover);
+    background: var(--cx-visual-bg-hover);
     padding: 0 4px;
     border-radius: 3px;
-    color: var(--bvc-fg);
+    color: var(--cx-visual-fg);
   }
   /* Per-row revert — appears at the right of every change. Hidden until the
      row is hovered to keep the list calm; full opacity on hover. */
@@ -718,7 +718,7 @@ export const panelCss = /* css */ `
   .change-revert {
     border: none;
     background: transparent;
-    color: var(--bvc-fg-muted);
+    color: var(--cx-visual-fg-muted);
     font-family: inherit;
     font-size: 11px;
     line-height: 1;
@@ -735,12 +735,12 @@ export const panelCss = /* css */ `
     opacity: 1;
   }
   .change-revert:hover {
-    background: var(--bvc-bg-hover);
-    color: var(--bvc-error);
+    background: var(--cx-visual-bg-hover);
+    color: var(--cx-visual-error);
   }
   .change-revert:focus-visible {
     opacity: 1;
-    outline: 2px solid var(--bvc-accent);
+    outline: 2px solid var(--cx-visual-accent);
     outline-offset: 1px;
   }
   /* Wrapper holds the identifying class list + the Show-all toggle. */
@@ -753,7 +753,7 @@ export const panelCss = /* css */ `
   .selector-line {
     font-family: 'Inconsolata', ui-monospace, SFMono-Regular, Menlo, monospace;
     font-size: 11px;
-    color: var(--bvc-fg-2);
+    color: var(--cx-visual-fg-2);
     display: flex;
     flex-wrap: wrap;
     gap: 2px 4px;
@@ -775,7 +775,7 @@ export const panelCss = /* css */ `
     appearance: none;
     border: 0;
     background: transparent;
-    color: var(--bvc-accent);
+    color: var(--cx-visual-accent);
     font: inherit;
     font-size: 11px;
     font-weight: 500;
@@ -787,7 +787,7 @@ export const panelCss = /* css */ `
     text-decoration-color: rgba(2, 148, 73, 0.35);
   }
   .selector-line-toggle:hover {
-    text-decoration-color: var(--bvc-accent);
+    text-decoration-color: var(--cx-visual-accent);
   }
   /* Selected-element row — consistent with panel's 11px compact language */
   .selector-main-row {
@@ -800,9 +800,9 @@ export const panelCss = /* css */ `
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    background: var(--bvc-bg);
-    border: 1px solid var(--bvc-border-strong);
-    color: var(--bvc-fg);
+    background: var(--cx-visual-bg);
+    border: 1px solid var(--cx-visual-border-strong);
+    color: var(--cx-visual-fg);
     border-radius: 20px;
     padding: 2px 10px;
     font-family: 'Inconsolata', ui-monospace, monospace;
@@ -813,7 +813,7 @@ export const panelCss = /* css */ `
   }
   /* Small accent diamond — signals "component" without overpowering */
   .selector-badge-diamond {
-    color: var(--bvc-accent);
+    color: var(--cx-visual-accent);
     font-size: 7px;
     line-height: 1;
   }
@@ -822,9 +822,9 @@ export const panelCss = /* css */ `
     font-weight: 400;
   }
 
-  .selector-line .tag { color: var(--bvc-syntax-tag); }
-  .selector-line .id  { color: var(--bvc-syntax-id); }
-  .selector-line .cls { color: var(--bvc-accent); }
+  .selector-line .tag { color: var(--cx-visual-syntax-tag); }
+  .selector-line .id  { color: var(--cx-visual-syntax-id); }
+  .selector-line .cls { color: var(--cx-visual-accent); }
 
   /* Sections (Figma-style) */
   /* ─── Sections — Figma right-rail rhythm ─────────────────────────────────
@@ -832,7 +832,7 @@ export const panelCss = /* css */ `
      body content. No bg hover on the header (Figma keeps it visually quiet
      except for the chevron rotate). 16px horizontal padding throughout so
      section internals breathe like Figma's properties rail. */
-  .fsection { border-bottom: 1px solid var(--bvc-border); }
+  .fsection { border-bottom: 1px solid var(--cx-visual-border); }
   .fsection-head {
     display: flex;
     align-items: center;
@@ -840,33 +840,33 @@ export const panelCss = /* css */ `
     padding: 8px 12px 6px;
     cursor: pointer;
     user-select: none;
-    transition: background-color var(--bvc-motion-fast);
+    transition: background-color var(--cx-visual-motion-fast);
   }
   .fsection-head:hover { background: transparent; }
-  .fsection-head:hover .fsection-title { color: var(--bvc-fg); }
+  .fsection-head:hover .fsection-title { color: var(--cx-visual-fg); }
   .fsection-head-left {
     display: flex;
     align-items: center;
-    gap: var(--bvc-s2);
+    gap: var(--cx-visual-s2);
     min-width: 0;
   }
   .fsection-head-right {
     display: flex;
     align-items: center;
-    gap: var(--bvc-s1);
-    color: var(--bvc-fg-muted);
+    gap: var(--cx-visual-s1);
+    color: var(--cx-visual-fg-muted);
   }
   .fsection-chevron {
     display: none; /* Figma's rail headers never show a chevron — clicking the row collapses */
   }
   .fsection-chevron svg {
-    transition: transform var(--bvc-motion-fast);
+    transition: transform var(--cx-visual-motion-fast);
   }
   .fsection-title {
     font-weight: 600;
     font-size: 11px;
     letter-spacing: 0;
-    color: var(--bvc-fg);
+    color: var(--cx-visual-fg);
   }
   .fsection-body {
     padding: 0 12px 12px;
@@ -882,31 +882,31 @@ export const panelCss = /* css */ `
     gap: 8px;
     padding: 0 8px;
     height: 26px;
-    border: 1px solid var(--bvc-border);
-    border-radius: var(--bvc-radius);
+    border: 1px solid var(--cx-visual-border);
+    border-radius: var(--cx-visual-radius);
     cursor: pointer;
-    background: var(--bvc-input-bg);
+    background: var(--cx-visual-input-bg);
   }
-  .value-chip:hover { border-color: var(--bvc-border-strong); background: var(--bvc-bg); }
+  .value-chip:hover { border-color: var(--cx-visual-border-strong); background: var(--cx-visual-bg); }
   .value-chip:focus-visible {
-    outline: 2px solid var(--bvc-accent);
+    outline: 2px solid var(--cx-visual-accent);
     outline-offset: 1px;
   }
   .value-chip-swatch {
     width: 16px;
     height: 16px;
     border-radius: 3px;
-    border: 1px solid var(--bvc-border);
+    border: 1px solid var(--cx-visual-border);
     flex-shrink: 0;
   }
   .value-chip-swatch[data-empty="true"] {
     background:
-      linear-gradient(45deg, transparent 45%, var(--bvc-border) 45%, var(--bvc-border) 55%, transparent 55%),
-      var(--bvc-bg);
+      linear-gradient(45deg, transparent 45%, var(--cx-visual-border) 45%, var(--cx-visual-border) 55%, transparent 55%),
+      var(--cx-visual-bg);
   }
   .value-chip-label {
     font-size: 11px;
-    color: var(--bvc-fg);
+    color: var(--cx-visual-fg);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -923,18 +923,18 @@ export const panelCss = /* css */ `
     width: 100%;
     height: 28px;
     padding: 0 8px;
-    border: 1px solid var(--bvc-border);
-    border-radius: var(--bvc-radius);
-    background: var(--bvc-input-bg);
+    border: 1px solid var(--cx-visual-border);
+    border-radius: var(--cx-visual-radius);
+    background: var(--cx-visual-input-bg);
     font-size: 12px;
     font-family: inherit;
-    color: var(--bvc-fg);
+    color: var(--cx-visual-fg);
   }
-  .mini-input:hover { border-color: var(--bvc-border-strong); background: var(--bvc-bg-hover); }
+  .mini-input:hover { border-color: var(--cx-visual-border-strong); background: var(--cx-visual-bg-hover); }
   .mini-input:focus {
     outline: none;
-    border-color: var(--bvc-accent);
-    background: var(--bvc-bg);
+    border-color: var(--cx-visual-accent);
+    background: var(--cx-visual-bg);
   }
   /* Native <select> has its own internal padding for the chevron — neutralise
      the height/padding so it matches plain inputs. */
@@ -955,7 +955,7 @@ export const panelCss = /* css */ `
     -webkit-appearance: none;
     -moz-appearance: none;
     padding-right: 22px;
-    background-image: var(--bvc-chevron);
+    background-image: var(--cx-visual-chevron);
     background-repeat: no-repeat;
     background-position: right 7px center;
   }
@@ -963,13 +963,13 @@ export const panelCss = /* css */ `
   select.text-input:focus,
   select.mini-input:hover,
   select.mini-input:focus {
-    background-image: var(--bvc-chevron);
+    background-image: var(--cx-visual-chevron);
     background-repeat: no-repeat;
     background-position: right 7px center;
   }
   /* Firefox: hide the dotted focus ring on the option text. */
   select.text-input:-moz-focusring,
-  select.mini-input:-moz-focusring { color: transparent; text-shadow: 0 0 0 var(--bvc-fg); }
+  select.mini-input:-moz-focusring { color: transparent; text-shadow: 0 0 0 var(--cx-visual-fg); }
   /* Narrow unit selects (W/H → px/%/auto, ~54px) need a tighter chevron inset
      so "auto" doesn't clip. Keeps the wider dropdowns at the comfortable 22px. */
   select.unit-select {
@@ -986,7 +986,7 @@ export const panelCss = /* css */ `
   }
   .control-label {
     font-size: 11px;
-    color: var(--bvc-fg-2);
+    color: var(--cx-visual-fg-2);
   }
 
   /* Segmented */
@@ -994,38 +994,38 @@ export const panelCss = /* css */ `
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: 1fr;
-    border: 1px solid var(--bvc-border);
-    border-radius: var(--bvc-radius);
+    border: 1px solid var(--cx-visual-border);
+    border-radius: var(--cx-visual-radius);
     overflow: hidden;
-    background: var(--bvc-bg-2);
+    background: var(--cx-visual-bg-2);
     padding: 2px;
     gap: 2px;
     height: 28px;
   }
-  .segmented:hover { border-color: var(--bvc-border-strong); }
+  .segmented:hover { border-color: var(--cx-visual-border-strong); }
   .segmented-btn {
     border: none;
     background: transparent;
     padding: 0 6px;
     font-size: 11px;
-    color: var(--bvc-fg-2);
+    color: var(--cx-visual-fg-2);
     cursor: pointer;
     font-family: inherit;
     min-width: 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    border-radius: var(--bvc-radius-sm);
+    border-radius: var(--cx-visual-radius-sm);
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .segmented-btn:hover { background: var(--bvc-bg); color: var(--bvc-fg); }
+  .segmented-btn:hover { background: var(--cx-visual-bg); color: var(--cx-visual-fg); }
   .segmented-btn[data-active="true"] {
-    background: var(--bvc-bg);
-    color: var(--bvc-fg);
+    background: var(--cx-visual-bg);
+    color: var(--cx-visual-fg);
     font-weight: 600;
-    box-shadow: var(--bvc-shadow-sm);
+    box-shadow: var(--cx-visual-shadow-sm);
   }
   .segmented-btn-icon {
     padding: 0;
@@ -1052,16 +1052,16 @@ export const panelCss = /* css */ `
     display: inline-flex;
     align-items: stretch;
     height: 28px;
-    border: 1px solid var(--bvc-border);
-    border-radius: var(--bvc-radius);
-    background: var(--bvc-input-bg);
+    border: 1px solid var(--cx-visual-border);
+    border-radius: var(--cx-visual-radius);
+    background: var(--cx-visual-input-bg);
     overflow: hidden;
     min-width: 0;
   }
-  .scrub:hover { border-color: var(--bvc-border-strong); background: var(--bvc-bg-hover); }
+  .scrub:hover { border-color: var(--cx-visual-border-strong); background: var(--cx-visual-bg-hover); }
   .scrub:focus-within {
-    border-color: var(--bvc-accent);
-    background: var(--bvc-bg);
+    border-color: var(--cx-visual-accent);
+    background: var(--cx-visual-bg);
   }
   .scrub-handle {
     display: inline-flex;
@@ -1069,7 +1069,7 @@ export const panelCss = /* css */ `
     justify-content: center;
     padding: 0 8px;
     background: transparent;
-    color: var(--bvc-fg-muted);
+    color: var(--cx-visual-fg-muted);
     font-size: 11px;
     font-family: 'Inconsolata', ui-monospace, monospace;
     cursor: ew-resize;
@@ -1080,9 +1080,9 @@ export const panelCss = /* css */ `
        background, so the geometry stays stable during a drag. */
     touch-action: none;
   }
-  .scrub-handle:hover { color: var(--bvc-fg-2); }
+  .scrub-handle:hover { color: var(--cx-visual-fg-2); }
   .scrub-handle.scrub-handle-active {
-    color: var(--bvc-accent);
+    color: var(--cx-visual-accent);
   }
   .scrub-input {
     flex: 1;
@@ -1093,7 +1093,7 @@ export const panelCss = /* css */ `
     padding: 0 8px 0 0;
     font-size: 12px;
     font-family: inherit;
-    color: var(--bvc-fg);
+    color: var(--cx-visual-fg);
     outline: none;
     /* Hide native spinner — the scrub handle replaces it. */
     appearance: textfield;
@@ -1123,10 +1123,10 @@ export const panelCss = /* css */ `
     width: 100%;
     height: 28px;
     padding: 0 8px;
-    border: 1px solid var(--bvc-border);
-    border-radius: var(--bvc-radius);
-    background: var(--bvc-input-bg);
-    color: var(--bvc-fg);
+    border: 1px solid var(--cx-visual-border);
+    border-radius: var(--cx-visual-radius);
+    background: var(--cx-visual-input-bg);
+    color: var(--cx-visual-fg);
     font-family: inherit;
     font-size: 12px;
     cursor: pointer;
@@ -1134,27 +1134,27 @@ export const panelCss = /* css */ `
     min-width: 0;
   }
   .color-chip:hover {
-    border-color: var(--bvc-border-strong);
-    background: var(--bvc-bg-hover);
+    border-color: var(--cx-visual-border-strong);
+    background: var(--cx-visual-bg-hover);
   }
   /* Active state while its popover is open — accent border echoes focus. */
   .color-chip[data-open="true"] {
-    border-color: var(--bvc-accent);
+    border-color: var(--cx-visual-accent);
   }
   .color-chip-swatch {
     width: 16px;
     height: 16px;
-    border-radius: var(--bvc-radius-sm);
-    border: 1px solid var(--bvc-border);
+    border-radius: var(--cx-visual-radius-sm);
+    border: 1px solid var(--cx-visual-border);
     flex-shrink: 0;
-    background: var(--bvc-bg-2);
+    background: var(--cx-visual-bg-2);
   }
   .color-chip-swatch[data-empty="true"] {
     /* Checker pattern for "no colour" — same idiom as Figma's empty fill. */
     background:
-      linear-gradient(45deg, transparent 45%, var(--bvc-border-strong) 45% 55%, transparent 55%),
-      linear-gradient(-45deg, transparent 45%, var(--bvc-border-strong) 45% 55%, transparent 55%),
-      var(--bvc-bg);
+      linear-gradient(45deg, transparent 45%, var(--cx-visual-border-strong) 45% 55%, transparent 55%),
+      linear-gradient(-45deg, transparent 45%, var(--cx-visual-border-strong) 45% 55%, transparent 55%),
+      var(--cx-visual-bg);
   }
   .color-chip-label {
     flex: 1;
@@ -1164,16 +1164,16 @@ export const panelCss = /* css */ `
   }
   .color-chip[data-kind="custom"] .color-chip-label {
     font-family: 'Inconsolata', ui-monospace, monospace;
-    font-size: var(--bvc-t-xs);
-    color: var(--bvc-fg-2);
+    font-size: var(--cx-visual-t-xs);
+    color: var(--cx-visual-fg-2);
   }
   .color-chip[data-kind="empty"] .color-chip-label {
-    color: var(--bvc-fg-muted);
+    color: var(--cx-visual-fg-muted);
     font-style: italic;
   }
   .color-chip-chev {
     display: inline-flex;
-    color: var(--bvc-fg-muted);
+    color: var(--cx-visual-fg-muted);
     flex-shrink: 0;
   }
 
@@ -1182,39 +1182,39 @@ export const panelCss = /* css */ `
      enough to read without a tooltip. */
   .color-popover .swatch-grid {
     grid-template-columns: repeat(6, 1fr);
-    gap: var(--bvc-s1);
+    gap: var(--cx-visual-s1);
   }
   .swatch-picker-empty {
-    padding: var(--bvc-s3);
+    padding: var(--cx-visual-s3);
     text-align: center;
-    color: var(--bvc-fg-muted);
-    font-size: var(--bvc-t-sm);
+    color: var(--cx-visual-fg-muted);
+    font-size: var(--cx-visual-t-sm);
   }
   .color-popover-custom {
-    border-top: 1px solid var(--bvc-border);
-    padding-top: var(--bvc-s3);
-    margin-top: var(--bvc-s2);
+    border-top: 1px solid var(--cx-visual-border);
+    padding-top: var(--cx-visual-s3);
+    margin-top: var(--cx-visual-s2);
   }
   .color-popover-custom-row {
     display: grid;
     grid-template-columns: 28px 1fr auto;
-    gap: var(--bvc-s2);
+    gap: var(--cx-visual-s2);
     align-items: center;
   }
   .color-popover-native {
     width: 28px;
-    height: var(--bvc-h-sm);
+    height: var(--cx-visual-h-sm);
     padding: 2px;
-    border: 1px solid var(--bvc-border);
-    border-radius: var(--bvc-radius-sm);
-    background: var(--bvc-input-bg);
+    border: 1px solid var(--cx-visual-border);
+    border-radius: var(--cx-visual-radius-sm);
+    background: var(--cx-visual-input-bg);
     cursor: pointer;
   }
   .color-popover-hex {
     font-family: 'Inconsolata', ui-monospace, monospace;
   }
   .color-popover-apply {
-    height: var(--bvc-h-sm);
+    height: var(--cx-visual-h-sm);
   }
 
   /* ─── Token-aware row (scrub + token chip) ────────────────────────────────
@@ -1225,19 +1225,19 @@ export const panelCss = /* css */ `
   .token-aware-row {
     display: grid;
     grid-template-columns: 1fr auto;
-    gap: var(--bvc-s2);
+    gap: var(--cx-visual-s2);
     align-items: center;
     min-width: 0;
   }
   .token-aware-chip {
-    height: var(--bvc-h-sm);
-    padding: 0 var(--bvc-s2);
-    border: 1px solid var(--bvc-border);
-    border-radius: var(--bvc-radius-sm);
-    background: var(--bvc-input-bg);
-    color: var(--bvc-fg-2);
+    height: var(--cx-visual-h-sm);
+    padding: 0 var(--cx-visual-s2);
+    border: 1px solid var(--cx-visual-border);
+    border-radius: var(--cx-visual-radius-sm);
+    background: var(--cx-visual-input-bg);
+    color: var(--cx-visual-fg-2);
     font-family: inherit;
-    font-size: var(--bvc-t-xs);
+    font-size: var(--cx-visual-t-xs);
     font-weight: 600;
     cursor: pointer;
     white-space: nowrap;
@@ -1246,14 +1246,14 @@ export const panelCss = /* css */ `
     line-height: 1;
   }
   .token-aware-chip:hover {
-    border-color: var(--bvc-border-strong);
-    background: var(--bvc-bg);
-    color: var(--bvc-fg);
+    border-color: var(--cx-visual-border-strong);
+    background: var(--cx-visual-bg);
+    color: var(--cx-visual-fg);
   }
   .token-aware-chip[data-scale="off"] {
-    border-color: var(--bvc-warn-text);
-    color: var(--bvc-warn-text);
-    background: var(--bvc-warn-bg);
+    border-color: var(--cx-visual-warn-text);
+    color: var(--cx-visual-warn-text);
+    background: var(--cx-visual-warn-bg);
   }
 
   /* Token chip — used for spacing (padding sides, gap) and typography. The
@@ -1266,19 +1266,19 @@ export const panelCss = /* css */ `
     width: 100%;
     height: 26px;
     padding: 0 8px;
-    border: 1px solid var(--bvc-border);
-    border-radius: var(--bvc-radius);
-    background: var(--bvc-input-bg);
-    color: var(--bvc-fg);
+    border: 1px solid var(--cx-visual-border);
+    border-radius: var(--cx-visual-radius);
+    background: var(--cx-visual-input-bg);
+    color: var(--cx-visual-fg);
     font-family: inherit;
     font-size: 11px;
     cursor: pointer;
     text-align: left;
     min-width: 0;
   }
-  .token-chip:hover { border-color: var(--bvc-border-strong); background: var(--bvc-bg); }
+  .token-chip:hover { border-color: var(--cx-visual-border-strong); background: var(--cx-visual-bg); }
   .token-chip:focus-visible {
-    outline: 2px solid var(--bvc-accent);
+    outline: 2px solid var(--cx-visual-accent);
     outline-offset: 1px;
   }
   .token-chip-value {
@@ -1289,7 +1289,7 @@ export const panelCss = /* css */ `
     font-weight: 600;
   }
   .token-chip-hint {
-    color: var(--bvc-fg-2);
+    color: var(--cx-visual-fg-2);
     font-size: 10.5px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1299,19 +1299,19 @@ export const panelCss = /* css */ `
   }
   .token-chip-chev {
     display: inline-flex;
-    color: var(--bvc-fg-muted);
+    color: var(--cx-visual-fg-muted);
     flex-shrink: 0;
   }
   /* Off-scale value: yellow rim + warning text — communicates the value
      exists but doesn't conform to the spacing/typography system. */
   .token-chip[data-scale="off"] {
-    border-color: var(--bvc-warn-text);
-    color: var(--bvc-warn-text);
-    background: var(--bvc-warn-bg);
+    border-color: var(--cx-visual-warn-text);
+    color: var(--cx-visual-warn-text);
+    background: var(--cx-visual-warn-bg);
   }
   .token-chip[data-scale="off"] .token-chip-hint,
   .token-chip[data-scale="off"] .token-chip-chev {
-    color: var(--bvc-warn-text);
+    color: var(--cx-visual-warn-text);
   }
 
   /* Token picker (popover content) — fills whatever width the popover ends
@@ -1327,9 +1327,9 @@ export const panelCss = /* css */ `
   .token-picker-head {
     font-size: 12px;
     font-weight: 700;
-    color: var(--bvc-fg);
+    color: var(--cx-visual-fg);
     padding-bottom: 4px;
-    border-bottom: 1px solid var(--bvc-border);
+    border-bottom: 1px solid var(--cx-visual-border);
   }
   .token-picker-list {
     display: flex;
@@ -1345,22 +1345,22 @@ export const panelCss = /* css */ `
     padding: 6px 8px;
     border: 1px solid transparent;
     background: transparent;
-    border-radius: var(--bvc-radius);
+    border-radius: var(--cx-visual-radius);
     font-family: inherit;
     font-size: 11px;
-    color: var(--bvc-fg);
+    color: var(--cx-visual-fg);
     cursor: pointer;
     text-align: left;
     width: 100%;
   }
   .token-picker-option:hover {
-    background: var(--bvc-bg-2);
-    border-color: var(--bvc-border);
+    background: var(--cx-visual-bg-2);
+    border-color: var(--cx-visual-border);
   }
   .token-picker-option[data-active="true"] {
-    background: var(--bvc-bg-focus);
-    border-color: var(--bvc-accent);
-    color: var(--bvc-accent);
+    background: var(--cx-visual-bg-focus);
+    border-color: var(--cx-visual-accent);
+    color: var(--cx-visual-accent);
   }
   /* Right-align so 1-digit and 2-digit values share a clean trailing edge.
      Width is the smallest that fits "999" — keeps the hint column flush
@@ -1379,31 +1379,31 @@ export const panelCss = /* css */ `
     text-align: left;
   }
   .token-picker-hint {
-    color: var(--bvc-fg-2);
+    color: var(--cx-visual-fg-2);
     font-size: 10.5px;
   }
   .token-picker-option[data-active="true"] .token-picker-hint {
-    color: var(--bvc-accent);
+    color: var(--cx-visual-accent);
   }
   .token-picker-clear {
-    border: 1px dashed var(--bvc-border-strong);
+    border: 1px dashed var(--cx-visual-border-strong);
     background: transparent;
-    color: var(--bvc-fg-2);
+    color: var(--cx-visual-fg-2);
     font-family: inherit;
     font-size: 11px;
-    border-radius: var(--bvc-radius);
+    border-radius: var(--cx-visual-radius);
     padding: 5px 8px;
     cursor: pointer;
   }
   .token-picker-clear:hover {
-    color: var(--bvc-fg);
+    color: var(--cx-visual-fg);
     border-style: solid;
-    background: var(--bvc-bg-2);
+    background: var(--cx-visual-bg-2);
   }
   .token-picker-note {
-    background: var(--bvc-warn-bg);
-    color: var(--bvc-warn-text);
-    border-radius: var(--bvc-radius);
+    background: var(--cx-visual-warn-bg);
+    color: var(--cx-visual-warn-text);
+    border-radius: var(--cx-visual-radius);
     padding: 6px 8px;
     font-size: 11px;
     line-height: 1.4;
@@ -1421,7 +1421,7 @@ export const panelCss = /* css */ `
     flex-shrink: 0;
     width: 40px;
     text-align: center;
-    color: var(--bvc-fg);
+    color: var(--cx-visual-fg);
     line-height: 1;
     /* The inline 'font' on this element is set per-token via JS so each row
        previews its own typography. */
@@ -1443,7 +1443,7 @@ export const panelCss = /* css */ `
 
   .tabs-edit-intro {
     font-size: 11px;
-    color: var(--bvc-fg-2);
+    color: var(--cx-visual-fg-2);
     line-height: 1.4;
     margin-bottom: 4px;
   }
@@ -1454,11 +1454,11 @@ export const panelCss = /* css */ `
   }
   .tabs-edit-empty {
     font-size: 11px;
-    color: var(--bvc-fg-muted);
+    color: var(--cx-visual-fg-muted);
     padding: 8px;
-    background: var(--bvc-bg-2);
-    border: 1px dashed var(--bvc-border-strong);
-    border-radius: var(--bvc-radius);
+    background: var(--cx-visual-bg-2);
+    border: 1px dashed var(--cx-visual-border-strong);
+    border-radius: var(--cx-visual-radius);
     text-align: center;
   }
   /* Row layout: [radio] [label input ...flex] [↑] [↓] [✕] */
@@ -1469,7 +1469,7 @@ export const panelCss = /* css */ `
     align-items: center;
   }
   .tabs-edit-radio {
-    accent-color: var(--bvc-accent);
+    accent-color: var(--cx-visual-accent);
     width: 14px;
     height: 14px;
     cursor: pointer;
@@ -1478,24 +1478,24 @@ export const panelCss = /* css */ `
   .tabs-edit-input {
     height: 26px;
     padding: 0 8px;
-    border: 1px solid var(--bvc-border);
-    border-radius: var(--bvc-radius);
-    background: var(--bvc-input-bg);
+    border: 1px solid var(--cx-visual-border);
+    border-radius: var(--cx-visual-radius);
+    background: var(--cx-visual-input-bg);
     font-family: inherit;
     font-size: 11px;
-    color: var(--bvc-fg);
+    color: var(--cx-visual-fg);
     min-width: 0;
   }
   .tabs-edit-input:focus {
     outline: none;
-    border-color: var(--bvc-accent);
-    background: var(--bvc-bg);
+    border-color: var(--cx-visual-accent);
+    background: var(--cx-visual-bg);
   }
   .tabs-edit-move,
   .tabs-edit-delete {
     border: 1px solid transparent;
     background: transparent;
-    color: var(--bvc-fg-muted);
+    color: var(--cx-visual-fg-muted);
     border-radius: 4px;
     height: 22px;
     padding: 0;
@@ -1505,11 +1505,11 @@ export const panelCss = /* css */ `
   }
   .tabs-edit-move:hover:not(:disabled),
   .tabs-edit-delete:hover {
-    background: var(--bvc-bg-hover);
-    color: var(--bvc-fg);
+    background: var(--cx-visual-bg-hover);
+    color: var(--cx-visual-fg);
   }
   .tabs-edit-delete:hover {
-    color: var(--bvc-error);
+    color: var(--cx-visual-error);
   }
   .tabs-edit-move:disabled {
     opacity: 0.3;
@@ -1519,19 +1519,19 @@ export const panelCss = /* css */ `
     margin-top: 6px;
     width: 100%;
     height: 28px;
-    border: 1px dashed var(--bvc-border-strong);
+    border: 1px dashed var(--cx-visual-border-strong);
     background: transparent;
-    color: var(--bvc-fg-2);
-    border-radius: var(--bvc-radius);
+    color: var(--cx-visual-fg-2);
+    border-radius: var(--cx-visual-radius);
     font-family: inherit;
     font-size: 11px;
     cursor: pointer;
   }
   .tabs-edit-add:hover {
-    color: var(--bvc-accent);
-    border-color: var(--bvc-accent);
+    color: var(--cx-visual-accent);
+    border-color: var(--cx-visual-accent);
     border-style: solid;
-    background: var(--bvc-bg-focus);
+    background: var(--cx-visual-bg-focus);
   }
 
   /* ─── State toggles (per-component booleans) ─────────────────────────── */
@@ -1549,12 +1549,12 @@ export const panelCss = /* css */ `
     align-items: center;
     gap: 6px;
     font-size: 11px;
-    color: var(--bvc-fg);
+    color: var(--cx-visual-fg);
     cursor: pointer;
     user-select: none;
   }
   .state-checkbox {
-    accent-color: var(--bvc-accent);
+    accent-color: var(--cx-visual-accent);
     width: 14px;
     height: 14px;
     cursor: pointer;
@@ -1573,7 +1573,7 @@ export const panelCss = /* css */ `
      per row at the panel's 320px width. */
   .ds-preset-intro {
     font-size: 11px;
-    color: var(--bvc-fg-2);
+    color: var(--cx-visual-fg-2);
     line-height: 1.4;
     margin-bottom: 4px;
   }
@@ -1585,10 +1585,10 @@ export const panelCss = /* css */ `
   .ds-preset-btn {
     height: 30px;
     padding: 0 8px;
-    border: 1px solid var(--bvc-border);
-    background: var(--bvc-bg-2);
-    color: var(--bvc-fg);
-    border-radius: var(--bvc-radius);
+    border: 1px solid var(--cx-visual-border);
+    background: var(--cx-visual-bg-2);
+    color: var(--cx-visual-fg);
+    border-radius: var(--cx-visual-radius);
     font-family: inherit;
     font-size: 11px;
     font-weight: 600;
@@ -1596,22 +1596,22 @@ export const panelCss = /* css */ `
     text-align: left;
   }
   .ds-preset-btn:hover {
-    background: var(--bvc-bg);
-    border-color: var(--bvc-accent);
-    color: var(--bvc-accent);
+    background: var(--cx-visual-bg);
+    border-color: var(--cx-visual-accent);
+    color: var(--cx-visual-accent);
   }
   .ds-preset-btn--ghost {
     grid-column: 1 / -1;
     background: transparent;
     border-style: dashed;
-    border-color: var(--bvc-border-strong);
-    color: var(--bvc-fg-2);
+    border-color: var(--cx-visual-border-strong);
+    color: var(--cx-visual-fg-2);
     font-weight: 500;
     text-align: center;
   }
   .ds-preset-btn--ghost:hover {
-    color: var(--bvc-error);
-    border-color: var(--bvc-error);
+    color: var(--cx-visual-error);
+    border-color: var(--cx-visual-error);
     background: transparent;
   }
 
@@ -1622,9 +1622,9 @@ export const panelCss = /* css */ `
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 4px;
-    background: var(--bvc-bg-2);
-    border: 1px solid var(--bvc-border);
-    border-radius: var(--bvc-radius);
+    background: var(--cx-visual-bg-2);
+    border: 1px solid var(--cx-visual-border);
+    border-radius: var(--cx-visual-radius);
     padding: 2px;
   }
   .auto-dir-btn {
@@ -1632,7 +1632,7 @@ export const panelCss = /* css */ `
     border: 1px solid transparent;
     background: transparent;
     border-radius: 4px;
-    color: var(--bvc-fg-2);
+    color: var(--cx-visual-fg-2);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -1640,13 +1640,13 @@ export const panelCss = /* css */ `
     padding: 0;
   }
   .auto-dir-btn:hover {
-    background: var(--bvc-bg);
-    color: var(--bvc-fg);
+    background: var(--cx-visual-bg);
+    color: var(--cx-visual-fg);
   }
   .auto-dir-btn[data-active="true"] {
-    background: var(--bvc-bg);
-    border-color: var(--bvc-border-strong);
-    color: var(--bvc-fg);
+    background: var(--cx-visual-bg);
+    border-color: var(--cx-visual-border-strong);
+    color: var(--cx-visual-fg);
   }
   .auto-dir-btn svg {
     width: 16px;
@@ -1663,43 +1663,43 @@ export const panelCss = /* css */ `
   .auto-size-label {
     font-family: 'Inconsolata', ui-monospace, monospace;
     font-size: 11px;
-    color: var(--bvc-fg-2);
+    color: var(--cx-visual-fg-2);
     text-align: center;
   }
   .auto-size-input {
     height: 26px;
     padding: 0 8px;
-    border: 1px solid var(--bvc-border);
-    border-radius: var(--bvc-radius);
-    background: var(--bvc-input-bg);
+    border: 1px solid var(--cx-visual-border);
+    border-radius: var(--cx-visual-radius);
+    background: var(--cx-visual-input-bg);
     font-family: inherit;
     font-size: 11px;
-    color: var(--bvc-fg);
+    color: var(--cx-visual-fg);
     width: 100%;
     min-width: 0;
   }
   .auto-size-input:focus {
     outline: none;
-    border-color: var(--bvc-accent);
-    background: var(--bvc-bg);
+    border-color: var(--cx-visual-accent);
+    background: var(--cx-visual-bg);
   }
   .auto-size-pill {
     height: 26px;
-    border: 1px solid var(--bvc-border);
-    border-radius: var(--bvc-radius);
-    background: var(--bvc-input-bg);
-    color: var(--bvc-fg-2);
+    border: 1px solid var(--cx-visual-border);
+    border-radius: var(--cx-visual-radius);
+    background: var(--cx-visual-input-bg);
+    color: var(--cx-visual-fg-2);
     font-size: 10.5px;
     font-weight: 700;
     font-family: inherit;
     cursor: pointer;
     padding: 0 6px;
   }
-  .auto-size-pill:hover { background: var(--bvc-bg); color: var(--bvc-fg); }
+  .auto-size-pill:hover { background: var(--cx-visual-bg); color: var(--cx-visual-fg); }
   .auto-size-pill[data-mode="fill"] {
-    background: var(--bvc-bg-focus);
-    border-color: var(--bvc-accent);
-    color: var(--bvc-accent);
+    background: var(--cx-visual-bg-focus);
+    border-color: var(--cx-visual-accent);
+    color: var(--cx-visual-accent);
   }
 
   /* Alignment 9-dot grid. Each dot is a clickable area; the dots themselves
@@ -1716,9 +1716,9 @@ export const panelCss = /* css */ `
     grid-template-rows: repeat(3, 1fr);
     width: 78px;
     height: 78px;
-    background: var(--bvc-bg-2);
-    border: 1px solid var(--bvc-border);
-    border-radius: var(--bvc-radius);
+    background: var(--cx-visual-bg-2);
+    border: 1px solid var(--cx-visual-border);
+    border-radius: var(--cx-visual-radius);
     padding: 6px;
     gap: 0;
   }
@@ -1737,16 +1737,16 @@ export const panelCss = /* css */ `
     width: 4px;
     height: 4px;
     border-radius: 50%;
-    background: var(--bvc-fg-muted);
+    background: var(--cx-visual-fg-muted);
   }
   .align-dot:hover::before {
-    background: var(--bvc-fg-2);
+    background: var(--cx-visual-fg-2);
   }
   .align-dot[data-active="true"]::before {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: var(--bvc-accent);
+    background: var(--cx-visual-accent);
   }
 
   .auto-gap {
@@ -1776,23 +1776,23 @@ export const panelCss = /* css */ `
   }
   .auto-pad-icon {
     display: inline-flex;
-    color: var(--bvc-fg-muted);
+    color: var(--cx-visual-fg-muted);
     flex-shrink: 0;
   }
   .auto-pad-icon svg { width: 14px; height: 14px; }
   .auto-pad-mini-label {
     font-family: 'Inconsolata', ui-monospace, monospace;
     font-size: 10px;
-    color: var(--bvc-fg-muted);
+    color: var(--cx-visual-fg-muted);
     width: 10px;
     text-align: center;
     flex-shrink: 0;
   }
   .auto-pad-mode {
-    border: 1px solid var(--bvc-border);
-    background: var(--bvc-bg-2);
-    border-radius: var(--bvc-radius);
-    color: var(--bvc-fg-2);
+    border: 1px solid var(--cx-visual-border);
+    background: var(--cx-visual-bg-2);
+    border-radius: var(--cx-visual-radius);
+    color: var(--cx-visual-fg-2);
     cursor: pointer;
     width: 26px;
     height: 26px;
@@ -1801,7 +1801,7 @@ export const panelCss = /* css */ `
     align-items: center;
     justify-content: center;
   }
-  .auto-pad-mode:hover { background: var(--bvc-bg); color: var(--bvc-fg); }
+  .auto-pad-mode:hover { background: var(--cx-visual-bg); color: var(--cx-visual-fg); }
   .auto-pad-mode svg { width: 14px; height: 14px; }
 
   /* Opacity row — slider + numeric input + percent label, side by side. The
@@ -1815,7 +1815,7 @@ export const panelCss = /* css */ `
   }
   .opacity-slider {
     width: 100%;
-    accent-color: var(--bvc-accent);
+    accent-color: var(--cx-visual-accent);
     height: 26px;
     margin: 0;
   }
@@ -1823,22 +1823,22 @@ export const panelCss = /* css */ `
     width: 100%;
     height: 26px;
     padding: 0 6px;
-    border: 1px solid var(--bvc-border);
-    border-radius: var(--bvc-radius);
-    background: var(--bvc-input-bg);
+    border: 1px solid var(--cx-visual-border);
+    border-radius: var(--cx-visual-radius);
+    background: var(--cx-visual-input-bg);
     font-family: inherit;
     font-size: 11px;
-    color: var(--bvc-fg);
+    color: var(--cx-visual-fg);
     text-align: center;
   }
   .opacity-numeric:focus {
     outline: none;
-    border-color: var(--bvc-accent);
-    background: var(--bvc-bg);
+    border-color: var(--cx-visual-accent);
+    background: var(--cx-visual-bg);
   }
   .opacity-pct {
     font-size: 11px;
-    color: var(--bvc-fg-muted);
+    color: var(--cx-visual-fg-muted);
   }
 
   /* Clip-content checkbox row */
@@ -1847,12 +1847,12 @@ export const panelCss = /* css */ `
     align-items: center;
     gap: 6px;
     font-size: 11px;
-    color: var(--bvc-fg);
+    color: var(--cx-visual-fg);
     cursor: pointer;
     user-select: none;
   }
   .auto-clip-checkbox {
-    accent-color: var(--bvc-accent);
+    accent-color: var(--cx-visual-accent);
     width: 14px;
     height: 14px;
     cursor: pointer;
@@ -1870,14 +1870,14 @@ export const panelCss = /* css */ `
   .figma-pad {
     display: grid;
     grid-template-columns: 1fr 1fr auto;
-    gap: var(--bvc-s2);
+    gap: var(--cx-visual-s2);
     align-items: stretch;
   }
   .figma-pad[data-mode="individual"] { align-items: start; }
   .figma-pad-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--bvc-s2);
+    gap: var(--cx-visual-s2);
     grid-column: 1 / span 2;
   }
   .figma-pad-cell {
@@ -1886,10 +1886,10 @@ export const panelCss = /* css */ `
     gap: 8px;
     height: 28px;
     padding: 0 8px;
-    border: 1px solid var(--bvc-border);
-    border-radius: var(--bvc-radius);
-    background: var(--bvc-figma-pad-bg);
-    color: var(--bvc-fg);
+    border: 1px solid var(--cx-visual-border);
+    border-radius: var(--cx-visual-radius);
+    background: var(--cx-visual-figma-pad-bg);
+    color: var(--cx-visual-fg);
     font-family: inherit;
     font-size: 12px;
     cursor: pointer;
@@ -1904,21 +1904,21 @@ export const panelCss = /* css */ `
     width: 100%;
   }
   .figma-pad-cell:hover {
-    border-color: var(--bvc-border-strong);
-    background: var(--bvc-bg-hover);
+    border-color: var(--cx-visual-border-strong);
+    background: var(--cx-visual-bg-hover);
   }
-  .figma-pad-cell[data-scale="off"] { color: var(--bvc-warn-text); }
+  .figma-pad-cell[data-scale="off"] { color: var(--cx-visual-warn-text); }
   .figma-pad-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: var(--bvc-fg-muted);
+    color: var(--cx-visual-fg-muted);
     flex-shrink: 0;
     width: 14px;
     height: 14px;
   }
   .figma-pad-icon svg { width: 14px; height: 14px; display: block; }
-  .figma-pad-cell:hover .figma-pad-icon { color: var(--bvc-fg-2); }
+  .figma-pad-cell:hover .figma-pad-icon { color: var(--cx-visual-fg-2); }
   .figma-pad-value {
     flex: 1;
     min-width: 0;
@@ -1930,10 +1930,10 @@ export const panelCss = /* css */ `
   .figma-pad-mode {
     width: 28px;
     height: 28px;
-    border: 1px solid var(--bvc-border);
-    border-radius: var(--bvc-radius);
+    border: 1px solid var(--cx-visual-border);
+    border-radius: var(--cx-visual-radius);
     background: transparent;
-    color: var(--bvc-fg-muted);
+    color: var(--cx-visual-fg-muted);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -1942,21 +1942,21 @@ export const panelCss = /* css */ `
     flex-shrink: 0;
   }
   .figma-pad-mode:hover {
-    border-color: var(--bvc-border-strong);
-    background: var(--bvc-bg-hover);
-    color: var(--bvc-fg);
+    border-color: var(--cx-visual-border-strong);
+    background: var(--cx-visual-bg-hover);
+    color: var(--cx-visual-fg);
   }
   .figma-pad-mode[data-on="true"] {
-    background: var(--bvc-bg-focus);
-    color: var(--bvc-accent);
+    background: var(--cx-visual-bg-focus);
+    color: var(--cx-visual-accent);
   }
   .figma-pad-mode svg { width: 14px; height: 14px; display: block; }
-  .spacing-block { display: flex; flex-direction: column; gap: var(--bvc-s1); }
+  .spacing-block { display: flex; flex-direction: column; gap: var(--cx-visual-s1); }
 
   /* Slider */
   .gap-slider {
     width: 100%;
-    accent-color: var(--bvc-accent);
+    accent-color: var(--cx-visual-accent);
   }
 
   /* Chips list */
@@ -1968,19 +1968,19 @@ export const panelCss = /* css */ `
   .chip {
     display: inline-flex;
     align-items: center;
-    background: var(--bvc-bg-2);
-    color: var(--bvc-fg-2);
-    border: 1px solid var(--bvc-border);
+    background: var(--cx-visual-bg-2);
+    color: var(--cx-visual-fg-2);
+    border: 1px solid var(--cx-visual-border);
     border-radius: 3px;
     padding: 1px 5px;
     font-size: 10px;
     font-family: ui-monospace, monospace;
   }
-  .chip.tw { color: var(--bvc-syntax-tw); } /* tailwind purple — non-brand syntax tint */
-  .chip.cxl { color: var(--bvc-accent); }
+  .chip.tw { color: var(--cx-visual-syntax-tw); } /* tailwind purple — non-brand syntax tint */
+  .chip.cxl { color: var(--cx-visual-accent); }
 
   .hint {
-    color: var(--bvc-fg-muted);
+    color: var(--cx-visual-fg-muted);
     font-size: 11px;
   }
 
@@ -1996,10 +1996,10 @@ export const panelCss = /* css */ `
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid var(--bvc-border);
+    border: 1px solid var(--cx-visual-border);
     border-radius: 5px;
-    background: var(--bvc-bg-2);
-    color: var(--bvc-fg);
+    background: var(--cx-visual-bg-2);
+    color: var(--cx-visual-fg);
     flex-shrink: 0;
   }
   .icon-preview svg { width: 16px; height: 16px; }
@@ -2007,7 +2007,7 @@ export const panelCss = /* css */ `
     flex: 1;
     font-family: ui-monospace, monospace;
     font-size: 11px;
-    color: var(--bvc-fg-2);
+    color: var(--cx-visual-fg-2);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -2035,22 +2035,22 @@ export const panelCss = /* css */ `
     padding: 4px 6px;
     border: 1px solid transparent;
     background: transparent;
-    border-radius: var(--bvc-radius);
+    border-radius: var(--cx-visual-radius);
     cursor: pointer;
-    color: var(--bvc-fg);
+    color: var(--cx-visual-fg);
     text-align: left;
     font-family: inherit;
     font-size: 11px;
     width: 100%;
   }
   .icon-cell:hover {
-    background: var(--bvc-bg-2);
-    border-color: var(--bvc-border);
+    background: var(--cx-visual-bg-2);
+    border-color: var(--cx-visual-border);
   }
   .icon-cell[data-active="true"] {
-    background: var(--bvc-bg-focus);
-    border-color: var(--bvc-accent);
-    color: var(--bvc-accent);
+    background: var(--cx-visual-bg-focus);
+    border-color: var(--cx-visual-accent);
+    color: var(--cx-visual-accent);
   }
   .icon-cell-svg {
     display: inline-flex;
@@ -2059,10 +2059,10 @@ export const panelCss = /* css */ `
     width: 24px;
     height: 24px;
     flex-shrink: 0;
-    border: 1px solid var(--bvc-border);
+    border: 1px solid var(--cx-visual-border);
     border-radius: 4px;
-    background: var(--bvc-bg-2);
-    color: var(--bvc-fg);
+    background: var(--cx-visual-bg-2);
+    color: var(--cx-visual-fg);
     padding: 3px;
   }
   .icon-cell-svg svg { width: 100%; height: 100%; display: block; }
@@ -2078,7 +2078,7 @@ export const panelCss = /* css */ `
     appearance: none;
     border: 0;
     background: transparent;
-    color: var(--bvc-fg);
+    color: var(--cx-visual-fg);
     font: inherit;
     text-align: left;
     padding: 6px 8px;
@@ -2089,9 +2089,9 @@ export const panelCss = /* css */ `
     gap: 8px;
     width: 100%;
   }
-  .drill-row:hover { background: var(--bvc-bg-hover); }
+  .drill-row:hover { background: var(--cx-visual-bg-hover); }
   .drill-row-icon {
-    color: var(--bvc-accent);
+    color: var(--cx-visual-accent);
     width: 12px;
     flex-shrink: 0;
     text-align: center;
@@ -2105,15 +2105,15 @@ export const panelCss = /* css */ `
   .drill-row-meta {
     font-family: 'Inconsolata', ui-monospace, monospace;
     font-size: 10px;
-    color: var(--bvc-fg-muted);
+    color: var(--cx-visual-fg-muted);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     max-width: 50%;
   }
   .icon-cell[data-active="true"] .icon-cell-svg {
-    border-color: var(--bvc-accent);
-    color: var(--bvc-accent);
+    border-color: var(--cx-visual-accent);
+    color: var(--cx-visual-accent);
   }
   .icon-cell-label {
     flex: 1;
@@ -2126,7 +2126,7 @@ export const panelCss = /* css */ `
   /* DS-mode component header (Figma library-instance style) */
   .comp-header {
     padding: 10px 12px;
-    border-bottom: 1px solid var(--bvc-border);
+    border-bottom: 1px solid var(--cx-visual-border);
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -2137,10 +2137,10 @@ export const panelCss = /* css */ `
     gap: 6px;
     font-size: 13px;
     font-weight: 600;
-    color: var(--bvc-fg);
+    color: var(--cx-visual-fg);
   }
   .comp-name-icon {
-    color: var(--bvc-accent);
+    color: var(--cx-visual-accent);
   }
 
   /* Component swap — turns the component name into a clickable picker so
@@ -2162,10 +2162,10 @@ export const panelCss = /* css */ `
     cursor: pointer;
   }
   .comp-swap:hover {
-    background: var(--bvc-bg-hover);
+    background: var(--cx-visual-bg-hover);
   }
   .comp-swap-chev {
-    color: var(--bvc-fg-muted);
+    color: var(--cx-visual-fg-muted);
     display: inline-flex;
     align-items: center;
   }
@@ -2186,7 +2186,7 @@ export const panelCss = /* css */ `
     appearance: none;
     border: 0;
     background: transparent;
-    color: var(--bvc-fg);
+    color: var(--cx-visual-fg);
     font: inherit;
     text-align: left;
     padding: 6px 8px;
@@ -2197,16 +2197,16 @@ export const panelCss = /* css */ `
     justify-content: space-between;
     gap: 8px;
   }
-  .swap-row:hover { background: var(--bvc-bg-hover); }
+  .swap-row:hover { background: var(--cx-visual-bg-hover); }
   .swap-row[data-active="true"] {
-    background: var(--bvc-bg-hover);
-    color: var(--bvc-accent);
+    background: var(--cx-visual-bg-hover);
+    color: var(--cx-visual-accent);
   }
   .swap-row-name { font-weight: 600; }
   .swap-row-meta {
     font-family: 'Inconsolata', ui-monospace, monospace;
     font-size: 10px;
-    color: var(--bvc-fg-muted);
+    color: var(--cx-visual-fg-muted);
   }
 
   .comp-lib {
@@ -2214,7 +2214,7 @@ export const panelCss = /* css */ `
     align-items: center;
     gap: 6px;
     font-size: 11px;
-    color: var(--bvc-fg-muted);
+    color: var(--cx-visual-fg-muted);
   }
 
   /* Two-col control row → label left, control right (Figma pattern) */
@@ -2226,7 +2226,7 @@ export const panelCss = /* css */ `
   }
   .fsection-body .two-col .control-label {
     margin-bottom: 0;
-    color: var(--bvc-fg-2);
+    color: var(--cx-visual-fg-2);
     font-size: 11px;
   }
 
@@ -2249,7 +2249,7 @@ export const panelCss = /* css */ `
   }
   .variant-axis-header {
     font-size: 11px;
-    color: var(--bvc-fg-2);
+    color: var(--cx-visual-fg-2);
     text-transform: none;
     letter-spacing: 0;
     margin-bottom: 6px;
@@ -2260,32 +2260,32 @@ export const panelCss = /* css */ `
     gap: 4px;
   }
   .variant-chip {
-    font-size: var(--bvc-t-sm);
-    padding: 2px var(--bvc-s3);
+    font-size: var(--cx-visual-t-sm);
+    padding: 2px var(--cx-visual-s3);
     border-radius: 999px;
-    border: 1px solid var(--bvc-border);
-    background: var(--bvc-bg);
-    color: var(--bvc-fg);
+    border: 1px solid var(--cx-visual-border);
+    background: var(--cx-visual-bg);
+    color: var(--cx-visual-fg);
     cursor: pointer;
     white-space: nowrap;
     font-family: inherit;
     line-height: 1.6;
   }
   .variant-chip:hover {
-    background: var(--bvc-bg-2);
-    border-color: var(--bvc-border-strong);
+    background: var(--cx-visual-bg-2);
+    border-color: var(--cx-visual-border-strong);
   }
   .variant-chip:active {
     transform: translateY(0.5px);
   }
   .variant-chip[data-active="true"] {
-    background: var(--bvc-accent);
+    background: var(--cx-visual-accent);
     color: #fff;
-    border-color: var(--bvc-accent);
-    box-shadow: var(--bvc-shadow-sm);
+    border-color: var(--cx-visual-accent);
+    box-shadow: var(--cx-visual-shadow-sm);
   }
   .variant-chip[data-active="true"]:hover {
-    background: var(--bvc-accent);
+    background: var(--cx-visual-accent);
     filter: brightness(1.05);
   }
 
@@ -2299,7 +2299,7 @@ export const panelCss = /* css */ `
   }
   .prop-toggle-label {
     font-size: 11px;
-    color: var(--bvc-fg-2);
+    color: var(--cx-visual-fg-2);
     user-select: none;
   }
   .prop-toggle {
@@ -2320,12 +2320,12 @@ export const panelCss = /* css */ `
   .prop-toggle-track {
     position: absolute;
     inset: 0;
-    background: var(--bvc-border-strong);
+    background: var(--cx-visual-border-strong);
     border-radius: 9px;
     transition: background 0.15s;
   }
   .prop-toggle input:checked ~ .prop-toggle-track {
-    background: var(--bvc-accent);
+    background: var(--cx-visual-accent);
   }
   .prop-toggle-thumb {
     position: absolute;
@@ -2342,7 +2342,7 @@ export const panelCss = /* css */ `
     transform: translateX(14px);
   }
   .prop-toggle:focus-within .prop-toggle-track {
-    outline: 2px solid var(--bvc-accent);
+    outline: 2px solid var(--cx-visual-accent);
     outline-offset: 1px;
   }
 
@@ -2351,21 +2351,21 @@ export const panelCss = /* css */ `
     width: 100%;
     height: 28px;
     padding: 0 8px;
-    background: var(--bvc-input-bg);
-    border: 1px solid var(--bvc-border);
-    border-radius: var(--bvc-radius);
-    color: var(--bvc-fg);
+    background: var(--cx-visual-input-bg);
+    border: 1px solid var(--cx-visual-border);
+    border-radius: var(--cx-visual-radius);
+    color: var(--cx-visual-fg);
     font-size: 12px;
     font-family: inherit;
     outline: none;
     box-sizing: border-box;
   }
-  .text-input:hover { border-color: var(--bvc-border-strong); background: var(--bvc-bg-hover); }
+  .text-input:hover { border-color: var(--cx-visual-border-strong); background: var(--cx-visual-bg-hover); }
   .text-input:focus {
-    border-color: var(--bvc-accent);
-    background: var(--bvc-bg);
+    border-color: var(--cx-visual-accent);
+    background: var(--cx-visual-bg);
   }
-  .text-input::placeholder { color: var(--bvc-fg-muted); }
+  .text-input::placeholder { color: var(--cx-visual-fg-muted); }
   /* Suppress native number spinners — the scrub handle is the numeric affordance. */
   .text-input::-webkit-outer-spin-button,
   .text-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
@@ -2379,17 +2379,17 @@ export const panelCss = /* css */ `
     gap: 6px;
     width: 100%;
     height: 28px;
-    background: var(--bvc-input-bg);
-    border: 1px solid var(--bvc-border);
-    border-radius: var(--bvc-radius);
+    background: var(--cx-visual-input-bg);
+    border: 1px solid var(--cx-visual-border);
+    border-radius: var(--cx-visual-radius);
     padding: 0 8px;
     cursor: pointer;
     font-family: inherit;
     font-size: 12px;
-    color: var(--bvc-fg);
+    color: var(--cx-visual-fg);
     text-align: left;
   }
-  .icon-trigger:hover { border-color: var(--bvc-border-strong); background: var(--bvc-bg-hover); }
+  .icon-trigger:hover { border-color: var(--cx-visual-border-strong); background: var(--cx-visual-bg-hover); }
   .icon-trigger-preview {
     display: inline-flex;
     align-items: center;
@@ -2407,7 +2407,7 @@ export const panelCss = /* css */ `
   }
   .icon-trigger-chev {
     display: inline-flex;
-    color: var(--bvc-fg-muted);
+    color: var(--cx-visual-fg-muted);
     flex-shrink: 0;
   }
   /* Inline notice (Brainy yellow tag tokens). */
@@ -2416,31 +2416,31 @@ export const panelCss = /* css */ `
     align-items: flex-start;
     gap: 6px;
     padding: 6px 8px;
-    background: var(--bvc-warn-bg);
-    border: 1px solid var(--bvc-border);
-    border-radius: var(--bvc-radius);
+    background: var(--cx-visual-warn-bg);
+    border: 1px solid var(--cx-visual-border);
+    border-radius: var(--cx-visual-radius);
     font-size: 11px;
     line-height: 1.4;
   }
   .convert-notice-tag {
-    background: var(--bvc-bg);
+    background: var(--cx-visual-bg);
     border-radius: 3px;
     padding: 1px 6px;
     font-weight: 700;
-    color: var(--bvc-warn-text);
+    color: var(--cx-visual-warn-text);
     white-space: nowrap;
     flex-shrink: 0;
   }
   .convert-notice-text {
-    color: var(--bvc-warn-text);
+    color: var(--cx-visual-warn-text);
   }
   .convert-notice-text code {
-    background: var(--bvc-bg-hover);
+    background: var(--cx-visual-bg-hover);
     border-radius: 2px;
     padding: 0 3px;
     font-family: 'Inconsolata', ui-monospace, monospace;
     font-size: 10.5px;
-    color: var(--bvc-warn-text);
+    color: var(--cx-visual-warn-text);
   }
 
   /* Escape hatch — ghost link, low visual weight (Brainy cxl-btn--link). */
@@ -2449,19 +2449,19 @@ export const panelCss = /* css */ `
     padding: 0;
     border: none;
     background: transparent;
-    color: var(--bvc-fg-2);
+    color: var(--cx-visual-fg-2);
     cursor: pointer;
     font-family: inherit;
     font-size: 11px;
     text-align: left;
     text-decoration: underline;
     text-decoration-style: dotted;
-    text-decoration-color: var(--bvc-border-strong);
+    text-decoration-color: var(--cx-visual-border-strong);
     text-underline-offset: 3px;
   }
   .escape-link:hover {
-    color: var(--bvc-accent);
-    text-decoration-color: var(--bvc-accent);
+    color: var(--cx-visual-accent);
+    text-decoration-color: var(--cx-visual-accent);
   }
 
   /* Popover layer + popover */
@@ -2487,8 +2487,8 @@ export const panelCss = /* css */ `
     max-width: 320px;
     max-height: 70vh;
     overflow-y: auto;
-    background: var(--bvc-bg);
-    border: 1px solid var(--bvc-border-strong);
+    background: var(--cx-visual-bg);
+    border: 1px solid var(--cx-visual-border-strong);
     border-radius: 8px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.08);
     padding: 10px;
@@ -2503,15 +2503,15 @@ export const panelCss = /* css */ `
     justify-content: space-between;
     font-size: 12px;
     font-weight: 600;
-    color: var(--bvc-fg);
+    color: var(--cx-visual-fg);
   }
-  .swatch-picker-heading { color: var(--bvc-fg); }
+  .swatch-picker-heading { color: var(--cx-visual-fg); }
   .swatch-picker-sub {
     font-size: 11px;
-    color: var(--bvc-fg-muted);
+    color: var(--cx-visual-fg-muted);
     font-family: ui-monospace, monospace;
-    background: var(--bvc-bg-2);
-    border: 1px solid var(--bvc-border);
+    background: var(--cx-visual-bg-2);
+    border: 1px solid var(--cx-visual-border);
     border-radius: 4px;
     padding: 4px 8px;
     overflow: hidden;
@@ -2534,13 +2534,13 @@ export const panelCss = /* css */ `
     gap: 6px;
     font-size: 11px;
     font-weight: 600;
-    color: var(--bvc-fg);
+    color: var(--cx-visual-fg);
     text-transform: capitalize;
   }
   .swatch-cat-count {
     font-size: 10px;
-    color: var(--bvc-fg-muted);
-    background: var(--bvc-bg-2);
+    color: var(--cx-visual-fg-muted);
+    background: var(--cx-visual-bg-2);
     border-radius: 3px;
     padding: 0 5px;
     font-weight: 500;
@@ -2549,28 +2549,28 @@ export const panelCss = /* css */ `
     background: transparent;
     border: none;
     font-family: inherit;
-    color: var(--bvc-fg-muted);
+    color: var(--cx-visual-fg-muted);
     font-size: 11px;
     cursor: pointer;
     padding: 2px 4px;
     border-radius: 3px;
   }
   .swatch-picker-clear:hover {
-    background: var(--bvc-bg-2);
-    color: var(--bvc-fg);
+    background: var(--cx-visual-bg-2);
+    color: var(--cx-visual-fg);
   }
   .swatch-picker-search {
     width: 100%;
     padding: 5px 8px;
-    border: 1px solid var(--bvc-border);
+    border: 1px solid var(--cx-visual-border);
     border-radius: 5px;
     font-size: 11px;
     font-family: inherit;
-    background: var(--bvc-bg-2);
+    background: var(--cx-visual-bg-2);
   }
   .swatch-picker-search:focus {
     outline: none;
-    border-color: var(--bvc-accent);
+    border-color: var(--cx-visual-accent);
     background: white;
   }
   .swatch-grid {
@@ -2593,7 +2593,7 @@ export const panelCss = /* css */ `
     margin: 0;
     width: 100%;
     aspect-ratio: 1;
-    border: 2px solid var(--bvc-border);
+    border: 2px solid var(--cx-visual-border);
     border-radius: 4px;
     cursor: pointer;
     padding: 0;
@@ -2603,12 +2603,12 @@ export const panelCss = /* css */ `
   .swatch:hover {
     /* Subtle darken on hover so it stays distinct from the green selected
        state without competing with it. */
-    border-color: var(--bvc-border-strong);
+    border-color: var(--cx-visual-border-strong);
   }
   .swatch[data-active="true"] {
     /* Single accent border marks the selected swatch — no inner ring (that
        read as a double border). Geometry is unchanged (same 2px width). */
-    border-color: var(--bvc-accent);
+    border-color: var(--cx-visual-accent);
   }
   /* Off-scale marker: the current token is outside the role-narrowed set
      (e.g., a surface-* token applied as text colour). We keep showing it
@@ -2640,7 +2640,7 @@ export const panelCss = /* css */ `
   /* Dismissable warning banner — shown when a primitive picked inside a cxui
      ancestor still gets visual controls. Same DS warning tokens as the OFF
      badge above so the colour story stays consistent. */
-  .bvc-banner {
+  .cx-visual-banner {
     display: flex;
     align-items: flex-start;
     gap: 8px;
@@ -2652,7 +2652,7 @@ export const panelCss = /* css */ `
     border-radius: 6px;
     margin: 8px 12px;
   }
-  .bvc-banner-close {
+  .cx-visual-banner-close {
     background: transparent;
     border: 0;
     color: inherit;
@@ -2662,73 +2662,73 @@ export const panelCss = /* css */ `
     cursor: pointer;
     opacity: 0.7;
   }
-  .bvc-banner-close:hover {
+  .cx-visual-banner-close:hover {
     opacity: 1;
   }
 
   /* Empty state rendered in place of any sections when the selection is
      blocked (chart/graph or descendant). Single-purpose: explain why no
      controls are present and where edits should happen instead. */
-  .bvc-empty-state {
+  .cx-visual-empty-state {
     padding: 24px 16px;
     text-align: center;
     color: var(--c-text-secondary);
   }
-  .bvc-empty-state-icon {
+  .cx-visual-empty-state-icon {
     font-size: 24px;
     margin-bottom: 8px;
   }
-  .bvc-empty-state-title {
+  .cx-visual-empty-state-title {
     font-size: 12px;
     font-weight: 600;
     color: var(--c-text-primary);
     margin-bottom: 6px;
   }
-  .bvc-empty-state-body {
+  .cx-visual-empty-state-body {
     font-size: 11px;
     line-height: 1.5;
   }
   /* Action row below the empty-state body. The blocked-state can render
      two actions side-by-side (Copy prompt + Jump out); the uncataloged
      state renders one (Jump to parent). flex-wrap keeps narrow panels OK. */
-  .bvc-empty-state-actions {
+  .cx-visual-empty-state-actions {
     margin-top: 12px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 8px;
   }
-  .bvc-empty-state-action {
+  .cx-visual-empty-state-action {
     margin-top: 12px;
     padding: 6px 12px;
     font-size: 11px;
     font-weight: 600;
     border-radius: 6px;
-    border: 1px solid var(--bvc-border);
+    border: 1px solid var(--cx-visual-border);
     background: transparent;
-    color: var(--bvc-fg);
+    color: var(--cx-visual-fg);
     cursor: pointer;
   }
-  /* When wrapped in .bvc-empty-state-actions the parent owns the top
+  /* When wrapped in .cx-visual-empty-state-actions the parent owns the top
      margin, so reset the per-button margin to keep gaps even. */
-  .bvc-empty-state-actions .bvc-empty-state-action {
+  .cx-visual-empty-state-actions .cx-visual-empty-state-action {
     margin-top: 0;
   }
   /* Primary action variant — used for the Copy-prompt button so it reads
      as the recommended next step. Subtle accent tint rather than a full
      solid fill, to match the muted empty-state aesthetic. */
-  .bvc-empty-state-action-primary {
-    border-color: var(--bvc-accent);
-    background: color-mix(in srgb, var(--bvc-accent) 10%, transparent);
-    color: var(--bvc-accent);
+  .cx-visual-empty-state-action-primary {
+    border-color: var(--cx-visual-accent);
+    background: color-mix(in srgb, var(--cx-visual-accent) 10%, transparent);
+    color: var(--cx-visual-accent);
   }
-  .bvc-empty-state-action:hover:not(:disabled) {
-    background: var(--bvc-bg-hover);
+  .cx-visual-empty-state-action:hover:not(:disabled) {
+    background: var(--cx-visual-bg-hover);
   }
-  .bvc-empty-state-action-primary:hover:not(:disabled) {
-    background: color-mix(in srgb, var(--bvc-accent) 18%, transparent);
+  .cx-visual-empty-state-action-primary:hover:not(:disabled) {
+    background: color-mix(in srgb, var(--cx-visual-accent) 18%, transparent);
   }
-  .bvc-empty-state-action:disabled {
+  .cx-visual-empty-state-action:disabled {
     opacity: 0.5;
     cursor: not-allowed;
   }
@@ -2755,9 +2755,9 @@ export const panelCss = /* css */ `
     z-index: 2147483647;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
     /* Brief fade-in so the tooltip doesn't blink between swatches. */
-    animation: bvc-tip-fade-in 80ms ease-out both;
+    animation: cx-visual-tip-fade-in 80ms ease-out both;
   }
-  @keyframes bvc-tip-fade-in {
+  @keyframes cx-visual-tip-fade-in {
     from { opacity: 0; }
     to { opacity: 1; }
   }
@@ -2789,14 +2789,14 @@ export const panelCss = /* css */ `
     padding: 10px 0 2px;
     font-size: 11px;
     line-height: 1.45;
-    color: var(--bvc-fg-muted);
+    color: var(--cx-visual-fg-muted);
   }
   /* Read-only mode (no window.ng) does NOT disable any control here: layout,
      color, content/icon, typography, sizing and spacing all edit the DOM
      directly and work without Angular dev tools — and Copy-prompt + Pick must
      stay live. The only Angular-bound editor is the cxui variant section, and
      it self-disables with its own "Angular component not found" notice. The
-     .bvc-readonly class is kept solely to scope the informational banner. */
+     .cx-visual-readonly class is kept solely to scope the informational banner. */
 
   /* Respect the OS "reduce motion" setting: drop the tooltip fade, the resize
      handle highlight, and neutralise the panel's transitions/animations. */
@@ -2814,28 +2814,28 @@ export const panelCss = /* css */ `
 export const outlineCss = /* css */ `
   /* Outline-layer tokens — declared on the layer's own root since the
      outline elements are NOT inside the panel's shadow DOM and don't
-     inherit the panel's --bvc-* aliases. */
+     inherit the panel's --cx-visual-* aliases. */
   :root {
-    --bvc-outline-color: var(--c-text-interactive, #029449);
-    --bvc-outline-color-hover: var(--c-border-interactive, rgba(2, 148, 73, 0.55));
+    --cx-visual-outline-color: var(--c-text-interactive, #029449);
+    --cx-visual-outline-color-hover: var(--c-border-interactive, rgba(2, 148, 73, 0.55));
   }
-  .bvc-outline {
+  .cx-visual-outline {
     position: fixed;
     pointer-events: none;
-    border: 2px solid var(--bvc-outline-color);
+    border: 2px solid var(--cx-visual-outline-color);
     border-radius: 2px;
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.6) inset;
     z-index: 2147483645;
   }
-  .bvc-outline[data-mode="hover"] {
-    border-color: var(--bvc-outline-color-hover);
+  .cx-visual-outline[data-mode="hover"] {
+    border-color: var(--cx-visual-outline-color-hover);
     border-style: dashed;
     opacity: 0.7;
   }
-  .bvc-label {
+  .cx-visual-label {
     position: fixed;
     pointer-events: none;
-    background: var(--bvc-outline-color);
+    background: var(--cx-visual-outline-color);
     color: white;
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     font-size: 10px;
@@ -2852,7 +2852,7 @@ export const outlineCss = /* css */ `
      panel. Each band fills the actual padding (inside the element) or
      margin (outside) region for the side it represents, so designers see
      exactly where the value will land before they pick. */
-  .bvc-spacing-band {
+  .cx-visual-spacing-band {
     position: fixed;
     pointer-events: none;
     z-index: 2147483645;
@@ -2866,12 +2866,12 @@ export const outlineCss = /* css */ `
     );
     display: none;
   }
-  .bvc-spacing-band[data-on="true"] { display: block; }
+  .cx-visual-spacing-band[data-on="true"] { display: block; }
 
   /* Floating "Esc to cancel" pill that follows the cursor while picking.
      Designers couldn't tell what to press to exit pick mode without a
      visible affordance. */
-  .bvc-cursor-badge {
+  .cx-visual-cursor-badge {
     position: fixed;
     pointer-events: none;
     background: #1d1d1f;

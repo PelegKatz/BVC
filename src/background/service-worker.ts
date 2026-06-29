@@ -17,6 +17,6 @@ chrome.action.onClicked.addListener(async tab => {
       files: ['dist/content/content-script.js'],
     });
   } catch (err) {
-    console.error('[bvc] activation failed:', err);
+    console.error('[cx-visual] activation failed:', err);
   }
 });

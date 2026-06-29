@@ -20,7 +20,7 @@ function setText(el: Element, text: string): void {
 }
 
 // Form elements have no meaningful text-node child (inputs are void; their
-// visible "watermark" lives in the `placeholder` attribute). When BVC's
+// visible "watermark" lives in the `placeholder` attribute). When CX-Visual's
 // text-label section is invoked on an <input> or <textarea>, switch the
 // row to edit the placeholder attribute instead — that's the equivalent
 // of editing the visible label for the kind of element a designer cares about.

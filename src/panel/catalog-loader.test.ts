@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { extractBvcConfig, keepEntry, type CatalogAxis } from './catalog-loader';
+import { extractCxVisualConfig, keepEntry, type CatalogAxis } from './catalog-loader';
 
 const FAKE_AXIS: CatalogAxis = { name: 'a', signalName: 'a', type: 'boolean', default: false };
 
@@ -21,29 +21,29 @@ describe('catalog filter', () => {
   });
 });
 
-describe('extractBvcConfig', () => {
+describe('extractCxVisualConfig', () => {
   it(`GIVEN a story meta with no parameters
       THEN returns undefined`, () => {
-    expect(extractBvcConfig({ title: 'X' })).toBeUndefined();
+    expect(extractCxVisualConfig({ title: 'X' })).toBeUndefined();
   });
 
   it(`GIVEN parameters.bvc with a valid content kind
       THEN returns the parsed config`, () => {
-    expect(extractBvcConfig({ title: 'X', parameters: { bvc: { content: 'copy-text' } } })).toEqual({ content: 'copy-text' });
+    expect(extractCxVisualConfig({ title: 'X', parameters: { bvc: { content: 'copy-text' } } })).toEqual({ content: 'copy-text' });
   });
 
   it(`GIVEN parameters.bvc with an unknown content kind
       THEN returns undefined`, () => {
-    expect(extractBvcConfig({ title: 'X', parameters: { bvc: { content: 'made-up' } } })).toBeUndefined();
+    expect(extractCxVisualConfig({ title: 'X', parameters: { bvc: { content: 'made-up' } } })).toBeUndefined();
   });
 
   it(`GIVEN parameters.bvc as a non-object value
       THEN returns undefined`, () => {
-    expect(extractBvcConfig({ title: 'X', parameters: { bvc: 'oops' } })).toBeUndefined();
+    expect(extractCxVisualConfig({ title: 'X', parameters: { bvc: 'oops' } })).toBeUndefined();
   });
 
   it(`GIVEN parameters.bvc as an empty object
       THEN returns undefined`, () => {
-    expect(extractBvcConfig({ title: 'X', parameters: { bvc: {} } })).toBeUndefined();
+    expect(extractCxVisualConfig({ title: 'X', parameters: { bvc: {} } })).toBeUndefined();
   });
 });

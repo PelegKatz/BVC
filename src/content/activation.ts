@@ -13,15 +13,15 @@ export async function detectPageMode(deps: DetectDeps): Promise<PageMode> {
 }
 
 /**
- * True when the in-bundle BVC (the dev-build panel that ships inside
+ * True when the in-bundle CX-Visual (the dev-build panel that ships inside
  * cx-web-workspace) is already mounted on this page. We key off its
- * double-mount flag `window.__bvcMounted` — the extension uses a different
- * flag (`__bvcExtensionMounted`), so this never matches the extension itself.
+ * double-mount flag `window.__cxVisualMounted` — the extension uses a different
+ * flag (`__cxVisualExtensionMounted`), so this never matches the extension itself.
  * During the coexistence phase the extension refuses to activate to avoid two
  * panels fighting over the same shadow-host id and pick-mode events (§9).
  */
-export function detectInBundleBvc(): boolean {
-  return Boolean((window as unknown as Record<string, unknown>).__bvcMounted);
+export function detectInBundleCxVisual(): boolean {
+  return Boolean((window as unknown as Record<string, unknown>).__cxVisualMounted);
 }
 
 function hasCxuiMarkers(root: ParentNode): boolean {

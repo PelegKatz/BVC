@@ -1,9 +1,9 @@
 // Generates a "copy-paste into Claude" prompt for editing the chart config
-// of the parent <cxui-chart> when BVC's blocked empty state is showing.
+// of the parent <cxui-chart> when CX-Visual's blocked empty state is showing.
 //
 // Why this exists: chart sub-components (legend, tooltip, zoom, empty-state)
 // look editable in the DOM — they have flat input signals — but their values
-// are bound from the chart's [config] input on every re-render, so any BVC
+// are bound from the chart's [config] input on every re-render, so any CX-Visual
 // input override gets clobbered. The honest path is "tell the designer
 // what to change in source," and the prompt encodes both *where* (config
 // path) and the *current state* read live from the component.
@@ -31,7 +31,7 @@ const LEGEND_TARGET: ChartConfigTarget = {
   configPath: 'config.legend',
   label: 'Legend config',
   reason:
-    'The legend component is rendered by `<cxui-chart>` from `config.legend` — any BVC input override is overwritten on the next config change.',
+    'The legend component is rendered by `<cxui-chart>` from `config.legend` — any CX-Visual input override is overwritten on the next config change.',
   commonEdits: [
     '- **Hide the legend:** `legend: false`',
     "- **Move:** `legend: { position: 'top' | 'bottom' | 'left' | 'right' }`",
@@ -82,7 +82,7 @@ const CHART_ROOT_TARGET: ChartConfigTarget = {
   configPath: 'config',
   label: 'Chart config',
   reason:
-    'The chart visualisation is fully driven by its `[config]` input — series, axes, plot options all live there. Edits via BVC inputs would be overwritten on the next config change.',
+    'The chart visualisation is fully driven by its `[config]` input — series, axes, plot options all live there. Edits via CX-Visual inputs would be overwritten on the next config change.',
   commonEdits: [
     "- **Series data / type:** `config.series = [{ type: 'line', data: [...] }]`",
     '- **Axes:** `config.xAxis`, `config.yAxis`',
@@ -162,7 +162,7 @@ export function buildChartConfigPrompt(blockingAncestor: Element): string | null
 
   const url = window.location.href;
 
-  return `# BVC chart-config edit request
+  return `# CX-Visual chart-config edit request
 
 The designer picked \`<${blockingTag}>\` inside a chart on \`${url}\`. ${target.reason}
 

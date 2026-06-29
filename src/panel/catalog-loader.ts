@@ -1,4 +1,4 @@
-// Loads the BVC component catalog. In the extension the catalog is pre-baked
+// Loads the CX-Visual component catalog. In the extension the catalog is pre-baked
 // (cx-web-workspace `pnpm bvc:export`) and bundled as data/catalog.json, loaded
 // via runtime-data. The in-bundle client's dev-server fetch + Storybook /@fs
 // fallback are dropped here — not available in an extension context.
@@ -15,19 +15,19 @@ export interface CatalogAxis {
   classMap?: Record<string, string[]>;
 }
 
-export type BvcContentKind = 'text-label' | 'icon' | 'copy-text' | 'value' | 'percentage' | 'name' | 'qr-data';
+export type CxVisualContentKind = 'text-label' | 'icon' | 'copy-text' | 'value' | 'percentage' | 'name' | 'qr-data';
 
-export interface BvcConfig {
+export interface CxVisualConfig {
   /** Which Content section creator the panel should render. */
-  content?: BvcContentKind;
+  content?: CxVisualContentKind;
 }
 
 export interface CatalogEntry {
   name: string;
   storyTitle: string;
   axes: CatalogAxis[];
-  /** Optional BVC config from a story's parameters.bvc block. */
-  bvc?: BvcConfig;
+  /** Optional CX-Visual config from a story's parameters.bvc block. */
+  bvc?: CxVisualConfig;
 }
 
 /**
@@ -53,9 +53,9 @@ interface StoryMeta {
   parameters?: { bvc?: unknown };
 }
 
-const CONTENT_KINDS: BvcContentKind[] = ['text-label', 'icon', 'copy-text', 'value', 'percentage', 'name', 'qr-data'];
+const CONTENT_KINDS: CxVisualContentKind[] = ['text-label', 'icon', 'copy-text', 'value', 'percentage', 'name', 'qr-data'];
 
-function isContentKind(v: unknown): v is BvcContentKind {
+function isContentKind(v: unknown): v is CxVisualContentKind {
   return typeof v === 'string' && (CONTENT_KINDS as string[]).includes(v);
 }
 
@@ -65,7 +65,7 @@ function isContentKind(v: unknown): v is BvcContentKind {
  * malformed bvc block carries no actionable signal and would cause
  * `keepEntry` to retain a useless catalog entry.
  */
-export function extractBvcConfig(meta: StoryMeta): BvcConfig | undefined {
+export function extractCxVisualConfig(meta: StoryMeta): CxVisualConfig | undefined {
   const raw = meta.parameters?.bvc;
   if (!raw || typeof raw !== 'object') return undefined;
   // Read `content` via Reflect.get to avoid `as`-casting an `unknown` value.

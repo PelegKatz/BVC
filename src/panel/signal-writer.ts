@@ -92,7 +92,7 @@ export function setSignalValue(el: Element, instance: object, signalName: string
   const cmp = instance as Record<string, unknown>;
 
   // 1. CXUI directives expose internal "override" entry points so external
-  //    callers (like BVC) can change props without going through the parent
+  //    callers (like CX-Visual) can change props without going through the parent
   //    template binding. We probe for these in priority order:
   //
   //    a) Imperative setter on the prototype — e.g. `setEffectiveSize(s)`,
@@ -128,7 +128,7 @@ export function setSignalValue(el: Element, instance: object, signalName: string
     }
   }
   // Prefer `_<name>Override` over `_directive<Cap>` — the override semantics
-  // are reserved for external editors (BVC) and must beat the user-bound
+  // are reserved for external editors (CX-Visual) and must beat the user-bound
   // input, whereas `_directive<Cap>` is sometimes a low-priority default set
   // by an attribute directive (see CxuiButton._directiveVariant + cxuiIconButton).
   for (const overrideKey of [`_${signalName}Override`, `_directive${cap}`, `_effective${cap}`]) {

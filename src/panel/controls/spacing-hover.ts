@@ -22,11 +22,11 @@ let frameHandle: number | null = null;
 function ensureOverlay(): void {
   if (overlay) return;
   overlay = document.createElement('div');
-  overlay.id = 'bvc-spacing-overlay';
+  overlay.id = 'cx-visual-spacing-overlay';
   overlay.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:2147483645;';
   const mk = (side: SpacingSide): HTMLDivElement => {
     const band = document.createElement('div');
-    band.className = 'bvc-spacing-band';
+    band.className = 'cx-visual-spacing-band';
     band.dataset.side = side;
     overlay!.appendChild(band);
     return band;
@@ -127,7 +127,7 @@ export function highlightSpacing(el: Element, kind: SpacingKind, sides: SpacingS
 function gapBand(i: number): HTMLDivElement {
   while (gapBands.length <= i) {
     const b = document.createElement('div');
-    b.className = 'bvc-spacing-band';
+    b.className = 'cx-visual-spacing-band';
     b.dataset.side = 'gap';
     overlay!.appendChild(b);
     gapBands.push(b);

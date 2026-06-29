@@ -1,5 +1,5 @@
 {
-  "name": "bvc-extension",
+  "name": "cx-visual-extension",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -8,7 +8,7 @@
     "watch": "node build.mjs --watch",
     "test": "vitest run",
     "fetch-catalog": "tsx tools/fetch-catalog.ts",
-    "zip": "cd dist && zip -r ../bvc-extension.zip ."
+    "zip": "cd dist && zip -r ../cx-visual-extension.zip ."
   },
   "devDependencies": {
     "@types/chrome": "^0.0.246",

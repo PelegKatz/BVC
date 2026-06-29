@@ -1,6 +1,6 @@
 // One-stop async loader for the four bundled JSON artifacts (catalog, tokens,
 // icons, fonts). In the extension these are web-accessible resources fetched
-// via chrome.runtime.getURL — replacing the build-injected __BVC_* globals the
+// via chrome.runtime.getURL — replacing the build-injected __CX_VISUAL_* globals the
 // in-bundle client used.
 import type { Token } from './tokens';
 import type { CatalogEntry } from './catalog-loader';
@@ -56,6 +56,6 @@ export async function loadRuntimeData(): Promise<RuntimeData> {
 
 async function fetchJson<T>(path: string): Promise<T> {
   const res = await fetch(chrome.runtime.getURL(path));
-  if (!res.ok) throw new Error(`[bvc] failed to load ${path}: HTTP ${res.status}`);
+  if (!res.ok) throw new Error(`[cx-visual] failed to load ${path}: HTTP ${res.status}`);
   return (await res.json()) as T;
 }

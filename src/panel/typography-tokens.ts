@@ -11,7 +11,7 @@ const HEADINGS = new Set(['state-number-large', 'state-number', 'page-title', 's
 const BODY = new Set(['subheading-bold', 'subheading-reg', 'paragraph-bold', 'paragraph-reg']);
 const CODE = new Set(['code-bold', 'code-reg', 'code-sm-bold', 'code-sm-reg']);
 
-// Populated at boot from the bundled data/fonts.json (was __BVC_FONTS__).
+// Populated at boot from the bundled data/fonts.json (was __CX_VISUAL_FONTS__).
 // Both are live ESM bindings seeded by initFonts() before the panel renders.
 export let typographyTokens: TypographyToken[] = [];
 export let typographyTokenGroups: TypographyTokenGroup[] = [];

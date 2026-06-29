@@ -1,4 +1,4 @@
-import type { BvcContentKind } from '../../catalog-loader';
+import type { CxVisualContentKind } from '../../catalog-loader';
 import { createIconSection } from '../icon-picker';
 import { createTextLabelSection } from '../text-label';
 
@@ -13,7 +13,7 @@ import { createQrDataSection } from './qr-data';
  * has no associated creator. The panel only calls this when the catalog entry's
  * bvc.content is set, so a missing case is a bug — we log and return null.
  */
-export function createContentSection(kind: BvcContentKind, el: Element, onChange: () => void): HTMLDivElement | null {
+export function createContentSection(kind: CxVisualContentKind, el: Element, onChange: () => void): HTMLDivElement | null {
   switch (kind) {
     case 'icon':
       return createIconSection(el, onChange);
@@ -30,7 +30,7 @@ export function createContentSection(kind: BvcContentKind, el: Element, onChange
     case 'qr-data':
       return createQrDataSection(el, onChange);
     default: {
-      console.warn('[bvc] unknown content kind:', kind);
+      console.warn('[cx-visual] unknown content kind:', kind);
       return null;
     }
   }

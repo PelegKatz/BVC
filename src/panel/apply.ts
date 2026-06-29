@@ -15,7 +15,7 @@ export function buildSessionPrompt(elements: EditedElement[]): string {
 
 function buildSingleElementPrompt(el: Element, changes: Change[]): string {
   const url = window.location.href;
-  return `# BVC change request
+  return `# CX-Visual change request
 
 Source: \`${url}\`
 
@@ -42,7 +42,7 @@ function buildMultiElementPrompt(items: { el: Element; changes: Change[] }[]): s
     })
     .join('\n\n---\n\n');
 
-  return `# BVC change request (${items.length} elements)
+  return `# CX-Visual change request (${items.length} elements)
 
 Source: \`${url}\`
 
@@ -62,7 +62,7 @@ function formatTargetSection(el: Element, heading: string): string {
   const tag = el.tagName.toLowerCase();
   const id = el.id || '';
   const dataAttrs = Array.from(el.attributes)
-    .filter(a => a.name.startsWith('data-') && a.name !== 'data-bvc')
+    .filter(a => a.name.startsWith('data-') && a.name !== 'data-cx-visual')
     .map(a => `${a.name}="${a.value}"`);
   const selector = describeSelector(el);
   const ancestorChain = describeAncestorChain(el, 4);
@@ -94,7 +94,7 @@ function formatChanges(changes: Change[], el: Element): string {
   // Collect CSS classes managed by variant swaps to suppress raw class diff noise.
   const variantManagedClasses = new Set<string>();
   for (const attr of Array.from(el.attributes)) {
-    if (attr.name.startsWith('data-bvc-variant-classes-')) {
+    if (attr.name.startsWith('data-cx-visual-variant-classes-')) {
       for (const cls of attr.value.split(/\s+/)) variantManagedClasses.add(cls);
     }
   }
@@ -322,7 +322,7 @@ export async function postApply(prompt: string): Promise<ApplyResult> {
   // P1: clipboard-only. The in-bundle client POSTed to the Vite dev plugin's
   // /__bvc/apply endpoint; the extension has no such endpoint. A local apply
   // helper is the P2 path (direction plan D3/D4). For now the designer pastes
-  // the prompt into Claude Code, or runs /bvc-apply paste.
+  // the prompt into Claude Code, or runs /cx-visual-apply paste.
   const copied = await copyToClipboard(prompt);
   if (!copied) return { ok: false, error: 'clipboard write failed' };
   return { ok: true, path: 'clipboard' };

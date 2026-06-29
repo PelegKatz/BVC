@@ -1,7 +1,7 @@
 import type { CatalogEntry } from './catalog-loader';
 import { findCxuiEntry, describeCxuiComponent, isCxuiComponent } from './catalog-cxui';
 
-const PICK_COUNT_KEY = 'bvc-uncataloged-pick-counts';
+const PICK_COUNT_KEY = 'cx-visual-uncataloged-pick-counts';
 
 export interface JumpTarget {
   el: Element;
@@ -78,22 +78,22 @@ export function createUncatalogedCxuiState(props: UncatalogedStateProps): HTMLDi
   const target = findJumpTarget(props.el, props.catalog);
 
   const wrap = document.createElement('div');
-  wrap.className = 'bvc-empty-state bvc-uncataloged-state';
+  wrap.className = 'cx-visual-empty-state cx-visual-uncataloged-state';
 
   const icon = document.createElement('div');
-  icon.className = 'bvc-empty-state-icon';
+  icon.className = 'cx-visual-empty-state-icon';
   icon.textContent = '🔒';
 
   const title = document.createElement('div');
-  title.className = 'bvc-empty-state-title';
+  title.className = 'cx-visual-empty-state-title';
   title.textContent = `${tagLabel} is an internal part of a parent cxui component and isn't directly editable.`;
 
   const body = document.createElement('div');
-  body.className = 'bvc-empty-state-body';
+  body.className = 'cx-visual-empty-state-body';
 
   const jumpBtn = document.createElement('button');
   jumpBtn.type = 'button';
-  jumpBtn.className = 'bvc-empty-state-action';
+  jumpBtn.className = 'cx-visual-empty-state-action';
 
   if (target?.kind === 'cataloged') {
     const parentName = describeCxuiComponent(target.el).toLowerCase();

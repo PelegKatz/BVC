@@ -8,7 +8,7 @@ export interface Snapshot {
   placeholder?: string;
   /** icon attribute of the first <cxui-icon> child, null if none. */
   iconChild: string | null;
-  /** Variant selections recorded as data-bvc-variant-* attrs at snapshot time. */
+  /** Variant selections recorded as data-cx-visual-variant-* attrs at snapshot time. */
   variantAttrs: Record<string, string>;
 }
 
@@ -31,8 +31,8 @@ export function takeSnapshot(el: Element): Snapshot {
   const isInput = tag === 'INPUT' || tag === 'TEXTAREA';
   const variantAttrs: Record<string, string> = {};
   for (const attr of Array.from(el.attributes)) {
-    if (attr.name.startsWith('data-bvc-variant-') && !attr.name.startsWith('data-bvc-variant-classes-')) {
-      variantAttrs[attr.name.slice('data-bvc-variant-'.length)] = attr.value;
+    if (attr.name.startsWith('data-cx-visual-variant-') && !attr.name.startsWith('data-cx-visual-variant-classes-')) {
+      variantAttrs[attr.name.slice('data-cx-visual-variant-'.length)] = attr.value;
     }
   }
   const snap: Snapshot = {
@@ -95,15 +95,15 @@ export function computeChanges(snap: Snapshot, el: Element): Change[] {
 
   const componentTag = el.tagName.toLowerCase();
   for (const attr of Array.from(el.attributes)) {
-    if (!attr.name.startsWith('data-bvc-variant-') || attr.name.startsWith('data-bvc-variant-classes-')) continue;
-    const axisName = attr.name.slice('data-bvc-variant-'.length);
+    if (!attr.name.startsWith('data-cx-visual-variant-') || attr.name.startsWith('data-cx-visual-variant-classes-')) continue;
+    const axisName = attr.name.slice('data-cx-visual-variant-'.length);
     const oldVal = snap.variantAttrs[axisName];
     if (oldVal !== attr.value) {
       changes.push({ kind: 'variant', name: axisName, from: oldVal ?? '', to: attr.value, componentTag });
     }
   }
   for (const [axisName, oldVal] of Object.entries(snap.variantAttrs)) {
-    if (!el.hasAttribute(`data-bvc-variant-${axisName}`)) {
+    if (!el.hasAttribute(`data-cx-visual-variant-${axisName}`)) {
       changes.push({ kind: 'variant', name: axisName, from: oldVal, to: '', componentTag });
     }
   }
@@ -140,10 +140,10 @@ export function restoreSnapshot(el: Element, snap: Snapshot): void {
   else el.removeAttribute('readonly');
 
   for (const attr of Array.from(el.attributes)) {
-    if (attr.name.startsWith('data-bvc-variant-') && !attr.name.startsWith('data-bvc-variant-classes-')) el.removeAttribute(attr.name);
+    if (attr.name.startsWith('data-cx-visual-variant-') && !attr.name.startsWith('data-cx-visual-variant-classes-')) el.removeAttribute(attr.name);
   }
   for (const [key, val] of Object.entries(snap.variantAttrs)) {
-    el.setAttribute(`data-bvc-variant-${key}`, val);
+    el.setAttribute(`data-cx-visual-variant-${key}`, val);
   }
 
   const tag = el.tagName;

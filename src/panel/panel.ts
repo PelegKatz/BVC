@@ -14,7 +14,7 @@ import { describeShort as describeShortLabel } from './element-label';
 import { attachTooltip } from './tooltip';
 import { buildSessionPrompt, copyToClipboard, postApply } from './apply';
 import { computeChanges, restoreSnapshot, takeSnapshot, type Change, type Snapshot } from './diff';
-import type { BvcContentKind, CatalogEntry } from './catalog-loader';
+import type { CxVisualContentKind, CatalogEntry } from './catalog-loader';
 
 export interface PanelHandlers {
   onTogglePick: (next: boolean) => void;
@@ -52,7 +52,7 @@ export class Panel {
   constructor(private handlers: PanelHandlers) {
     this.host = document.createElement('div');
     this.host.id = 'brainy-visual-controller-host';
-    this.host.setAttribute('data-bvc', 'true');
+    this.host.setAttribute('data-cx-visual', 'true');
     Object.assign(this.host.style, {
       position: 'fixed',
       top: '0',
@@ -82,7 +82,7 @@ export class Panel {
     this.root.className = 'root';
     this.shadow.appendChild(this.root);
 
-    // Two-row sticky header. Row 1 holds the BVC mark, the always-visible
+    // Two-row sticky header. Row 1 holds the CX-Visual mark, the always-visible
     // Copy-prompt CTA (disabled until there are edits), and the Pick + Close
     // controls. Row 2 is the action bar — edit count, sent-ago indicator, and
     // Reset — which only renders when there's something to act on. The
@@ -221,11 +221,11 @@ export class Panel {
    * and Copy-prompt — edits the DOM directly and still works. We no longer show
    * a global banner for it (irrelevant for primitives, not actionable on prod);
    * the only effect is that cxui Properties is hidden in this mode (see
-   * renderSelected). The `bvc-readonly` class is kept as semantic root state.
+   * renderSelected). The `cx-visual-readonly` class is kept as semantic root state.
    */
   setReadOnly(readOnly: boolean): void {
     this.readOnly = readOnly;
-    this.root.classList.toggle('bvc-readonly', readOnly);
+    this.root.classList.toggle('cx-visual-readonly', readOnly);
   }
 
   mount(parent: ParentNode) {
@@ -789,7 +789,7 @@ function ancestorBreadcrumb(el: Element, onSelect: (el: Element) => void, onPrev
   const ancestors: Element[] = [];
   let cur = el.parentElement;
   while (cur && cur !== document.body && ancestors.length < 4) {
-    if (cur.getAttribute('data-bvc') !== 'true') ancestors.push(cur);
+    if (cur.getAttribute('data-cx-visual') !== 'true') ancestors.push(cur);
     cur = cur.parentElement;
   }
   if (ancestors.length === 0) return null;
@@ -891,14 +891,14 @@ function buildClassSpan(c: string, kind: 'primary' | 'rest'): HTMLSpanElement {
  *
  * Caps at VISIBLE_DESCENDANTS chips by default to keep large lists/grids
  * from dominating the strip. A `Show N more` / `Show less` toggle reveals
- * the rest in-place. BVC's own host element (data-bvc="true") is excluded
+ * the rest in-place. CX-Visual's own host element (data-cx-visual="true") is excluded
  * so the panel never lists itself.
  */
 const VISIBLE_DESCENDANTS = 3;
 function descendantList(el: Element, onSelect: (el: Element) => void, onPreview?: (el: Element | null) => void): HTMLDivElement | null {
   const children: Element[] = [];
   for (const child of Array.from(el.children)) {
-    if (child.getAttribute('data-bvc') === 'true') continue;
+    if (child.getAttribute('data-cx-visual') === 'true') continue;
     children.push(child);
   }
   if (children.length === 0) return null;
@@ -978,8 +978,8 @@ function describeShort(el: Element): string {
 
 // ─── Persistence helpers ──────────────────────────────────────────────────────
 
-const STORAGE_KEY_OPEN = 'bvc-panel-open';
-const STORAGE_KEY_WIDTH = 'bvc-panel-width';
+const STORAGE_KEY_OPEN = 'cx-visual-panel-open';
+const STORAGE_KEY_WIDTH = 'cx-visual-panel-width';
 
 function readPersistedOpen(): boolean {
   try {
@@ -1025,7 +1025,7 @@ function persistWidth(w: number): void {
  * toggle/checkbox stories, this function returns null for all cases and
  * can be deleted.
  */
-function inferLegacyContentKind(el: Element): BvcContentKind | null {
+function inferLegacyContentKind(el: Element): CxVisualContentKind | null {
   const tag = el.tagName.toLowerCase();
   if (tag === 'cxui-icon') return 'icon';
   if (el.hasAttribute('cxuiButton')) return 'icon';

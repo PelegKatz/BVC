@@ -1,6 +1,6 @@
 import { loadRuntimeData } from './runtime-data';
 
-// Populated at boot from the bundled data/icons.json (was __BVC_ICONS__).
+// Populated at boot from the bundled data/icons.json (was __CX_VISUAL_ICONS__).
 export let iconNames: string[] = [];
 
 export async function initIcons(): Promise<void> {

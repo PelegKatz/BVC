@@ -7,10 +7,10 @@ import { getCxuiInstance, getSignalValue, setSignalValue, notifyStorybookArgs, i
 import { createSection } from './section';
 
 /**
- * Axes that BVC hides from the Properties section on cxui components.
+ * Axes that CX-Visual hides from the Properties section on cxui components.
  * These are component-state booleans (disabled, readonly) whose visible
  * preview can't be made reliable on the live web-app — Angular host
- * bindings re-sync from read-only `input()` signals BVC can't write to.
+ * bindings re-sync from read-only `input()` signals CX-Visual can't write to.
  * Hiding the toggles is more honest than showing controls that do nothing.
  */
 function isHiddenAxis(signalName: string): boolean {
@@ -57,7 +57,7 @@ export function createCxuiVariantSection(props: CxuiVariantSectionProps): HTMLDi
 
 function createAxisChips(el: Element, instance: object, axis: CatalogAxis, onChange: () => void): HTMLDivElement {
   const wrap = document.createElement('div');
-  const variantDataKey = `bvcVariant${axis.signalName.charAt(0).toUpperCase()}${axis.signalName.slice(1)}`;
+  const variantDataKey = `cxVisualVariant${axis.signalName.charAt(0).toUpperCase()}${axis.signalName.slice(1)}`;
   const current = (el as HTMLElement).dataset[variantDataKey] ?? getSignalValue(instance, axis.signalName);
 
   // In Storybook, notifyStorybookArgs drives updates asynchronously via template bindings.
@@ -270,10 +270,10 @@ function applyVariantChange(el: Element, instance: object, axis: CatalogAxis, ne
     for (const cls of allKnownClasses) html.classList.remove(cls);
     for (const cls of axis.classMap[newValue] ?? []) html.classList.add(cls);
     // Track intent via data attr (Angular never touches data-* attrs).
-    const key = `bvcVariant${axis.signalName.charAt(0).toUpperCase()}${axis.signalName.slice(1)}`;
+    const key = `cxVisualVariant${axis.signalName.charAt(0).toUpperCase()}${axis.signalName.slice(1)}`;
     html.dataset[key] = newValue;
     // Store all managed classes so apply.ts can suppress the raw class diff noise.
-    const classesKey = `bvcVariantClasses${axis.signalName.charAt(0).toUpperCase()}${axis.signalName.slice(1)}`;
+    const classesKey = `cxVisualVariantClasses${axis.signalName.charAt(0).toUpperCase()}${axis.signalName.slice(1)}`;
     html.dataset[classesKey] = allKnownClasses.join(' ');
   }
 }
